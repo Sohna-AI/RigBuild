@@ -1,24 +1,26 @@
-from app.models import db, Product, environment, SCHEMA
+from app.models import db, CPU, environment, SCHEMA
 from sqlalchemy.sql import text
 import json
 
 
 # Adds a demo user, you can add other users here if you want
-def seed_products():
-    with open('../seed_data/products/products.json') as f:
-        products = json.load(f)
+def seed_cpus():
+    with open('../seed_data/cpu/cpus.json') as f:
+        cpus = json.load(f)
         
    
     
-    for product in products:
-        newProduct = Product(
-            name=product['name'],
-            price=product['price'],
-            stock_quantity=product['stock_quantity'],
-            category_id=product['category_id'],
-            user_id=product['user_id'],
+    for cpu in cpus:
+        cpuProduct = CPU(
+            name=cpu['name'],
+            core_count=cpu['core_count'],
+            core_clock=cpu['core_clock'],
+            boost_clock=cpu['boost_clock'],
+            graphics=cpu['graphics'],
+            tdp=cpu['tdp'],
+            smt=cpu['smt'],
         )
-        db.session.add(newProduct)
+        db.session.add(cpuProduct)
     db.session.commit()
 
 
@@ -28,10 +30,10 @@ def seed_products():
 # incrementing primary key, CASCADE deletes any dependent entities.  With
 # sqlite3 in development you need to instead use DELETE to remove all data and
 # it will reset the primary keys for you as well.
-def undo_products():
+def undo_cpus():
     if environment == "production":
-        db.session.execute(f"TRUNCATE table {SCHEMA}.products RESTART IDENTITY CASCADE;")
+        db.session.execute(f"TRUNCATE table {SCHEMA}.cpus RESTART IDENTITY CASCADE;")
     else:
-        db.session.execute(text("DELETE FROM products"))
+        db.session.execute(text("DELETE FROM cpus"))
         
     db.session.commit()

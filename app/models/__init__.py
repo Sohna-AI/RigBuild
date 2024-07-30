@@ -10,4 +10,12 @@ from .productImage import ProductImage
 from .review import Review
 from .shoppingCart import ShoppingCart
 from .wishlist import Wishlist
+from .case import Case
+from .cooling import Cooling
+from .cpu import CPU
+from .gpu import GPU
+from .memory import Memory
+from .monitor import Monitor
+from .motherboard import Motherboard
+from .storage import Storage
 from .db import environment, SCHEMA

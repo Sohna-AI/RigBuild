@@ -1,8 +1,8 @@
 """create all tables
 
-Revision ID: f393f4e2341a
+Revision ID: b8050943d153
 Revises: 3fde38616333
-Create Date: 2024-07-29 17:26:02.192905
+Create Date: 2024-07-29 21:36:17.931492
 
 """
 from alembic import op
@@ -10,7 +10,7 @@ import sqlalchemy as sa
 
 
 # revision identifiers, used by Alembic.
-revision = 'f393f4e2341a'
+revision = 'b8050943d153'
 down_revision = '3fde38616333'
 branch_labels = None
 depends_on = None
@@ -51,7 +51,6 @@ def upgrade():
     op.create_table('products',
     sa.Column('id', sa.Integer(), nullable=False),
     sa.Column('name', sa.String(length=50), nullable=False),
-    sa.Column('description', sa.String(length=1500), nullable=False),
     sa.Column('price', sa.Numeric(precision=10, scale=2), nullable=False),
     sa.Column('stock_quantity', sa.Integer(), nullable=False),
     sa.Column('category_id', sa.Integer(), nullable=False),
@@ -79,6 +78,79 @@ def upgrade():
     sa.Column('updated_at', sa.DateTime(), nullable=True),
     sa.ForeignKeyConstraint(['cart_id'], ['shopping_carts.id'], ),
     sa.ForeignKeyConstraint(['product_id'], ['products.id'], ),
+    sa.PrimaryKeyConstraint('id')
+    )
+    op.create_table('cases',
+    sa.Column('id', sa.Integer(), nullable=False),
+    sa.Column('form_factor', sa.String(length=50), nullable=False),
+    sa.Column('color', sa.String(length=50), nullable=True),
+    sa.Column('features', sa.Text(), nullable=True),
+    sa.Column('created_at', sa.DateTime(), nullable=True),
+    sa.Column('updated_at', sa.DateTime(), nullable=True),
+    sa.ForeignKeyConstraint(['id'], ['products.id'], ),
+    sa.PrimaryKeyConstraint('id')
+    )
+    op.create_table('coolings',
+    sa.Column('id', sa.Integer(), nullable=False),
+    sa.Column('type', sa.String(length=50), nullable=False),
+    sa.Column('fan_size', sa.String(length=50), nullable=True),
+    sa.Column('rgb', sa.Boolean(), nullable=True),
+    sa.Column('created_at', sa.DateTime(), nullable=True),
+    sa.Column('updated_at', sa.DateTime(), nullable=True),
+    sa.ForeignKeyConstraint(['id'], ['products.id'], ),
+    sa.PrimaryKeyConstraint('id')
+    )
+    op.create_table('cpus',
+    sa.Column('id', sa.Integer(), nullable=False),
+    sa.Column('name', sa.String(length=255), nullable=False),
+    sa.Column('core_count', sa.Integer(), nullable=False),
+    sa.Column('core_clock', sa.Numeric(precision=5, scale=2), nullable=False),
+    sa.Column('boost_clock', sa.Numeric(precision=5, scale=2), nullable=True),
+    sa.Column('tdp', sa.Integer(), nullable=False),
+    sa.Column('graphics', sa.String(length=255), nullable=True),
+    sa.Column('smt', sa.Boolean(), nullable=False),
+    sa.Column('created_at', sa.DateTime(), nullable=True),
+    sa.Column('updated_at', sa.DateTime(), nullable=True),
+    sa.ForeignKeyConstraint(['id'], ['products.id'], ),
+    sa.PrimaryKeyConstraint('id')
+    )
+    op.create_table('gpus',
+    sa.Column('id', sa.Integer(), nullable=False),
+    sa.Column('memory', sa.String(length=50), nullable=True),
+    sa.Column('core_count', sa.Integer(), nullable=True),
+    sa.Column('created_at', sa.DateTime(), nullable=True),
+    sa.Column('updated_at', sa.DateTime(), nullable=True),
+    sa.ForeignKeyConstraint(['id'], ['products.id'], ),
+    sa.PrimaryKeyConstraint('id')
+    )
+    op.create_table('memories',
+    sa.Column('id', sa.Integer(), nullable=False),
+    sa.Column('capacity', sa.String(length=50), nullable=False),
+    sa.Column('type', sa.String(length=50), nullable=True),
+    sa.Column('speed', sa.String(length=50), nullable=True),
+    sa.Column('created_at', sa.DateTime(), nullable=True),
+    sa.Column('updated_at', sa.DateTime(), nullable=True),
+    sa.ForeignKeyConstraint(['id'], ['products.id'], ),
+    sa.PrimaryKeyConstraint('id')
+    )
+    op.create_table('monitors',
+    sa.Column('id', sa.Integer(), nullable=False),
+    sa.Column('screen_size', sa.String(length=50), nullable=False),
+    sa.Column('resolution', sa.String(length=50), nullable=True),
+    sa.Column('refresh_rate', sa.String(length=50), nullable=True),
+    sa.Column('created_at', sa.DateTime(), nullable=True),
+    sa.Column('updated_at', sa.DateTime(), nullable=True),
+    sa.ForeignKeyConstraint(['id'], ['products.id'], ),
+    sa.PrimaryKeyConstraint('id')
+    )
+    op.create_table('motherboards',
+    sa.Column('id', sa.Integer(), nullable=False),
+    sa.Column('chipset', sa.String(length=50), nullable=True),
+    sa.Column('form_factor', sa.String(length=50), nullable=True),
+    sa.Column('socket_type', sa.String(length=50), nullable=True),
+    sa.Column('created_at', sa.DateTime(), nullable=True),
+    sa.Column('updated_at', sa.DateTime(), nullable=True),
+    sa.ForeignKeyConstraint(['id'], ['products.id'], ),
     sa.PrimaryKeyConstraint('id')
     )
     op.create_table('order_items',
@@ -114,6 +186,17 @@ def upgrade():
     sa.ForeignKeyConstraint(['user_id'], ['users.id'], ),
     sa.PrimaryKeyConstraint('id')
     )
+    op.create_table('storages',
+    sa.Column('id', sa.Integer(), nullable=False),
+    sa.Column('storage_type', sa.String(length=50), nullable=False),
+    sa.Column('capacity', sa.String(length=50), nullable=False),
+    sa.Column('read_speed', sa.Integer(), nullable=True),
+    sa.Column('write_speed', sa.Integer(), nullable=True),
+    sa.Column('created_at', sa.DateTime(), nullable=True),
+    sa.Column('updated_at', sa.DateTime(), nullable=True),
+    sa.ForeignKeyConstraint(['id'], ['products.id'], ),
+    sa.PrimaryKeyConstraint('id')
+    )
     op.create_table('wishlists',
     sa.Column('id', sa.Integer(), nullable=False),
     sa.Column('user_id', sa.Integer(), nullable=False),
@@ -130,9 +213,17 @@ def upgrade():
 def downgrade():
     # ### commands auto generated by Alembic - please adjust! ###
     op.drop_table('wishlists')
+    op.drop_table('storages')
     op.drop_table('reviews')
     op.drop_table('product_images')
     op.drop_table('order_items')
+    op.drop_table('motherboards')
+    op.drop_table('monitors')
+    op.drop_table('memories')
+    op.drop_table('gpus')
+    op.drop_table('cpus')
+    op.drop_table('coolings')
+    op.drop_table('cases')
     op.drop_table('cart_items')
     op.drop_table('shopping_carts')
     op.drop_table('products')
