@@ -19,7 +19,7 @@ class ShoppingCart(db.Model):
         return {
             'id': self.id,
             'user_id': self.user_id,
-            'products': [cartItem.to_dict() for cartItem in self.cart_items],
+            'cart': [cartItem.to_dict() for cartItem in self.cart_items],
             'created_at': self.created_at,
             'updated_at': self.updated_at
         }

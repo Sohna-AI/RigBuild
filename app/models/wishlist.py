@@ -23,6 +23,7 @@ class Wishlist(db.Model):
             'id': self.id,
             'product_id': self.product_id,
             'user_id': self.user_id,
+            'products': [product.to_dict() for product in self.products],
             'created_at': self.created_at,
             'updated_at': self.updated_at
         }
