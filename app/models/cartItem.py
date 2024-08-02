@@ -22,8 +22,9 @@ class CartItem(db.Model):
         return {
             'id': self.id,
             'user_id': self.user_id,
+            'cart_id': self.cart_id,
             'product_id': self.product_id,
-            'product': self.product,
+            'product': self.product.to_dict(),
             'created_at': self.created_at,
             'updated_at': self.updated_at
         }
