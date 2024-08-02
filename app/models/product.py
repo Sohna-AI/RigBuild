@@ -32,8 +32,10 @@ class Product(db.Model):
             'description': self.description,
             'price': self.price,
             'stock_quantity': self.stock_quantity,
+            'product_images': [product_image.to_dict() for product_image in self.product_images],
             'category_id': self.category_id,
             'user_id': self.user_id,
+            'user': self.user.to_dict(),
             'reviews': [review.to_dict() for review in self.reviews],
             'created_at': self.created_at,
             'updated_at': self.updated_at

@@ -21,6 +21,7 @@ class Order(db.Model):
         return {
             'id': self.id,
             'user_id': self.user_id,
+            'order_items': [order_item.to_dict() for order_item in self.order_items],
             'created_at': self.created_at,
             'updated_at': self.updated_at
         }

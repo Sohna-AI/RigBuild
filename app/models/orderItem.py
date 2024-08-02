@@ -23,7 +23,9 @@ class OrderItem(db.Model):
         return {
             'id': self.id,
             'user_id': self.user_id,
+            'order': self.order.to_dict(),
             'product_id': self.product_id,
+            'product': self.product.to_dict(),
             'product': self.product,
             'created_at': self.created_at,
             'updated_at': self.updated_at

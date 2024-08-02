@@ -24,6 +24,7 @@ class Address(db.Model):
         return {
             'id': self.id,
             'user_id': self.user_id,
+            'user': self.user.to_dict(),
             'street': self.street,
             'city': self.city,
             'state': self.state,
