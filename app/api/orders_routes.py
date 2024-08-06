@@ -1,6 +1,6 @@
 from flask import Blueprint
 from flask_login import login_required, current_user
-from app.models import db, Cart, Order, OrderItem
+from app.models import db, ShoppingCart, Order, OrderItem
 from datetime import datetime
 
 order_routes = Blueprint('orders', __name__)
@@ -62,7 +62,7 @@ def checkout():
     """
     Performs a transaction to complete the purchase
     """
-    cart_items = Cart.query.filter_by(user_id = current_user.id).all()
+    cart_items = ShoppingCart.query.filter_by(user_id = current_user.id).all()
     if not cart_items:
         return {'error': 'No items in the cart'}
     

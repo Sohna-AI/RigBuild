@@ -1,0 +1,8 @@
+.category-selector {
+  background-color: lightsteelblue;
+  border: none;
+  border-radius: 20px;
+  padding: 5px;
+  cursor: pointer;
+  transition: 400ms;
+}

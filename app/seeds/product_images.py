@@ -132,6 +132,34 @@ def seed_product_images():
         {
             'product_id': 32,
             'image_url': 'https://rigbuild-productimages.s3.us-east-2.amazonaws.com/Acer-Predator-X34.jpg',
+        },
+        {
+            'product_id': 33,
+            'image_url': 'https://rigbuild-productimages.s3.us-east-2.amazonaws.com/Corsair+CX450.jpg',
+        },
+        {
+            'product_id': 34,
+            'image_url': 'https://rigbuild-productimages.s3.us-east-2.amazonaws.com/EVGA+500W1.jpg',
+        },
+        {
+            'product_id': 35,
+            'image_url': 'https://rigbuild-productimages.s3.us-east-2.amazonaws.com/Thermaltake+Smart+600W.webp',
+        },
+        {
+            'product_id': 36,
+            'image_url': 'https://rigbuild-productimages.s3.us-east-2.amazonaws.com/Cooler+Master+MWE+650W.jpg',
+        },
+        {
+            'product_id': 37,
+            'image_url': 'https://rigbuild-productimages.s3.us-east-2.amazonaws.com/Seasonic+S12III+500+SSR-500GB3.webp',
+        },
+        {
+            'product_id': 38,
+            'image_url': 'https://rigbuild-productimages.s3.us-east-2.amazonaws.com/Corsair+RM850X.jpg',
+        },
+        {
+            'product_id': 39,
+            'image_url': 'https://rigbuild-productimages.s3.us-east-2.amazonaws.com/EVGA+SuperNOVA+850+G5.png',
         }
     ]
     

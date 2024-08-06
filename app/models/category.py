@@ -13,13 +13,14 @@ class Category(db.Model):
     created_at = db.Column(db.DateTime, default=func.now())
     updated_at = db.Column(db.DateTime, default=func.now())
     
-    product = db.relationship('Product', back_populates='category')
+    products = db.relationship('Product', back_populates='category')
     
     def to_dict(self):
         return {
             'id': self.id,
             'name': self.name,
             'description': self.description,
+            'products': [product.to_dict() for product in self.products],
             'created_at': self.created_at,
             'updated_at': self.updated_at
         }

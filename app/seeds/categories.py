@@ -37,7 +37,11 @@ def seed_categories():
         {
             'name': 'Monitor',
             'description': 'Monitors are used to display the visual output from the computer',
-        }
+        },
+        {
+            'name': 'Power Supply Unit (PSU)',
+            'description': 'crucial component in a computer system that regulates the flow of power to various components, such as the CPU, memory, and storage devices.'
+        },
     ]
 
     for catagories_data in categories:

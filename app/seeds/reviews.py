@@ -12,7 +12,7 @@ def seed_reviews():
             "review": "Review for product 1"
         },
         {
-            "user_id": 7,
+            "user_id": 2,
             "product_id": 1,
             "rating": 4,
             "review": "Review for product 1"
@@ -24,7 +24,7 @@ def seed_reviews():
             "review": "Review for product 1"
         },
         {
-            "user_id": 11,
+            "user_id": 1,
             "product_id": 1,
             "rating": 1,
             "review": "Review for product 1"
@@ -36,61 +36,61 @@ def seed_reviews():
             "review": "Review for product 1"
         },
         {
-            "user_id": 11,
+            "user_id": 3,
             "product_id": 2,
             "rating": 5,
             "review": "Review for product 2"
         },
         {
-            "user_id": 6,
+            "user_id": 2,
             "product_id": 2,
             "rating": 5,
             "review": "Review for product 2"
         },
         {
-            "user_id": 14,
+            "user_id": 1,
             "product_id": 2,
             "rating": 2,
             "review": "Review for product 2"
         },
         {
-            "user_id": 15,
+            "user_id": 2,
             "product_id": 2,
             "rating": 1,
             "review": "Review for product 2"
         },
         {
-            "user_id": 5,
+            "user_id": 3,
             "product_id": 2,
             "rating": 4,
             "review": "Review for product 2"
         },
         {
-            "user_id": 10,
+            "user_id": 2,
             "product_id": 3,
             "rating": 5,
             "review": "Review for product 3"
         },
         {
-            "user_id": 4,
+            "user_id": 2,
             "product_id": 3,
             "rating": 5,
             "review": "Review for product 3"
         },
         {
-            "user_id": 6,
+            "user_id": 3,
             "product_id": 3,
             "rating": 2,
             "review": "Review for product 3"
         },
         {
-            "user_id": 12,
+            "user_id": 2,
             "product_id": 3,
             "rating": 1,
             "review": "Review for product 3"
         },
         {
-            "user_id": 15,
+            "user_id": 2,
             "product_id": 3,
             "rating": 2,
             "review": "Review for product 3"
@@ -102,31 +102,31 @@ def seed_reviews():
             "review": "Review for product 4"
         },
         {
-            "user_id": 15,
+            "user_id": 3,
             "product_id": 4,
             "rating": 3,
             "review": "Review for product 4"
         },
         {
-            "user_id": 9,
+            "user_id": 1,
             "product_id": 4,
             "rating": 3,
             "review": "Review for product 4"
         },
         {
-            "user_id": 5,
+            "user_id": 2,
             "product_id": 4,
             "rating": 5,
             "review": "Review for product 4"
         },
         {
-            "user_id": 8,
+            "user_id": 3,
             "product_id": 4,
             "rating": 4,
             "review": "Review for product 4"
         },
         {
-            "user_id": 8,
+            "user_id": 2,
             "product_id": 5,
             "rating": 5,
             "review": "Review for product 5"
@@ -138,109 +138,109 @@ def seed_reviews():
             "review": "Review for product 5"
         },
         {
-            "user_id": 14,
+            "user_id": 2,
             "product_id": 5,
             "rating": 3,
+            "review": "Review for product 5"
+        },
+        {
+            "user_id": 1,
+            "product_id": 5,
+            "rating": 2,
             "review": "Review for product 5"
         },
         {
             "user_id": 3,
             "product_id": 5,
-            "rating": 2,
-            "review": "Review for product 5"
-        },
-        {
-            "user_id": 5,
-            "product_id": 5,
             "rating": 1,
             "review": "Review for product 5"
         },
         {
-            "user_id": 12,
+            "user_id": 1,
             "product_id": 6,
             "rating": 1,
             "review": "Review for product 6"
         },
         {
-            "user_id": 11,
+            "user_id": 2,
             "product_id": 6,
             "rating": 3,
             "review": "Review for product 6"
         },
         {
-            "user_id": 7,
+            "user_id": 3,
             "product_id": 6,
             "rating": 3,
             "review": "Review for product 6"
         },
         {
-            "user_id": 9,
+            "user_id": 2,
             "product_id": 6,
             "rating": 5,
             "review": "Review for product 6"
         },
         {
-            "user_id": 7,
+            "user_id": 1,
             "product_id": 6,
             "rating": 3,
             "review": "Review for product 6"
         },
         {
-            "user_id": 12,
+            "user_id": 2,
             "product_id": 7,
             "rating": 5,
             "review": "Review for product 7"
         },
         {
-            "user_id": 15,
+            "user_id": 3,
             "product_id": 7,
             "rating": 3,
             "review": "Review for product 7"
         },
         {
-            "user_id": 7,
+            "user_id": 2,
             "product_id": 7,
             "rating": 5,
             "review": "Review for product 7"
         },
         {
-            "user_id": 8,
+            "user_id": 1,
             "product_id": 7,
             "rating": 1,
             "review": "Review for product 7"
         },
         {
-            "user_id": 9,
+            "user_id": 2,
             "product_id": 7,
             "rating": 2,
             "review": "Review for product 7"
         },
         {
-            "user_id": 10,
+            "user_id": 3,
             "product_id": 8,
             "rating": 4,
             "review": "Review for product 8"
         },
         {
-            "user_id": 15,
+            "user_id": 2,
             "product_id": 8,
             "rating": 3,
             "review": "Review for product 8"
         },
         {
-            "user_id": 12,
+            "user_id": 1,
             "product_id": 8,
             "rating": 1,
             "review": "Review for product 8"
         },
         {
-            "user_id": 6,
+            "user_id": 2,
             "product_id": 8,
             "rating": 1,
             "review": "Review for product 8"
         },
         {
-            "user_id": 10,
+            "user_id": 3,
             "product_id": 8,
             "rating": 4,
             "review": "Review for product 8"
@@ -258,25 +258,25 @@ def seed_reviews():
             "review": "Review for product 9"
         },
         {
-            "user_id": 4,
+            "user_id": 1,
             "product_id": 9,
             "rating": 2,
             "review": "Review for product 9"
         },
         {
-            "user_id": 13,
+            "user_id": 2,
             "product_id": 9,
             "rating": 4,
             "review": "Review for product 9"
         },
         {
-            "user_id": 10,
+            "user_id": 3,
             "product_id": 9,
             "rating": 5,
             "review": "Review for product 9"
         },
         {
-            "user_id": 6,
+            "user_id": 2,
             "product_id": 10,
             "rating": 3,
             "review": "Review for product 10"
@@ -288,25 +288,25 @@ def seed_reviews():
             "review": "Review for product 10"
         },
         {
-            "user_id": 13,
+            "user_id": 1,
             "product_id": 10,
             "rating": 5,
             "review": "Review for product 10"
         },
         {
-            "user_id": 6,
+            "user_id": 2,
             "product_id": 10,
             "rating": 1,
             "review": "Review for product 10"
         },
         {
-            "user_id": 12,
+            "user_id": 1,
             "product_id": 10,
             "rating": 2,
             "review": "Review for product 10"
         },
         {
-            "user_id": 7,
+            "user_id": 3,
             "product_id": 11,
             "rating": 3,
             "review": "Review for product 11"
@@ -318,103 +318,103 @@ def seed_reviews():
             "review": "Review for product 11"
         },
         {
-            "user_id": 10,
+            "user_id": 1,
             "product_id": 12,
             "rating": 2,
             "review": "Review for product 12"
         },
         {
-            "user_id": 11,
+            "user_id": 1,
             "product_id": 12,
             "rating": 2,
             "review": "Review for product 12"
         },
         {
-            "user_id": 6,
+            "user_id": 2,
             "product_id": 13,
             "rating": 3,
             "review": "Review for product 13"
         },
         {
-            "user_id": 6,
+            "user_id": 3,
             "product_id": 13,
             "rating": 2,
             "review": "Review for product 13"
         },
         {
-            "user_id": 10,
+            "user_id": 2,
             "product_id": 14,
             "rating": 5,
             "review": "Review for product 14"
         },
         {
-            "user_id": 8,
+            "user_id": 1,
             "product_id": 14,
             "rating": 5,
             "review": "Review for product 14"
         },
         {
-            "user_id": 13,
+            "user_id": 2,
             "product_id": 15,
             "rating": 5,
             "review": "Review for product 15"
         },
         {
-            "user_id": 10,
+            "user_id": 3,
             "product_id": 15,
             "rating": 4,
             "review": "Review for product 15"
         },
         {
-            "user_id": 4,
+            "user_id": 3,
             "product_id": 16,
             "rating": 5,
             "review": "Review for product 16"
         },
         {
-            "user_id": 8,
+            "user_id": 1,
             "product_id": 16,
             "rating": 1,
             "review": "Review for product 16"
         },
         {
-            "user_id": 10,
+            "user_id": 1,
             "product_id": 17,
             "rating": 4,
+            "review": "Review for product 17"
+        },
+        {
+            "user_id": 3,
+            "product_id": 17,
+            "rating": 1,
             "review": "Review for product 17"
         },
         {
             "user_id": 2,
-            "product_id": 17,
-            "rating": 1,
-            "review": "Review for product 17"
-        },
-        {
-            "user_id": 8,
             "product_id": 18,
             "rating": 3,
             "review": "Review for product 18"
         },
         {
-            "user_id": 12,
+            "user_id": 1,
             "product_id": 18,
             "rating": 4,
             "review": "Review for product 18"
         },
         {
-            "user_id": 7,
+            "user_id": 3,
             "product_id": 19,
             "rating": 4,
             "review": "Review for product 19"
         },
         {
-            "user_id": 14,
+            "user_id": 1,
             "product_id": 19,
             "rating": 5,
             "review": "Review for product 19"
         },
         {
-            "user_id": 5,
+            "user_id": 2,
             "product_id": 20,
             "rating": 4,
             "review": "Review for product 20"
@@ -426,73 +426,73 @@ def seed_reviews():
             "review": "Review for product 20"
         },
         {
-            "user_id": 5,
+            "user_id": 3,
             "product_id": 21,
             "rating": 2,
             "review": "Review for product 21"
         },
         {
-            "user_id": 7,
+            "user_id": 2,
             "product_id": 22,
             "rating": 5,
             "review": "Review for product 22"
         },
         {
-            "user_id": 10,
+            "user_id": 1,
             "product_id": 23,
             "rating": 1,
             "review": "Review for product 23"
         },
         {
-            "user_id": 14,
+            "user_id": 2,
             "product_id": 23,
             "rating": 2,
             "review": "Review for product 23"
         },
         {
-            "user_id": 7,
+            "user_id": 3,
             "product_id": 24,
             "rating": 2,
             "review": "Review for product 24"
         },
         {
-            "user_id": 9,
+            "user_id": 1,
             "product_id": 24,
             "rating": 4,
             "review": "Review for product 24"
         },
         {
-            "user_id": 7,
+            "user_id": 2,
             "product_id": 24,
             "rating": 4,
             "review": "Review for product 24"
         },
         {
-            "user_id": 10,
+            "user_id": 3,
             "product_id": 25,
             "rating": 2,
             "review": "Review for product 25"
         },
         {
-            "user_id": 7,
+            "user_id": 2,
             "product_id": 26,
             "rating": 4,
             "review": "Review for product 26"
         },
         {
-            "user_id": 15,
+            "user_id": 1,
             "product_id": 26,
             "rating": 3,
             "review": "Review for product 26"
         },
         {
-            "user_id": 15,
+            "user_id": 2,
             "product_id": 26,
             "rating": 2,
             "review": "Review for product 26"
         },
         {
-            "user_id": 8,
+            "user_id": 1,
             "product_id": 27,
             "rating": 3,
             "review": "Review for product 27"
@@ -504,13 +504,13 @@ def seed_reviews():
             "review": "Review for product 27"
         },
         {
-            "user_id": 13,
+            "user_id": 1,
             "product_id": 28,
             "rating": 5,
             "review": "Review for product 28"
         },
         {
-            "user_id": 12,
+            "user_id": 1,
             "product_id": 28,
             "rating": 5,
             "review": "Review for product 28"
@@ -522,31 +522,31 @@ def seed_reviews():
             "review": "Review for product 29"
         },
         {
-            "user_id": 14,
+            "user_id": 2,
             "product_id": 29,
             "rating": 3,
             "review": "Review for product 29"
         },
         {
-            "user_id": 11,
+            "user_id": 2,
             "product_id": 30,
             "rating": 5,
             "review": "Review for product 30"
         },
         {
-            "user_id": 12,
+            "user_id": 2,
             "product_id": 30,
             "rating": 4,
             "review": "Review for product 30"
         },
         {
-            "user_id": 15,
+            "user_id": 3,
             "product_id": 30,
             "rating": 3,
             "review": "Review for product 30"
         },
         {
-            "user_id": 8,
+            "user_id": 3,
             "product_id": 31,
             "rating": 1,
             "review": "Review for product 31"
@@ -558,25 +558,25 @@ def seed_reviews():
             "review": "Review for product 31"
         },
         {
-            "user_id": 15,
+            "user_id": 1,
             "product_id": 31,
             "rating": 3,
             "review": "Review for product 31"
         },
         {
-            "user_id": 6,
+            "user_id": 2,
             "product_id": 32,
             "rating": 4,
             "review": "Review for product 32"
         },
         {
-            "user_id": 1,
+            "user_id": 3,
             "product_id": 32,
             "rating": 2,
             "review": "Review for product 32"
         },
         {
-            "user_id": 12,
+            "user_id": 3,
             "product_id": 32,
             "rating": 1,
             "review": "Review for product 32"
