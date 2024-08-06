@@ -18,6 +18,13 @@ class User(db.Model, UserMixin):
     hashed_password = db.Column(db.String(255), nullable=False)
     created_at = db.Column(db.DateTime, default=func.now())
     updated_at = db.Column(db.DateTime, default=func.now())
+    
+    products = db.relationship('Product', back_populates='user', cascade='all, delete-orphan')
+    shopping_carts = db.relationship('ShoppingCart', back_populates='user', cascade='all, delete-orphan')
+    wishlist = db.relationship('Wishlist', back_populates='user', cascade='all, delete-orphan')
+    orders = db.relationship('Order', back_populates='user', cascade='all, delete-orphan')
+    reviews = db.relationship('Review', back_populates='user', cascade='all, delete-orphan')
+    addresses = db.relationship('Address', back_populates='user', cascade='all, delete-orphan')
 
     @property
     def password(self):
