@@ -3,6 +3,9 @@
     'Open Sans', 'Helvetica Neue', sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  display: flex;
+  flex-direction: column;
+  gap: 50px;
 }
 
 .product-details-page {
@@ -12,10 +15,11 @@
   margin: 0 auto;
 }
 .product-detail-image {
-  width: 500px;
-  height: 500px;
+  width: 490px;
+  height: 490px;
   border: 1px solid black;
   border-radius: 10px;
+  padding: 10px;
 }
 
 .product-details-page-container {
@@ -209,4 +213,88 @@
   display: flex;
   flex-direction: row-reverse;
   gap: 100px;
+}
+
+.product-details-reviews-products-container {
+  display: flex;
+  justify-content: center;
+  margin: 0 auto;
+  max-width: 1200px;
+  width: 100%;
+  gap: 70px;
+}
+.product-details-review-card-container {
+  display: flex;
+  flex-wrap: wrap;
+  width: 100%;
+  height: 100%;
+  gap: 30px;
+  padding: 10px;
+}
+
+.product-details-reviews-header {
+  display: flex;
+  justify-content: center;
+}
+.product-details-review-card {
+  width: 100%;
+  height: 100%;
+  padding-right: 50px;
+}
+.product-details-reviews-container {
+  display: flex;
+  flex-direction: column;
+  height: fit-content;
+  max-width: 600px;
+  width: 100%;
+}
+
+.show-more-reviews-button-container,
+.show-less-reviews-button-container {
+  display: flex;
+  justify-content: center;
+}
+
+.show-more-reviews-button,
+.show-less-reviews-button {
+  width: 150px;
+  height: 30px;
+  background-color: lightskyblue;
+  border: 1px solid transparent;
+  box-shadow: 0px 0px 4px 0.1px black;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.show-more-reviews-button:hover,
+.show-less-reviews-button:hover {
+  background-color: lightsteelblue;
+}
+
+.product-details-other-products-container {
+  display: flex;
+  flex-direction: column;
+  max-width: 600px;
+  width: 100%;
+}
+
+.product-details-other-products-list-container {
+  display: flex;
+  flex-direction: row;
+  align-items: start;
+  gap: 10px;
+  height: fit-content;
+}
+
+.product-details-other-products {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+  cursor: pointer;
+}
+
+.product-details-page-footer-container {
+  margin-top: 0 auto;
 }

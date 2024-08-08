@@ -8,6 +8,14 @@ from app.api.aws_s3 import upload_file_to_s3, get_unique_filename, remove_file_f
 
 product_image_routes = Blueprint('product-images', __name__)
 
+@product_image_routes.route('/', methods=['GET'])
+def get_all_product_images():
+    """
+    Query to return all product images in list
+    """
+    product_images = ProductImage.query.all()
+    return {'productImages': [product_image.to_dict() for product_image in product_images]}
+
 @product_image_routes.route('/<int:product_image_id>', methods=['PUT'])
 @login_required
 def edit_product_image(product_image_id):

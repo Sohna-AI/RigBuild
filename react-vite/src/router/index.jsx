@@ -5,6 +5,7 @@ import Layout from './Layout';
 import ProductsPage from '../components/ProductsPage/ProductsPage';
 import LandingPage from '../components/LandingPage/LandingPage';
 import ProductDetails from '../components/ProductDetailsPage/ProductDetails.jsx';
+import NewProductForm from '../components/NewProductForm/NewProductForm.jsx';
 
 export const router = createBrowserRouter([
   {
@@ -27,6 +28,10 @@ export const router = createBrowserRouter([
               {
                 path: '',
                 element: <ProductDetails />,
+              },
+              {
+                path: 'edit',
+                element: <NewProductForm edit={true} />,
               },
             ],
           },

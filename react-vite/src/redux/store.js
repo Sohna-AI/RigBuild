@@ -6,10 +6,12 @@ import categoriesReducer from './categories';
 import userReducer from './users';
 import wishlistReducer from './wishlist';
 import reviewsReducer from './reviews';
+import productImagesReducer from './productImages';
 
 const rootReducer = combineReducers({
   session: sessionReducer,
   products: productsReducer,
+  product_images: productImagesReducer,
   reviews: reviewsReducer,
   wishlist: wishlistReducer,
   categories: categoriesReducer,

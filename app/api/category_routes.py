@@ -12,7 +12,7 @@ def categories():
     categories = Category.query.all()
     return {'categories': [category.to_dict() for category in categories]}
 
-@category_routes.route('/<int:category_id>/products')
+@category_routes.route('/<int:category_id>')
 def products_in_category(category_id):
     """
     Query for a list of products in specific category
