@@ -226,6 +226,12 @@
   right: 0;
 }
 
+.login-button li,
+.signup-button li {
+  position: relative;
+  padding: 0.8em 1.4em;
+  z-index: 1;
+}
 .github-button {
   display: flex;
   justify-content: center;

@@ -39,6 +39,9 @@ ul {
   max-width: 190px;
 }
 
+.short-logo-container {
+  cursor: pointer;
+}
 .search-bar-input {
   width: 100%;
   height: 40px;

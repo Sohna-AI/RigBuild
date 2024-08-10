@@ -215,6 +215,14 @@
   gap: 100px;
 }
 
+.product-details-reviews-post-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 30px;
+  width: 400px;
+}
+
 .product-details-reviews-products-container {
   display: flex;
   justify-content: center;
@@ -297,4 +305,20 @@
 
 .product-details-page-footer-container {
   margin-top: 0 auto;
+}
+
+.review-this-product-button {
+  display: flex;
+  border: none;
+  padding: 1em 2em;
+  border-radius: 8px;
+  font-weight: 700;
+  letter-spacing: 1px;
+  cursor: pointer;
+  transition: all 300ms;
+}
+
+.review-this-product-button:hover {
+  background-color: lightyellow;
+  transition: all 300ms;
 }

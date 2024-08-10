@@ -6,6 +6,30 @@ from sqlalchemy.sql import text
 def seed_reviews():
     reviews = [
         {
+        "user_id": 1,
+        "product_id": 5,
+        "rating": 5,
+        "review": "High-performance CPU for gaming and productivity. Handles multitasking with ease."
+        },
+        {
+        "user_id": 1,
+        "product_id": 21,
+        "rating": 3,
+        "review": "Very compact CPU cooler. Runs a bit loud during demanding games. "
+        },
+        {
+        "user_id": 1,
+        "product_id": 36,
+        "rating": 4,
+        "review": "Very nice and powerful PSU, came with all the necessary cables. Very good for mid-end gaming."
+        },
+        {
+        "user_id": 1,
+        "product_id": 28,
+        "rating": 5,
+        "review": "Awesome case for the price. The airflow is great thorughout the case."
+        },
+        {
         "user_id": 2,
         "product_id": 1,
         "rating": 5,

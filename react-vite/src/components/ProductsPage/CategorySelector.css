@@ -5,4 +5,5 @@
   padding: 5px;
   cursor: pointer;
   transition: 400ms;
+  outline: none;
 }

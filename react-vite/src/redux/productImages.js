@@ -37,9 +37,9 @@ export const getProductImages = () => async (dispatch) => {
 
 export const addNewProductImage = (productId, image) => async (dispatch) => {
   const formData = new FormData();
-  formData.append('imge', image);
+  formData.append('image', image);
 
-  const res = await fetch(`/api/products/${productId}/product_images`, {
+  const res = await fetch(`/api/products/${productId}/product-images`, {
     method: 'POST',
     body: formData,
   });
@@ -62,6 +62,7 @@ export const editProductImageById = (productImageId, image) => async (dispatch) 
   if (res.ok) {
     const productImage = await res.json();
     dispatch(editProductImage(productImage));
+    return productImage;
   }
 };
 
@@ -102,9 +103,9 @@ const productImagesReducer = (state = structuredClone(initialState), action) => 
     }
     case ADD_PRODUCT_IMAGE: {
       const newState = structuredClone(state);
-      newState.product_images[action.productImage.id] = action.productImage;
-      if (!newState.allIds.indexOf(action.productImage.id) < 0) {
-        newState.allIds.push(action.productImage.id);
+      newState.product_images[action.product_image.id] = action.product_image;
+      if (!newState.allIds.indexOf(action.product_image.id) < 0) {
+        newState.allIds.push(action.product_image.id);
       }
       return newState;
     }

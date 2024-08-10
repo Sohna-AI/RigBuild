@@ -1,4 +1,4 @@
-import { NavLink } from 'react-router-dom';
+import { NavLink, useNavigate } from 'react-router-dom';
 import { AiOutlineShoppingCart } from 'react-icons/ai';
 import { useState, useEffect } from 'react';
 import ProfileButton from './ProfileButton';
@@ -8,6 +8,7 @@ import { useSelector } from 'react-redux';
 function Navigation({ isLoaded }) {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const sessionUser = useSelector((state) => state.session.user);
+  const navigate = useNavigate();
 
   useEffect(() => {
     if (sessionUser === null) {
@@ -15,14 +16,16 @@ function Navigation({ isLoaded }) {
     } else setIsLoggedIn(true);
   }, [sessionUser]);
 
+  const handleClick = () => {
+    if (sessionUser) navigate('/products');
+    else navigate('/');
+  };
   return (
     <ul className="">
       <li className="short-logo-container">
-        <NavLink to="/">
-          <div className="short-logo-container">
-            <img src="../../../public/short-logo-light-mode.png" className="short-logo" />
-          </div>
-        </NavLink>
+        <div className="short-logo-container" onClick={handleClick}>
+          <img src="../../../public/short-logo-light-mode.png" className="short-logo" />
+        </div>
       </li>
       <li>
         <div className="search-bar-container">
@@ -37,7 +40,9 @@ function Navigation({ isLoaded }) {
 
       {isLoggedIn && isLoaded && (
         <li className="profile-cart-container">
-          <button className='sell-product-button'>Sell your Product</button>
+          <NavLink to="/products/new">
+            <button className="sell-product-button">Sell your Product</button>
+          </NavLink>
           <AiOutlineShoppingCart className="cart" />
           <ProfileButton user={sessionUser} />
         </li>

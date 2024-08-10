@@ -26,11 +26,10 @@ export const getCategories = () => async (dispatch) => {
 
 export const getProductsByCategory = (categoryId) => async (dispatch) => {
   const res = await fetch(`/api/category/${categoryId}`);
-
   if (res.ok) {
-    const list = await res.json();
-    dispatch(setProductsByCategory(categoryId, list));
-    return list;
+    const products = await res.json();
+    dispatch(setProductsByCategory(categoryId, products));
+    return products;
   }
 };
 

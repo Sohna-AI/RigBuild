@@ -2,16 +2,36 @@ import { useDispatch, useSelector } from 'react-redux';
 import * as categoryActions from '../../redux/categories';
 import { NavLink } from 'react-router-dom';
 import './LandingPage.css';
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useRef } from 'react';
+import OpenModalMenuItem from '../Navigation/OpenModalMenuItem';
+import LoginFormModal from '../LoginFormModal/LoginFormModal';
+import SignupFormModal from '../SignupFormModal';
 
 const LandingPage = () => {
   const dispatch = useDispatch();
   const [isLoaded, setIsLoaded] = useState(false);
+  const ulRef = useRef();
+  const [showMenu, setShowMenu] = useState(false);
   const categories = useSelector(categoryActions.selectCategories);
 
   useEffect(() => {
     dispatch(categoryActions.getCategories()).then(() => setIsLoaded(true));
   }, [dispatch]);
+
+  const closeMenu = () => setShowMenu(false);
+  useEffect(() => {
+    if (!showMenu) return;
+
+    const closeMenu = (e) => {
+      if (!ulRef.current.contains(e.target)) {
+        setShowMenu(false);
+      }
+    };
+
+    document.addEventListener('click', closeMenu);
+
+    return () => document.removeEventListener('click', closeMenu);
+  }, [showMenu]);
   return (
     <>
       <div className="landing-page-container">
@@ -26,7 +46,7 @@ const LandingPage = () => {
             <ul className="list-of-categories">
               {isLoaded &&
                 categories.map((category) => (
-                  <li key={category.id} className='category'>
+                  <li key={category.id} className="category">
                     <span className="category-name">{category.name}</span>: {category.description}
                   </li>
                 ))}
@@ -48,22 +68,38 @@ const LandingPage = () => {
               </button>
             </NavLink>
             <div className="login-signup-buttons-container">
-              <NavLink to="/login" className="login-button-container">
-                <button className="login-button" id="user-button">
-                  Login
-                  <div className="arrow-wrapper">
-                    <div className="arrow"></div>
-                  </div>
-                </button>
-              </NavLink>
-              <NavLink to="/signup" className="signup-button-container">
-                <button id="user-button">
-                  Signup
-                  <div className="arrow-wrapper">
-                    <div className="arrow"></div>
-                  </div>
-                </button>
-              </NavLink>
+              <div>
+                <OpenModalMenuItem
+                  itemText={
+                    <>
+                      <button className="login-button" id="user-button">
+                        Login
+                        <div className="arrow-wrapper">
+                          <div className="arrow"></div>
+                        </div>
+                      </button>{' '}
+                    </>
+                  }
+                  modalComponent={<LoginFormModal />}
+                  onItemClick={closeMenu}
+                />
+              </div>
+              <div>
+                <OpenModalMenuItem
+                  itemText={
+                    <>
+                      <button className="signup-button" id="user-button">
+                        Signup
+                        <div className="arrow-wrapper">
+                          <div className="arrow"></div>
+                        </div>
+                      </button>{' '}
+                    </>
+                  }
+                  modalComponent={<SignupFormModal />}
+                  onItemClick={closeMenu}
+                />
+              </div>
             </div>
           </div>
           <div className="social-links">

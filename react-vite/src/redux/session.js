@@ -64,6 +64,29 @@ export const thunkLogout = () => async (dispatch) => {
   dispatch(removeUser());
 };
 
+export const loginAsDemoUser = () => async (dispatch) => {
+  const demoCreds = {
+    email: 'demo@aa.io',
+    password: 'password',
+  };
+
+  const res = await fetch('/api/auth/login', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(demoCreds),
+  });
+
+  if (res.ok) {
+    const data = await res.json();
+    dispatch(setUser(data));
+  } else if (res.status < 500) {
+    const errorMessages = await res.json();
+    return errorMessages;
+  } else {
+    return { server: 'Something went wrong. Please try again' };
+  }
+};
+
 const initialState = { user: null };
 
 function sessionReducer(state = initialState, action) {

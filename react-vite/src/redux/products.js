@@ -1,6 +1,6 @@
 import { createSelector } from '@reduxjs/toolkit';
 import { getUserWishlist } from './wishlist';
-import { addProductImage } from './productImages';
+import { addNewProductImage, addProductImage } from './productImages';
 
 const ADD_PRODUCT = 'products/addProduct';
 const EDIT_PRODUCT = 'products/editProduct';
@@ -46,7 +46,8 @@ const removeProductFromWishlist = (productId) => ({
 });
 
 export const addNewProduct = (product, image) => async (dispatch) => {
-  const res = await fetch('/api/products', {
+  console.log(product);
+  const res = await fetch('/api/products/', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify(product),
@@ -55,20 +56,7 @@ export const addNewProduct = (product, image) => async (dispatch) => {
   if (res.ok) {
     const product = await res.json();
     dispatch(addProduct(product));
-
-    const formData = new FormData();
-    formData.append('image', image);
-
-    const imageRes = await fetch(`/api/products/${product.id}/product-images`, {
-      method: 'POST',
-      body: formData,
-    });
-
-    if (imageRes.ok) {
-      const image = await imageRes.json();
-      dispatch(addProductImage(image));
-      return product;
-    }
+    return product;
   }
 };
 
@@ -78,6 +66,12 @@ export const editProductById = (productId, data) => async (dispatch) => {
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify(data),
   });
+
+  if (res.ok) {
+    const product = await res.json();
+    dispatch(editProduct(product));
+    return product;
+  }
 };
 
 export const getProducts = () => async (dispatch) => {
@@ -136,6 +130,19 @@ const initialState = {
 
 const productsReducer = (state = structuredClone(initialState), action) => {
   switch (action.type) {
+    case ADD_PRODUCT: {
+      const newState = structuredClone(state);
+      newState.products[action.product.id] = structuredClone(action.product);
+      if (newState.allIds.indexOf(action.product.id) < 0) {
+        newState.allIds.push(action.product.id);
+      }
+      return newState;
+    }
+    case EDIT_PRODUCT: {
+      const newState = structuredClone(state);
+      newState.products[action.product.id] = structuredClone(action.product);
+      return newState;
+    }
     case SET_PRODUCTS: {
       const newState = structuredClone(state);
       action.products.products.forEach((product) => {
@@ -150,6 +157,12 @@ const productsReducer = (state = structuredClone(initialState), action) => {
       if (newState.allIds.indexOf(action.product.id) < 0) {
         newState.allIds.push(action.product.id);
       }
+      return newState;
+    }
+    case DELETE_PRODUCT: {
+      const newState = structuredClone(state);
+      delete newState.products[action.productId];
+      newState.allIds = newState.allIds.filter((id) => id !== action.productId);
       return newState;
     }
     default:

@@ -1,7 +1,8 @@
-import { useState } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { useModal } from '../../context/Modal';
 import { thunkSignup } from '../../redux/session';
+import LoginFormModal from '../LoginFormModal/LoginFormModal';
 import './SignupForm.css';
 
 function SignupFormModal() {
@@ -13,14 +14,17 @@ function SignupFormModal() {
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
   const [errors, setErrors] = useState({});
-  const { closeModal } = useModal();
+  const [showMenu, setShowMenu] = useState(false);
+  const [transitioning, setTransitioning] = useState(false);
+  const { closeModal, setModalContent } = useModal();
+  const ulRef = useRef();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
     if (password !== confirmPassword) {
       return setErrors({
-        confirmPassword: 'Confirm Password field must be the same as the Password field',
+        confirmPassword: 'Passwords do not match',
       });
     }
 
@@ -41,48 +45,108 @@ function SignupFormModal() {
     }
   };
 
+  const closeMenu = () => setShowMenu(false);
+  useEffect(() => {
+    if (!showMenu) return;
+
+    const closeMenu = (e) => {
+      if (!ulRef.current.contains(e.target)) {
+        setShowMenu(false);
+      }
+    };
+
+    document.addEventListener('click', closeMenu);
+
+    return () => document.removeEventListener('click', closeMenu);
+  }, [showMenu]);
+
+  const handleLoginClick = () => {
+    setErrors({});
+    setTransitioning(true);
+    setTimeout(() => {
+      setModalContent(<LoginFormModal />);
+      setTransitioning(false);
+    }, 300);
+  };
+
   return (
     <>
-      <h1>Sign Up</h1>
-      {errors.server && <p>{errors.server}</p>}
-      <form onSubmit={handleSubmit}>
-        <label>
-          Email
-          <input type="text" value={email} onChange={(e) => setEmail(e.target.value)} required />
-        </label>
-        {errors.email && <p>{errors.email}</p>}
-        <label>
-          Username
-          <input type="text" value={username} onChange={(e) => setUsername(e.target.value)} required />
-        </label>
-        {errors.username && <p>{errors.username}</p>}
-        <label>
-          First Name
-          <input type="text" value={firstName} onChange={(e) => setFirstName(e.target.value)} required />
-        </label>
-        {errors.firstName && <p>{errors.firstName}</p>}
-        <label>
-          Last Name
-          <input type="text" value={lastName} onChange={(e) => setLastName(e.target.value)} required />
-        </label>
-        {errors.lastName && <p>{errors.lastName}</p>}
-        <label>
-          Password
-          <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} required />
-        </label>
-        {errors.password && <p>{errors.password}</p>}
-        <label>
-          Confirm Password
-          <input
-            type="password"
-            value={confirmPassword}
-            onChange={(e) => setConfirmPassword(e.target.value)}
-            required
-          />
-        </label>
-        {errors.confirmPassword && <p>{errors.confirmPassword}</p>}
-        <button type="submit">Sign Up</button>
-      </form>
+      <div className={`signup-form-headers-input-container ${transitioning ? 'fade-out' : ''}`}>
+        <div className="signup-form-headers-container">
+          <div>
+            <img src="../../../public/short-logo-light-mode.svg" className="signup-form-short-logo" />
+          </div>
+          <p className="signup-form-header-subtext">
+            Find all the parts you need for your new RIG whether it is for work, school or just kicking back
+            to game
+          </p>
+        </div>
+        {!transitioning && errors.server && <p className="signup-error">{errors.server}</p>}
+        <form onSubmit={handleSubmit} className="signup-form-input-container">
+          <h1>Create your account</h1>
+          <label className="label-input-group">
+            <div className="signup-form-label-error">
+              Email
+              {!transitioning && errors.email && <span className="signup-error">{errors.email}</span>}
+            </div>
+            <input type="text" value={email} onChange={(e) => setEmail(e.target.value)} />
+          </label>
+          <label className="label-input-group">
+            <div className="signup-form-label-error">
+              Username
+              {!transitioning && errors.username && <span className="signup-error">{errors.username}</span>}
+            </div>
+            <input type="text" value={username} onChange={(e) => setUsername(e.target.value)} />
+          </label>
+          <label className="label-input-group">
+            <div className="signup-form-label-error">
+              First Name
+              {!transitioning && errors.first_name && (
+                <span className="signup-error">{errors.first_name}</span>
+              )}
+            </div>
+            <input type="text" value={firstName} onChange={(e) => setFirstName(e.target.value)} />
+          </label>
+          <label className="label-input-group">
+            <div className="signup-form-label-error">
+              Last Name
+              {!transitioning && errors.last_name && <span className="signup-error">{errors.last_name}</span>}
+            </div>
+            <input type="text" value={lastName} onChange={(e) => setLastName(e.target.value)} />
+          </label>
+          <label className="label-input-group">
+            <div className="signup-form-label-error">
+              Password
+              {!transitioning && errors.password && <span className="signup-error">{errors.password}</span>}
+            </div>
+            <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} />
+          </label>
+          <label className="label-input-group">
+            <div className="signup-form-label-error">
+              Confirm Password
+              {!transitioning && errors.confirmPassword && (
+                <span className="signup-error">{errors.confirmPassword}</span>
+              )}
+            </div>
+            <input
+              type="password"
+              value={confirmPassword}
+              onChange={(e) => setConfirmPassword(e.target.value)}
+            />
+          </label>
+          <div className="signup-form-signup-button-container">
+            <button type="submit" className="signup-form-signup-button">
+              Sign Up
+            </button>
+          </div>
+          <div className="signup-form-existing-container">
+            <div>Already have an account?</div>
+            <button className="signup-form-login-button" onClick={handleLoginClick}>
+              Login
+            </button>
+          </div>
+        </form>
+      </div>
     </>
   );
 }

@@ -34,14 +34,14 @@ def add_product():
     form = ProductForm()
     form['csrf_token'].data = request.cookies['csrf_token']
     if form.validate_on_submit():
-        category = Category.query.filter_by(name=form.category_name.data).first()
+        # category = Category.query.filter_by(name=form.category_name.data).first()
         
         new_product = Product(
             name=form.data['name'],
             description=form.data['description'],
             price=form.data['price'],
             stock_quantity=form.data['stock_quantity'],
-            category_id=category.id,
+            category_id=form.data['category_id'],
             user_id=current_user.id
         )
         db.session.add(new_product)
@@ -62,12 +62,11 @@ def edit_product(product_id):
     form = ProductForm()
     form['csrf_token'].data = request.cookies['csrf_token']
     if form.validate_on_submit():
-        category = Category.query.filter_by(name=form.category_name.data).first()
         product.name = form.data['name']
         product.description = form.data['description']
         product.price = form.data['price']
         product.stock_quantity = form.data['stock_quantity']
-        product.category_id = category.id
+        product.category_id = form.data['category_id']
         product.updated_at = datetime.now()
         
         db.session.commit()
@@ -119,7 +118,7 @@ def create_product_image_for_product(product_id):
         new_image = ProductImage(product_id=product_id, image_url=url)
         db.session.add(new_image)
         db.session.commit()
-        return {'url': url}
+        return new_image.to_dict()
     return form.errors, 400
 
 

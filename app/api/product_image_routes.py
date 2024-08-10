@@ -31,16 +31,17 @@ def edit_product_image(product_image_id):
     if form.validate_on_submit():
         image = form.data['image']
         image.filename = get_unique_filename(image.filename)
-        remove = remove_file_from_s3(product_image.image_url)
-        if remove:
-            upload = upload_file_to_s3(image)
+        if image: 
+            remove = remove_file_from_s3(product_image.image_url)
+            if remove:
+                upload = upload_file_to_s3(image)
         
             if 'url' not in upload: return upload, 400
         
             product_image.image_url = upload['url']
-            product_image.update_at = datetime.now()
+            product_image.updated_at = datetime.now()
             db.session.commit()
-            return {'url': product_image.image_url}
+            return product_image.to_dict()
     return form.errors, 400
 
 @product_image_routes.route('<int:product_image_id>', methods=['DELETE'])

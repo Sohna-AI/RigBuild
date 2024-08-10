@@ -1,0 +1,53 @@
+.delete-review-container {
+  display: flex;
+  flex-direction: column;
+  padding: 25px;
+  background: rgb(173, 216, 230);
+  border-radius: 10px;
+}
+
+.delete-review-delete-button-container {
+  display: flex;
+  justify-content: space-around;
+}
+
+.delete-modal-subtitle {
+  width: 240px;
+}
+
+.delete-review-button {
+  border: none;
+  padding: 1em 2em;
+  font-size: 12px;
+  letter-spacing: 2px;
+  font-weight: 800;
+  color: white;
+  background-color: maroon;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: all 400ms;
+}
+
+.delete-review-button:hover {
+  transition: all 400ms;
+  background-color: red;
+}
+
+.delete-review-cancel-button {
+  border: none;
+  padding: 1em 2em;
+  font-size: 12px;
+  letter-spacing: 2px;
+  font-weight: 600;
+  color: white;
+  background-color: gray;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: all 400ms;
+}
+
+.delete-review-cancel-button:hover {
+  transition: all 400ms;
+  background-color: aliceblue;
+  color: black;
+}

@@ -10,6 +10,11 @@ import { deleteWishlistProduct, setWishlistProduct } from '../../redux/wishlist'
 import ReviewCard from './ReviewCard';
 import './ProductDetails.css';
 import RelatedProducts from './RelatedProducts';
+import OpenModalMenuItem from '../Navigation/OpenModalMenuItem';
+import LoginFormModal from '../LoginFormModal/LoginFormModal';
+import CreateReviews from '../CreateReviews/CreateReviews';
+import { useModal } from '../../context/Modal';
+import OpenModalButton from '../OpenModalButton/OpenModalButton';
 
 const ProductDetails = () => {
   const dispatch = useDispatch();
@@ -23,12 +28,31 @@ const ProductDetails = () => {
   const [isLoaded, setIsLoaded] = useState(false);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const sessionUser = useSelector((state) => state.session.user);
-  const [deleteModalOpen, setDeleteModalOpen] = useState(false);
-  const [deleteReviewId, setDeleteReviewId] = useState(null);
-  const [reviewModalOpen, setReviewModalOpen] = useState(false);
   const [isWishlisted, setIsWishlisted] = useState(!!wishlist[productId]);
   const [visibleReviews, setVisibleReviews] = useState(4);
-  const modalRef = useRef(null);
+  const ulRef = useRef();
+  const [showMenu, setShowMenu] = useState(false);
+  const [showLoginModal, setShowLoginModal] = useState(false);
+
+  const closeMenu = () => setShowMenu(false);
+  useEffect(() => {
+    if (!showMenu) return;
+
+    const closeMenu = (e) => {
+      if (!ulRef.current.contains(e.target)) {
+        setShowMenu(false);
+      }
+    };
+
+    document.addEventListener('click', closeMenu);
+
+    return () => document.removeEventListener('click', closeMenu);
+  }, [showMenu]);
+
+  useEffect(() => {
+    if (sessionUser === null) setIsLoggedIn(false);
+    else setIsLoggedIn(true);
+  }, [sessionUser]);
 
   useEffect(() => {
     const fetchProductAndReviews = async () => {
@@ -56,9 +80,13 @@ const ProductDetails = () => {
   const otherProducts = relatedProducts ? relatedProducts.filter((p) => p.id !== product.id).slice(0, 4) : [];
 
   const handleWishlistChange = () => {
-    setIsWishlisted(!isWishlisted);
-    if (!isWishlisted) dispatch(setWishlistProduct(product));
-    else dispatch(deleteWishlistProduct(productId));
+    if (sessionUser) {
+      setIsWishlisted(!isWishlisted);
+      if (!isWishlisted) dispatch(setWishlistProduct(product));
+      else dispatch(deleteWishlistProduct(productId));
+    } else {
+      setShowLoginModal(true);
+    }
   };
 
   const handleShowMoreReviews = () => {
@@ -83,6 +111,41 @@ const ProductDetails = () => {
       ratings += review.rating;
     });
     return (ratings / reviews.length).toFixed(2);
+  };
+
+  const userPostedReview = (reviewsObj, userId) => {
+    if (typeof reviewsObj !== 'object' || typeof userId !== 'number') return false;
+
+    const { reviews } = reviewsObj[productId];
+    for (let reviewId of Object.keys(reviews)) {
+      const review = reviews[reviewId];
+      if (
+        parseInt(review.product_id) === parseInt(productId) &&
+        parseInt(review.user_id) === parseInt(userId)
+      ) {
+        return true;
+      }
+    }
+    return false;
+  };
+
+  const userIsProductOwner = (product, userId) => {
+    return product?.seller_id === userId;
+  };
+
+  const renderPostReviewButton = () => {
+    if (!isLoggedIn) return false;
+    else if (userPostedReview(reviews, sessionUser.id)) return false;
+    else if (userIsProductOwner(product, sessionUser.id)) return false;
+    else return true;
+  };
+
+  const handleOpenReviewModal = () => {
+    setReviewModalOpen(true);
+  };
+
+  const handleCloseReviewModal = () => {
+    setReviewModalOpen(false);
   };
 
   return (
@@ -160,6 +223,16 @@ const ProductDetails = () => {
                             <span className="option-2">Added to Wishlist</span>
                           </div>
                         </label>
+                        {showLoginModal && (
+                          <div>
+                            <div>You must must be logged in to add to wishlist:</div>
+                            <OpenModalMenuItem
+                              itemText={<button style={{ cursor: 'pointer' }}>Login</button>}
+                              modalComponent={<LoginFormModal />}
+                              onItemClick={() => setShowLoginModal(false)}
+                            />
+                          </div>
+                        )}
                       </div>
                     </div>
                   </div>
@@ -167,22 +240,39 @@ const ProductDetails = () => {
                 <div className="product-details-reviews-products-container">
                   <div className="product-details-reviews-container">
                     <div className="product-details-reviews">
-                      <h1 className="product-details-reviews-header">Reviews</h1>
+                      <div className="product-details-reviews-post-container">
+                        <h1 className="product-details-reviews-header">
+                          {product.reviews.length ? product.reviews.length : 'No reviews'}{' '}
+                          {product.reviews.length > 1 ? 'reviews' : ''}{' '}
+                        </h1>
+                        {renderPostReviewButton() && (
+                          <OpenModalButton
+                            buttonText={'Review this product'}
+                            modalComponent={<CreateReviews productId={productId} />}
+                            reviewProduct={true}
+                          />
+                        )}
+                      </div>
                       <ul className="product-details-review-card-container">
-                        {reviews[productId]?.allIds.slice(0, visibleReviews).map((reviewId) => {
-                          const review = reviews[productId].reviews[reviewId];
-                          return (
-                            <li className="product-details-review-card" key={review.id}>
-                              <ReviewCard
-                                id={review.id}
-                                rating={review.rating}
-                                review={review.review}
-                                created_at={review.created_at}
-                                user={review.user.username}
-                              />
-                            </li>
-                          );
-                        })}
+                        {reviews[productId]?.allIds
+                          .map((reviewId) => reviews[productId].reviews[reviewId])
+                          .sort((a, b) => new Date(b.created_at) - new Date(a.created_at))
+                          .slice(0, visibleReviews)
+                          .map((review) => {
+                            return (
+                              <li className="product-details-review-card" key={review.id}>
+                                <ReviewCard
+                                  id={review.id}
+                                  rating={review.rating}
+                                  review={review.review}
+                                  created_at={review.created_at}
+                                  user={review.user.username}
+                                  author={review.user_id}
+                                  product_id={review.product_id}
+                                />
+                              </li>
+                            );
+                          })}
                       </ul>
                     </div>
                     {visibleReviews < reviews[productId]?.allIds.length && (
@@ -194,7 +284,7 @@ const ProductDetails = () => {
                       </div>
                     )}
                     {visibleReviews > 4 && (
-                      <div className='show-less-reviews-button-container'>
+                      <div className="show-less-reviews-button-container">
                         <button onClick={handleShowLessReviews} className="show-less-reviews-button">
                           Show Less Reviews
                         </button>
