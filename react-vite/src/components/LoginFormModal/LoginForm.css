@@ -1,0 +1,207 @@
+.login-form-modal-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 380px;
+  height: 500px;
+  padding: 25px;
+  background: rgb(173, 216, 230);
+  background: radial-gradient(circle, rgba(173, 216, 230, 1) 0%, rgba(148, 187, 233, 1) 100%);
+  border-radius: 10px;
+  transition: opacity 0.3s ease;
+  opacity: 1;
+}
+
+.login-form-modal-container.fade-out {
+  opacity: 0;
+}
+
+.login-form-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 30px;
+  width: 100%;
+  border-radius: 10px;
+  transform: translateY(-160px);
+}
+
+.login-form-short-logo {
+  width: 250px;
+  transform: translateY(-60px);
+}
+
+.login-form-modal-headers {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.login-form-modal-subtext {
+  text-align: center;
+  font-size: 35px;
+  transform: translateY(-170px);
+  font-weight: 200;
+  color: black;
+}
+
+.login-form-label-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  margin-right: 50px;
+  gap: 10px;
+}
+
+.login-label-input-group {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  width: 80%;
+  font-size: 14px;
+  font-weight: 200;
+}
+
+.login-form-email,
+.login-form-password {
+  width: 100%;
+  padding: 11px 25px;
+  background-color: transparent;
+  border: 1px solid black;
+  border-radius: 8px;
+  line-height: 1;
+  transition: border-color 0.3s cubic-bezier(0.25, 0.01, 0.25, 1) 0s,
+    color 0.3s cubic-bezier(0.25, 0.01, 0.25, 1) 0s, background 0.2s cubic-bezier(0.25, 0.01, 0.25, 1) 0s;
+}
+
+.login-form-email:hover,
+.login-form-password:hover {
+  outline: none;
+  border-color: rgba(148, 187, 233, 1);
+}
+
+.login-form-email:focus,
+.login-form-password:focus {
+  transform: translateY(4px);
+  box-shadow: 1px 2px 0px 0px midnightblue;
+  border: none;
+  outline: 2px solid rgba(173, 216, 230, 1);
+}
+
+.login-form-login-demo-container {
+  padding-top: 20px;
+}
+
+.login-form-login-button {
+  padding: 1em 2em;
+  border: none;
+  border-radius: 5px;
+  font-weight: 900;
+  letter-spacing: 5px;
+  text-transform: uppercase;
+  cursor: pointer;
+  color: lightblue;
+  transition: all 500ms;
+  position: relative;
+  overflow: hidden;
+  outline: 2px solid lightblue;
+}
+
+.login-form-demo-login {
+  padding: 1em 1em;
+  border: none;
+  border-radius: 5px;
+  font-weight: 900;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  cursor: pointer;
+  color: rgb(4, 156, 206);
+  transition: all 500ms;
+  position: relative;
+  overflow: hidden;
+  outline: 2px solid rgb(4, 156, 206);
+}
+
+.login-form-login-button:hover,
+.login-form-demo-login:hover {
+  color: #a77575;
+  transform: scale(1.1);
+  outline: 2px solid lightblue;
+  box-shadow: 4px 5px 17px -4px lightblue;
+}
+
+.login-form-login-button::before {
+  content: '';
+  position: absolute;
+  left: -50px;
+  top: 0;
+  width: 0;
+  height: 100%;
+  background-color: lightblue;
+  transform: skewX(45deg);
+  z-index: -1;
+  transition: width 500ms;
+}
+
+.login-form-login-button:hover::before {
+  width: 250%;
+}
+
+.login-form-login-button:disabled {
+  transition: none;
+  color: gray;
+  outline: 2px solid gray;
+}
+
+.login-form-login-button:disabled:hover {
+  background-color: none;
+  transform: none;
+  transition: none;
+  box-shadow: none;
+  cursor: not-allowed;
+}
+
+.login-form-login-demo-container {
+  display: flex;
+  gap: 20px;
+}
+
+.login-form-signup-container {
+  transform: translateY(-120px);
+  width: 300px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+}
+
+.login-form-signup-button {
+  background-color: lightblue;
+  border: none;
+  padding: 1em 2em;
+  border-radius: 5px;
+  outline: 1px solid rgb(41, 41, 121);
+  font-weight: 600;
+  letter-spacing: 2px;
+  cursor: pointer;
+  transition: all 200ms;
+}
+
+.login-form-signup-button:hover {
+  background-color: rgb(97, 97, 246);
+  transition: all 200ms;
+}
+
+.login-form-label-error {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 20px;
+}
+
+.login-form-error {
+  color: red;
+  font-weight: 200;
+  font-size: 13px;
+}

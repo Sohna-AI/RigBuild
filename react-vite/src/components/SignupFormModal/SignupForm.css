@@ -1,0 +1,123 @@
+.signup-form-headers-input-container {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  padding: 25px;
+  border-radius: 9px;
+  width: 800px;
+  height: 500px;
+  background: rgb(238, 174, 202);
+  background: radial-gradient(circle, rgba(238, 174, 202, 1) 0%, rgba(148, 187, 233, 1) 100%);
+  transition: opacity 0.3s ease;
+  opacity: 1;
+}
+
+.signup-form-headers-input-container.fade-out {
+  opacity: 0;
+}
+
+.signup-form-short-logo {
+  width: 200px;
+  transform: translateY(80px);
+}
+
+.signup-form-header-subtext {
+  width: 300px;
+  height: 200px;
+}
+.signup-form-input-container {
+  display: flex;
+  flex-direction: column;
+  height: 500px;
+  padding-left: 80px;
+}
+
+.label-input-group {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  font-size: 14px;
+  font-weight: 200;
+}
+
+.label-input-group input {
+  border: none;
+  border-radius: 2px;
+  padding: 5px;
+  margin-bottom: 5px;
+  transition: all 300ms;
+}
+
+.label-input-group input:hover {
+  outline: 2px solid rgba(238, 174, 202, 1);
+  transition: all 300ms;
+}
+
+.label-input-group input:focus-visible {
+  outline: 2px solid rgba(148, 187, 233, 1);
+}
+
+.signup-form-signup-button-container {
+  display: flex;
+  justify-content: center;
+  margin-top: 10px;
+}
+
+.signup-form-signup-button {
+  border: none;
+  outline: 1px solid rgba(148, 187, 233, 1);
+  padding: 1em 2em;
+  letter-spacing: 5px;
+  font-weight: 600;
+  color: rgba(148, 187, 233, 1);
+  transition: all 300ms;
+  cursor: pointer;
+}
+
+.signup-form-signup-button:hover {
+  background-color: rgba(148, 187, 233, 1);
+  border: none;
+  outline: 1px solid rgba(238, 174, 202, 1);
+  color: rgba(238, 174, 202, 1);
+  transition: all 300ms;
+  font-weight: 900;
+}
+
+.signup-error {
+  color: red;
+  font-weight: 200;
+  font-size: 13px;
+}
+
+.signup-form-label-error {
+  display: flex;
+  justify-content: space-between;
+}
+
+.signup-form-existing-container {
+  display: flex;
+  align-items: center;
+  margin-top: 20px;
+  gap: 10px;
+}
+
+.signup-form-login-button {
+  border: none;
+  outline: 1px solid rgba(238, 174, 202, 1);
+  padding: 1em 2em;
+  border-radius: 3px;
+  font-weight: 800;
+  color: rgba(238, 174, 202, 1);
+  transition: all 300ms;
+  cursor: pointer;
+  letter-spacing: 2px;
+}
+
+.signup-form-login-button:hover {
+  border: none;
+  outline: 2px solid rgba(148, 187, 233, 1);
+  color: rgba(148, 187, 233, 1);
+  background-color: rgba(238, 174, 202, 1);
+  transition: all 300ms;
+  font-weight: 500;
+}

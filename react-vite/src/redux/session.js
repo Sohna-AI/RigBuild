@@ -3,64 +3,87 @@ const REMOVE_USER = 'session/removeUser';
 
 const setUser = (user) => ({
   type: SET_USER,
-  payload: user
+  payload: user,
 });
 
 const removeUser = () => ({
-  type: REMOVE_USER
+  type: REMOVE_USER,
 });
 
 export const thunkAuthenticate = () => async (dispatch) => {
-	const response = await fetch("/api/auth/");
-	if (response.ok) {
-		const data = await response.json();
-		if (data.errors) {
-			return;
-		}
+  const response = await fetch('/api/auth/');
+  if (response.ok) {
+    const data = await response.json();
+    if (data.errors) {
+      return;
+    }
 
-		dispatch(setUser(data));
-	}
+    dispatch(setUser(data));
+  }
 };
 
-export const thunkLogin = (credentials) => async dispatch => {
-  const response = await fetch("/api/auth/login", {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify(credentials)
+export const thunkLogin = (credentials) => async (dispatch) => {
+  const response = await fetch('/api/auth/login', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(credentials),
   });
 
-  if(response.ok) {
+  if (response.ok) {
     const data = await response.json();
     dispatch(setUser(data));
   } else if (response.status < 500) {
     const errorMessages = await response.json();
-    return errorMessages
+    return errorMessages;
   } else {
-    return { server: "Something went wrong. Please try again" }
+    return { server: 'Something went wrong. Please try again' };
   }
 };
 
 export const thunkSignup = (user) => async (dispatch) => {
-  const response = await fetch("/api/auth/signup", {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify(user)
+  const response = await fetch('/api/auth/signup', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(user),
   });
 
-  if(response.ok) {
+  if (response.ok) {
     const data = await response.json();
     dispatch(setUser(data));
   } else if (response.status < 500) {
     const errorMessages = await response.json();
-    return errorMessages
+    return errorMessages;
   } else {
-    return { server: "Something went wrong. Please try again" }
+    return { server: 'Something went wrong. Please try again' };
   }
 };
 
 export const thunkLogout = () => async (dispatch) => {
-  await fetch("/api/auth/logout");
+  await fetch('/api/auth/logout');
   dispatch(removeUser());
+};
+
+export const loginAsDemoUser = () => async (dispatch) => {
+  const demoCreds = {
+    email: 'demo@aa.io',
+    password: 'password',
+  };
+
+  const res = await fetch('/api/auth/login', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(demoCreds),
+  });
+
+  if (res.ok) {
+    const data = await res.json();
+    dispatch(setUser(data));
+  } else if (res.status < 500) {
+    const errorMessages = await res.json();
+    return errorMessages;
+  } else {
+    return { server: 'Something went wrong. Please try again' };
+  }
 };
 
 const initialState = { user: null };

@@ -1,6 +1,7 @@
-from .db import db, environment, SCHEMA, add_prefix_for_prod
+from .db import db, environment, SCHEMA
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask_login import UserMixin
+from sqlalchemy.sql import func
 
 
 class User(db.Model, UserMixin):
@@ -11,8 +12,19 @@ class User(db.Model, UserMixin):
 
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String(40), nullable=False, unique=True)
+    first_name = db.Column(db.String(50), nullable=False)
+    last_name = db.Column(db.String(50), nullable=False)
     email = db.Column(db.String(255), nullable=False, unique=True)
     hashed_password = db.Column(db.String(255), nullable=False)
+    created_at = db.Column(db.DateTime, default=func.now())
+    updated_at = db.Column(db.DateTime, default=func.now())
+    
+    products = db.relationship('Product', back_populates='user', cascade='all, delete-orphan')
+    shopping_carts = db.relationship('ShoppingCart', back_populates='user', cascade='all, delete-orphan')
+    wishlist = db.relationship('Wishlist', back_populates='user', cascade='all, delete-orphan')
+    orders = db.relationship('Order', back_populates='user', cascade='all, delete-orphan')
+    reviews = db.relationship('Review', back_populates='user', cascade='all, delete-orphan')
+    addresses = db.relationship('Address', back_populates='user', cascade='all, delete-orphan')
 
     @property
     def password(self):
@@ -29,5 +41,7 @@ class User(db.Model, UserMixin):
         return {
             'id': self.id,
             'username': self.username,
+            'first_name': self.first_name,
+            'last_name': self.last_name,
             'email': self.email
         }

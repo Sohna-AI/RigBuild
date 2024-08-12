@@ -1,0 +1,140 @@
+.review-card {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  border: 1px solid transparent;
+  box-shadow: 0px 0px 4px 0.1px black;
+  padding: 20px;
+  border-radius: 5px;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell,
+    'Open Sans', 'Helvetica Neue', sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.review-card-date {
+  font-size: 10px;
+  font-weight: 800;
+  color: blue;
+  padding-top: 5px;
+}
+
+.review-card-stars {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.review-card-review {
+  font-size: 15px;
+  font-weight: 200;
+}
+
+.review-card-edit-delete-container {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  margin-top: 10px;
+  gap: 15px;
+}
+
+.review-card-delete-button {
+  background-color: transparent;
+  position: relative;
+  border: none;
+}
+
+.review-card-delete-button::after {
+  content: 'Delete';
+  position: absolute;
+  top: -130%;
+  left: 50%;
+  transform: translateX(-50%);
+  width: fit-content;
+  height: fit-content;
+  background-color: rgb(168, 7, 7);
+  padding: 4px 8px;
+  border-radius: 5px;
+  transition: 0.2s linear;
+  transition-delay: 0.2s;
+  color: white;
+  text-transform: uppercase;
+  font-size: 12px;
+  opacity: 0;
+  visibility: hidden;
+}
+
+.review-card-delete-icon {
+  transform: scale(1.2);
+  transition: 0.2s linear;
+}
+
+.review-card-delete-button:hover > .review-card-delete-icon {
+  transform: scale(1.5);
+}
+
+.review-card-delete-button > .review-card-delete-icon path {
+  fill: red;
+}
+
+.review-card-delete-button:hover > .review-card-delete-icon path {
+  fill: rgb(168, 7, 7);
+}
+
+.review-card-delete-button:hover::after {
+  visibility: visible;
+  opacity: 1;
+  top: -160%;
+}
+
+.review-card-edit-button {
+  background-color: transparent;
+  position: relative;
+  border: none;
+  transition: 0.2s linear;
+}
+
+.review-card-edit-button:hover {
+  color: midnightblue;
+  transform: scale(1.5);
+  transition: 0.2s linear;
+}
+
+.review-card-edit-button::after {
+  content: 'edit';
+  position: absolute;
+  top: -50%;
+  left: 50%;
+  transform: translateX(-50%);
+  width: fit-content;
+  height: fit-content;
+  background-color: mediumslateblue;
+  padding: 4px 8px;
+  border-radius: 5px;
+  transition: 0.2s linear;
+  transition-delay: 0.2s;
+  color: white;
+  text-transform: uppercase;
+  font-size: 8px;
+  opacity: 0;
+  visibility: hidden;
+}
+
+.review-card-edit-icon {
+  transform: scale(1);
+  transition: 0.2s linear;
+}
+
+.review-card-edit-button:hover > .review-card-edit-icon {
+  transform: scale(0.8);
+}
+
+.review-card-edit-button:hover::after {
+  visibility: visible;
+  opacity: 1;
+  top: -70%;
+}
+
+.review-card-edit-button:hover > .review-card-edit-icon path {
+  stroke: mediumslateblue;
+}
