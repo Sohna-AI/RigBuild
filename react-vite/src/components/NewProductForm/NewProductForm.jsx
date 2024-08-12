@@ -29,31 +29,6 @@ export default function NewProductForm({ edit }) {
   const product = products.products[productId];
 
   useEffect(() => {
-    const savedFormData = JSON.parse(localStorage.getItem('productFormData'));
-    if (savedFormData) {
-      setName(savedFormData.name || '');
-      setDescription(savedFormData.description || '');
-      setPrice(savedFormData.price || 0);
-      setQuantity(savedFormData.quantity || 0);
-      setCategory(savedFormData.category || '');
-      setImage(savedFormData.image || null);
-    }
-  }, []);
-
-  const saveFormData = (updatedData) => {
-    const currentData = {
-      name,
-      description,
-      price,
-      quantity,
-      category,
-      image,
-      ...updatedData,
-    };
-    localStorage.setItem('productFormData', JSON.stringify(currentData));
-  };
-
-  useEffect(() => {
     const fetchInitialData = async () => {
       setIsLoaded(false);
       try {
@@ -99,28 +74,33 @@ export default function NewProductForm({ edit }) {
     const formData = {
       name,
       description,
-      price: parseFloat(price),
-      stock_quantity: parseInt(quantity),
+      price: parseFloat(price) ? parseFloat(price) : '',
+      stock_quantity: parseInt(quantity) ? parseInt(quantity) : '',
       category_id: selectedCategory ? selectedCategory.id : null,
     };
 
     try {
       if (edit) {
-        await dispatch(productActions.editProductById(productId, formData));
+        const serverRes = await dispatch(productActions.editProductById(productId, formData));
+        if (serverRes) {
+          setErrors(serverRes);
+        }
         if (deleteCurrentImage && currentImageId) {
-          await dispatch(productImageActions.removeProductImage(currentImageId));
+          const removeImageRes = await dispatch(productImageActions.removeProductImage(currentImageId));
+          if (removeImageRes) {
+            setErrors((prevErrors) => ({ ...prevErrors, ...removeImageRes }));
+          }
         }
-        if (image) {
-          await dispatch(productImageActions.addNewProductImage(productId, image));
+        const addImageRes = await dispatch(productImageActions.addNewProductImage(productId, image));
+        if (addImageRes) {
+          return setErrors((prevErrors) => ({ ...prevErrors, ...addImageRes }));
         }
-        localStorage.removeItem('productFormData');
-        navigate(`/products/${productId}`);
+        navigate(`/products/current`);
       } else {
         const newProduct = await dispatch(productActions.addNewProduct(formData, image));
 
         await dispatch(productImageActions.addNewProductImage(newProduct.id, image));
 
-        localStorage.removeItem('productFormData');
         navigate(`/products/${newProduct.id}`);
       }
     } catch (error) {
@@ -135,14 +115,14 @@ export default function NewProductForm({ edit }) {
     setDeleteCurrentImage(true);
   };
 
-  const handleDeleteImage = async () => {
+  const handleDeleteImage = async (e) => {
+    e.stopPropagation();
     setDeleteCurrentImage(true);
     setCurrentImageUrl(null);
     setImage(null);
   };
 
   const handleCancel = () => {
-    localStorage.removeItem('productFormData');
     if (edit) navigate(`/products/${productId}`);
     else navigate('/products');
   };
@@ -163,102 +143,103 @@ export default function NewProductForm({ edit }) {
             </p>
             <form className="product-form-container" encType="multipart/form-data" onSubmit={handleSubmit}>
               <div className="product-form-name" id="input-group-container">
-                <label>Name of product</label>
-                <input
-                  className="product-form-input"
-                  type="text"
-                  value={name}
-                  onChange={(e) => {
-                    setName(e.target.value);
-                    saveFormData({ name: e.target.value });
-                  }}
-                  required
-                />
-                {errors.name && <p>{errors.name}</p>}
+                <label>
+                  <div className="product-form-name-error">
+                    Name of product
+                    {errors.name && <p id="error">{errors.name}</p>}
+                  </div>
+                  <input
+                    className="product-form-input"
+                    type="text"
+                    value={name}
+                    onChange={(e) => setName(e.target.value)}
+                  />
+                </label>
               </div>
               <div className="product-form-describe" id="input-group-container">
-                <label>Describe the product</label>
-                <textarea
-                  className="product-form-input"
-                  type="text"
-                  value={description}
-                  onChange={(e) => {
-                    setDescription(e.target.value);
-                    saveFormData({ description: e.target.value });
-                  }}
-                  required
-                />
-                {errors.description && <p>{errors.description}</p>}
+                <label>
+                  <div className="product-form-description-error">
+                    Describe the product
+                    {errors.description && <p id="error">{errors.description}</p>}
+                  </div>
+                  <textarea
+                    className="product-form-input"
+                    type="text"
+                    value={description}
+                    onChange={(e) => setDescription(e.target.value)}
+                  />
+                </label>
               </div>
               <div className="product-form-price" id="input-group-container">
-                <label>Price of your product</label>
-                <input
-                  className="product-form-input"
-                  type="number"
-                  value={price}
-                  onChange={(e) => {
-                    setPrice(e.target.value);
-                    saveFormData({ price: e.target.value });
-                  }}
-                  required
-                  min="0"
-                  inputMode="numeric"
-                  onWheel={(e) => e.target.blur()}
-                />
-                {errors.price && <p>{errors.price}</p>}
+                <label>
+                  <div className="product-form-price-error">
+                    Price of your product
+                    {errors.price && <p id="error">{errors.price}</p>}
+                  </div>
+                  <input
+                    className="product-form-input"
+                    type="number"
+                    value={price}
+                    onChange={(e) => setPrice(e.target.value)}
+                    inputMode="numeric"
+                    onWheel={(e) => e.target.blur()}
+                  />
+                </label>
               </div>
               <div className="product-form-quantity" id="input-group-container">
-                <label>What is quantity of your stock?</label>
-                <input
-                  className="product-form-input"
-                  type="number"
-                  value={quantity}
-                  onChange={(e) => {
-                    setQuantity(e.target.value);
-                    saveFormData({ quantity: e.target.value });
-                  }}
-                  required
-                  min="0"
-                  inputMode="numeric"
-                  onWheel={(e) => e.target.blur()}
-                />
-                {errors.quantity && <p>{errors.quantity}</p>}
+                <label>
+                  <div className="product-form-quantity-error">
+                    What is quantity of your stock?
+                    {errors.quantity && <p id="error">{errors.quantity}</p>}
+                  </div>
+                  <input
+                    className="product-form-input"
+                    type="number"
+                    value={quantity}
+                    onChange={(e) => setQuantity(e.target.value)}
+                    min="0"
+                    inputMode="numeric"
+                    onWheel={(e) => e.target.blur()}
+                  />
+                </label>
               </div>
               <div className="product-form-category" id="input-group-container">
-                <label>Select category</label>
-                <select
-                  value={category}
-                  onChange={(e) => {
-                    setCategory(e.target.value);
-                    saveFormData({ category: e.target.value });
-                  }}
-                >
-                  <option value="">Select a category</option>
-                  {categories.map((cat) => (
-                    <option value={cat.name} key={cat.id}>
-                      {cat.name}
-                    </option>
-                  ))}
-                </select>
-                {errors.category && <p>{errors.category}</p>}
+                <label>
+                  <div className="product-form-category-error">
+                    Select category
+                    {errors.category && <p id="error">{errors.category}</p>}
+                  </div>
+                  <select value={category} onChange={(e) => setCategory(e.target.value)}>
+                    <option value="">Select a category</option>
+                    {categories.map((cat) => (
+                      <option value={cat.name} key={cat.id}>
+                        {cat.name}
+                      </option>
+                    ))}
+                  </select>
+                </label>
               </div>
               <div className="product-form-image" id="input-group-container">
-                <label>Upload an image</label>
-                {currentImageUrl && !loading ? (
-                  <div>
-                    <img
-                      src={currentImageUrl}
-                      alt="Current product"
-                      style={{ width: '100px', height: '100px' }}
-                    />
-                    <button type="button" onClick={handleDeleteImage}>
-                      Delete Image
-                    </button>
+                <label>
+                  <div className="product-form-image-error">
+                    Upload an image
+                    {errors.image && <p id="error">{errors.image}</p>}
                   </div>
-                ) : (
-                  <input type="file" accept="image/*" onChange={handleImageChange} required />
-                )}
-                {errors.image && <p>{errors.image}</p>}
+                  {currentImageUrl && !loading ? (
+                    <div>
+                      <img
+                        src={currentImageUrl}
+                        alt="Current product"
+                        style={{ width: '100px', height: '100px' }}
+                      />
+                      <button type="button" onClick={handleDeleteImage}>
+                        Delete Image
+                      </button>
+                    </div>
+                  ) : (
+                    <input type="file" accept="image/*" onChange={handleImageChange} />
+                  )}
+                </label>
               </div>
               <div className="product-form-submit-cancel">
                 <div className="product-form-submit-button-container">
@@ -276,7 +257,7 @@ export default function NewProductForm({ edit }) {
           </div>
         </>
       )}
-            <footer>
+      <footer>
         <div className="social-links">
           <div>
             <NavLink to="https://github.com/Sohna-AI" className="github-button-container">

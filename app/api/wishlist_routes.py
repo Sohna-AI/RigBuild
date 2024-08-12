@@ -9,7 +9,7 @@ from app.api.aws_s3 import upload_file_to_s3, get_unique_filename
 
 wishlist_routes = Blueprint('wishlist', __name__)
 
-@wishlist_routes.route('/', methods=['GET'])
+@wishlist_routes.route('/current', methods=['GET'])
 @login_required
 def get_favorites():
     """

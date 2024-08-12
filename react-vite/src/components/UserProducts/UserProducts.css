@@ -1,0 +1,36 @@
+.single-product-for-user-container {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  gap: 30px;
+}
+
+.user-product {
+  display: flex;
+  flex-direction: column;
+  flex-basis: auto;
+  width: 500px;
+  height: 400px;
+}
+
+.users-no-products-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 0 auto;
+}
+
+.users-no-products-sell-button {
+  background-color: transparent;
+  border: 2px solid lightpink;
+  padding: 10px;
+  border-radius: 30px;
+  cursor: pointer;
+  transition: 400ms;
+}
+
+.users-no-products-sell-button:hover {
+  background-color: lightpink;
+  color: white;
+  transition: 400ms;
+}

@@ -122,3 +122,49 @@
   transform: scale(0.95);
   transition-duration: 0.5s;
 }
+
+.users-product-image {
+  width: 100px;
+  height: 100px;
+}
+
+.users-product-card {
+  border-bottom: 2px solid black;
+  padding-bottom: 10px;
+  margin-top: 10px;
+}
+
+.users-product-info-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  width: 500px;
+  height: 250px;
+}
+
+.users-product-name-description-container {
+  display: flex;
+  flex-direction: column;
+  height: fit-content;
+}
+
+.users-product-show-full-des-button,
+.users-product-show-less-des-button {
+  border: none;
+  background-color: transparent;
+  text-decoration: underline;
+  color: blue;
+  cursor: pointer;
+  font-size: 12px;
+}
+
+.users-product-rating-price-edit-delete-button {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.users-product-edit-button,
+.users-product-delete-button {
+  cursor: pointer;
+}

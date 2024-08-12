@@ -1,6 +1,6 @@
 import { useDispatch, useSelector } from 'react-redux';
 import { useParams, NavLink } from 'react-router-dom';
-import { useState, useRef, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 
 import { IoStar } from 'react-icons/io5';
 import * as productActions from '../../redux/products';
@@ -13,8 +13,8 @@ import RelatedProducts from './RelatedProducts';
 import OpenModalMenuItem from '../Navigation/OpenModalMenuItem';
 import LoginFormModal from '../LoginFormModal/LoginFormModal';
 import CreateReviews from '../CreateReviews/CreateReviews';
-import { useModal } from '../../context/Modal';
 import OpenModalButton from '../OpenModalButton/OpenModalButton';
+import DeleteProduct from '../DeleteProduct/DeleteProduct';
 
 const ProductDetails = () => {
   const dispatch = useDispatch();
@@ -30,24 +30,7 @@ const ProductDetails = () => {
   const sessionUser = useSelector((state) => state.session.user);
   const [isWishlisted, setIsWishlisted] = useState(!!wishlist[productId]);
   const [visibleReviews, setVisibleReviews] = useState(4);
-  const ulRef = useRef();
-  const [showMenu, setShowMenu] = useState(false);
   const [showLoginModal, setShowLoginModal] = useState(false);
-
-  const closeMenu = () => setShowMenu(false);
-  useEffect(() => {
-    if (!showMenu) return;
-
-    const closeMenu = (e) => {
-      if (!ulRef.current.contains(e.target)) {
-        setShowMenu(false);
-      }
-    };
-
-    document.addEventListener('click', closeMenu);
-
-    return () => document.removeEventListener('click', closeMenu);
-  }, [showMenu]);
 
   useEffect(() => {
     if (sessionUser === null) setIsLoggedIn(false);
@@ -105,7 +88,17 @@ const ProductDetails = () => {
     return <div className="rating-stars">{filledStars}</div>;
   };
 
-  const avgRating = (reviews) => {
+  const avgRating = (reviews, numReviews) => {
+    let ratings = 0;
+    for (let id in reviews) {
+      const review = reviews[id];
+      ratings += review.rating;
+    }
+
+    return ratings / numReviews;
+  };
+
+  const avgRatingRelatedProducts = (reviews) => {
     let ratings = 0;
     reviews.map((review) => {
       ratings += review.rating;
@@ -140,12 +133,10 @@ const ProductDetails = () => {
     else return true;
   };
 
-  const handleOpenReviewModal = () => {
-    setReviewModalOpen(true);
-  };
-
-  const handleCloseReviewModal = () => {
-    setReviewModalOpen(false);
+  const handleReviewsHeader = (reviews) => {
+    if (reviews === 0) return 'No reviews';
+    if (reviews > 1) return `${reviews} reviews`;
+    if (reviews === 1) return `${reviews} review`;
   };
 
   return (
@@ -167,84 +158,151 @@ const ProductDetails = () => {
                     </div>
                     <div className="product-rating-cart">
                       <div className="product-rating">
-                        {product.reviews.length ? product.reviews.length : 'No reviews'}{' '}
-                        {product.reviews.length > 1 ? 'reviews' : ''}{' '}
-                        <StarRating rating={avgRating(product.reviews)} />
+                        {handleReviewsHeader(reviews[productId].allIds.length)}
+                        <StarRating
+                          rating={avgRating(reviews[productId].reviews, reviews[productId].allIds.length)}
+                        />
                       </div>
                       <div className="product-price-quantity">
                         <div className="product-price">${product.price}</div>
                         <div className="product-quantity">Quantity:{product.stock_quantity}</div>
                       </div>
                     </div>
-                    <div className="buttons-cart-wishlist">
-                      <div>
-                        <button className="cart-button">
-                          {' '}
-                          <span className="IconContainer">
+                    {!userIsProductOwner(product, sessionUser.id) ? (
+                      <div className="buttons-cart-wishlist">
+                        <div>
+                          <button className="cart-button">
+                            {' '}
+                            <span className="IconContainer">
+                              <svg
+                                xmlns="http://www.w3.org/2000/svg"
+                                height="1em"
+                                viewBox="0 0 576 512"
+                                fill="rgb(17, 17, 17)"
+                                className="cart-icon"
+                              >
+                                <path d="M0 24C0 10.7 10.7 0 24 0H69.5c22 0 41.5 12.8 50.6 32h411c26.3 0 45.5 25 38.6 50.4l-41 152.3c-8.5 31.4-37 53.3-69.5 53.3H170.7l5.4 28.5c2.2 11.3 12.1 19.5 23.6 19.5H488c13.3 0 24 10.7 24 24s-10.7 24-24 24H199.7c-34.6 0-64.3-24.6-70.7-58.5L77.4 54.5c-.7-3.8-4-6.5-7.9-6.5H24C10.7 48 0 37.3 0 24zM128 464a48 48 0 1 1 96 0 48 48 0 1 1 -96 0zm336-48a48 48 0 1 1 0 96 48 48 0 1 1 0-96z"></path>
+                              </svg>
+                            </span>
+                            <p className="cart-text">Add to Cart</p>
+                          </button>
+                        </div>
+                        <div className="product-favorite-button">
+                          <input
+                            value="favorite-button"
+                            name="favorite-checkbox"
+                            id="favorite"
+                            checked={isWishlisted}
+                            onChange={handleWishlistChange}
+                            type="checkbox"
+                          />
+                          <label className="container" htmlFor="favorite">
                             <svg
+                              className="feather feather-heart"
+                              strokeLinejoin="round"
+                              strokeLinecap="round"
+                              strokeWidth="2"
+                              stroke="currentColor"
+                              fill="none"
+                              viewBox="0 0 24 24"
+                              height="24"
+                              width="24"
                               xmlns="http://www.w3.org/2000/svg"
-                              height="1em"
-                              viewBox="0 0 576 512"
-                              fill="rgb(17, 17, 17)"
-                              className="cart-icon"
                             >
-                              <path d="M0 24C0 10.7 10.7 0 24 0H69.5c22 0 41.5 12.8 50.6 32h411c26.3 0 45.5 25 38.6 50.4l-41 152.3c-8.5 31.4-37 53.3-69.5 53.3H170.7l5.4 28.5c2.2 11.3 12.1 19.5 23.6 19.5H488c13.3 0 24 10.7 24 24s-10.7 24-24 24H199.7c-34.6 0-64.3-24.6-70.7-58.5L77.4 54.5c-.7-3.8-4-6.5-7.9-6.5H24C10.7 48 0 37.3 0 24zM128 464a48 48 0 1 1 96 0 48 48 0 1 1 -96 0zm336-48a48 48 0 1 1 0 96 48 48 0 1 1 0-96z"></path>
+                              <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path>
                             </svg>
-                          </span>
-                          <p className="cart-text">Add to Cart</p>
-                        </button>
+                            <div className="action">
+                              <span className="option-1">Add to Wishlist</span>
+                              <span className="option-2">Added to Wishlist</span>
+                            </div>
+                          </label>
+                          {showLoginModal && (
+                            <div>
+                              <div>You must must be logged in to add to wishlist:</div>
+                              <OpenModalMenuItem
+                                itemText={<button style={{ cursor: 'pointer' }}>Login</button>}
+                                modalComponent={<LoginFormModal />}
+                                onItemClick={() => setShowLoginModal(false)}
+                              />
+                            </div>
+                          )}
+                        </div>
                       </div>
-                      <div className="product-favorite-button">
-                        <input
-                          value="favorite-button"
-                          name="favorite-checkbox"
-                          id="favorite"
-                          checked={isWishlisted}
-                          onChange={handleWishlistChange}
-                          type="checkbox"
+                    ) : (
+                      <div className="product-details-edit-delete-buttons-container">
+                        <NavLink to={`/products/${productId}/edit`}>
+                          <button className="product-details-edit-button">Edit</button>
+                        </NavLink>
+                        <OpenModalButton
+                          buttonText="Delete"
+                          modalComponent={<DeleteProduct productId={productId} />}
+                          productDetailsDelete={true}
                         />
-                        <label className="container" htmlFor="favorite">
-                          <svg
-                            className="feather feather-heart"
-                            strokeLinejoin="round"
-                            strokeLinecap="round"
-                            strokeWidth="2"
-                            stroke="currentColor"
-                            fill="none"
-                            viewBox="0 0 24 24"
-                            height="24"
-                            width="24"
-                            xmlns="http://www.w3.org/2000/svg"
-                          >
-                            <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path>
-                          </svg>
-                          <div className="action">
-                            <span className="option-1">Add to Wishlist</span>
-                            <span className="option-2">Added to Wishlist</span>
-                          </div>
-                        </label>
-                        {showLoginModal && (
-                          <div>
-                            <div>You must must be logged in to add to wishlist:</div>
-                            <OpenModalMenuItem
-                              itemText={<button style={{ cursor: 'pointer' }}>Login</button>}
-                              modalComponent={<LoginFormModal />}
-                              onItemClick={() => setShowLoginModal(false)}
-                            />
-                          </div>
-                        )}
                       </div>
-                    </div>
+                    )}
                   </div>
                 </div>
                 <div className="product-details-reviews-products-container">
-                  <div className="product-details-reviews-container">
-                    <div className="product-details-reviews">
-                      <div className="product-details-reviews-post-container">
-                        <h1 className="product-details-reviews-header">
-                          {product.reviews.length ? product.reviews.length : 'No reviews'}{' '}
-                          {product.reviews.length > 1 ? 'reviews' : ''}{' '}
-                        </h1>
+                  {reviews[productId].allIds.length ? (
+                    <div className="product-details-reviews-container">
+                      <h1 className="product-details-reviews-header">
+                        {handleReviewsHeader(reviews[productId].allIds.length)}
+                      </h1>
+                      <div className="product-details-reviews">
+                        <div className="product-details-reviews-post-container">
+                          {renderPostReviewButton() && (
+                            <OpenModalButton
+                              buttonText={'Review this product'}
+                              modalComponent={<CreateReviews productId={productId} />}
+                              reviewProduct={true}
+                            />
+                          )}
+                        </div>
+                        <ul className="product-details-review-card-container">
+                          {reviews[productId]?.allIds
+                            .map((reviewId) => reviews[productId].reviews[reviewId])
+                            .sort((a, b) => new Date(b.created_at) - new Date(a.created_at))
+                            .slice(0, visibleReviews)
+                            .map((review) => {
+                              return (
+                                <li className="product-details-review-card" key={review.id}>
+                                  <ReviewCard
+                                    id={review.id}
+                                    rating={review.rating}
+                                    review={review.review}
+                                    created_at={review.created_at}
+                                    user={review.user.username}
+                                    author={review.user_id}
+                                    product_id={review.product_id}
+                                  />
+                                </li>
+                              );
+                            })}
+                        </ul>
+                      </div>
+                      {visibleReviews < reviews[productId]?.allIds.length && (
+                        <div className="show-more-reviews-button-container">
+                          {' '}
+                          <button onClick={handleShowMoreReviews} className="show-more-reviews-button">
+                            Show More Reviews
+                          </button>
+                        </div>
+                      )}
+                      {visibleReviews > 4 && (
+                        <div className="show-less-reviews-button-container">
+                          <button onClick={handleShowLessReviews} className="show-less-reviews-button">
+                            Show Less Reviews
+                          </button>
+                        </div>
+                      )}
+                    </div>
+                  ) : (
+                    <div className="product-details-no-reviews-container">
+                      <h1 className="product-details-no-reviews-header">
+                        {handleReviewsHeader(reviews[productId].allIds.length)}
+                      </h1>
+                      <div className="product-details-no-reviews-post-container">
+                        Be first to review this product:
                         {renderPostReviewButton() && (
                           <OpenModalButton
                             buttonText={'Review this product'}
@@ -253,56 +311,26 @@ const ProductDetails = () => {
                           />
                         )}
                       </div>
-                      <ul className="product-details-review-card-container">
-                        {reviews[productId]?.allIds
-                          .map((reviewId) => reviews[productId].reviews[reviewId])
-                          .sort((a, b) => new Date(b.created_at) - new Date(a.created_at))
-                          .slice(0, visibleReviews)
-                          .map((review) => {
-                            return (
-                              <li className="product-details-review-card" key={review.id}>
-                                <ReviewCard
-                                  id={review.id}
-                                  rating={review.rating}
-                                  review={review.review}
-                                  created_at={review.created_at}
-                                  user={review.user.username}
-                                  author={review.user_id}
-                                  product_id={review.product_id}
-                                />
-                              </li>
-                            );
-                          })}
-                      </ul>
                     </div>
-                    {visibleReviews < reviews[productId]?.allIds.length && (
-                      <div className="show-more-reviews-button-container">
-                        {' '}
-                        <button onClick={handleShowMoreReviews} className="show-more-reviews-button">
-                          Show More Reviews
-                        </button>
-                      </div>
-                    )}
-                    {visibleReviews > 4 && (
-                      <div className="show-less-reviews-button-container">
-                        <button onClick={handleShowLessReviews} className="show-less-reviews-button">
-                          Show Less Reviews
-                        </button>
-                      </div>
-                    )}
-                  </div>
+                  )}
 
                   <div className="product-details-other-products-container">
-                    <div className="product-details-other-products">
-                      <h1 className="product-details-other-product-header">Other Products</h1>
+                    <div className="product-details-other-products" style={{ cursor: 'text' }}>
+                      <h1 className="product-details-other-products-header" style={{ cursor: 'text' }}>
+                        Other Products
+                      </h1>
                       <ul className="product-details-other-products-list-container">
                         {otherProducts.map((relatedProduct) => (
-                          <li key={relatedProduct.id} className="product-details-other-product">
+                          <li
+                            key={relatedProduct.id}
+                            className="product-details-other-product"
+                            style={{ cursor: 'pointer' }}
+                          >
                             <RelatedProducts
                               id={relatedProduct.id}
                               name={relatedProduct.name}
                               price={relatedProduct.price}
-                              rating={avgRating(relatedProduct.reviews)}
+                              rating={avgRatingRelatedProducts(relatedProduct.reviews)}
                               product_image={relatedProduct.product_images[0].image_url}
                             />
                           </li>

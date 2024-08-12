@@ -20,7 +20,7 @@ export const deleteWishlistProduct = (productId) => ({
 });
 
 export const getUserWishlist = () => async (dispatch) => {
-  const res = await fetch('/api/wishlist');
+  const res = await fetch('/api/wishlist/current');
   if (res.ok) {
     const data = res.json();
     dispatch(setWishlistProducts(data));

@@ -25,6 +25,15 @@ def product_details(product_id):
     product = Product.query.get_or_404(product_id)
     return product.to_dict()
 
+@product_routes.route('/current', methods=['GET'])
+@login_required
+def user_products():
+    """
+    Query for a list of all user listed products
+    """
+    products = Product.query.filter_by(user_id=current_user.id)
+    return {'products': [product.to_dict() for product in products]}
+
 @product_routes.route('/', methods=['POST'])
 @login_required
 def add_product():

@@ -322,3 +322,12 @@
   background-color: lightyellow;
   transition: all 300ms;
 }
+
+.product-details-no-reviews-container {
+  max-width: 600px;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 50px;
+}

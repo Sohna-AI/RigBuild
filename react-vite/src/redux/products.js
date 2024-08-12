@@ -1,14 +1,12 @@
 import { createSelector } from '@reduxjs/toolkit';
 import { getUserWishlist } from './wishlist';
-import { addNewProductImage, addProductImage } from './productImages';
 
 const ADD_PRODUCT = 'products/addProduct';
 const EDIT_PRODUCT = 'products/editProduct';
 const SET_PRODUCTS = 'products/setProducts';
 const SET_PRODUCT = 'products/setProduct';
 const DELETE_PRODUCT = 'products/deleteProduct';
-const WISHLIST_PRODUCT = 'products/wishlistProduct';
-const REMOVE_PRODUCT_FROM_WISHLIST = 'products/removeProductFromWishlist';
+const SET_USER_PRODUCTS = 'products/setUserProducts';
 
 const addProduct = (product) => ({
   type: ADD_PRODUCT,
@@ -30,23 +28,22 @@ const setProduct = (product) => ({
   product,
 });
 
-const deleteProduct = (productId) => ({
-  type: DELETE_PRODUCT,
-  productId,
+const setUserProducts = (products) => ({
+  type: SET_USER_PRODUCTS,
+  products,
 });
 
-const wishlistProduct = (productId) => ({
-  type: WISHLIST_PRODUCT,
-  productId,
-});
+export const getUserProducts = () => async (dispatch) => {
+  const res = await fetch('/api/products/current');
 
-const removeProductFromWishlist = (productId) => ({
-  type: REMOVE_PRODUCT_FROM_WISHLIST,
-  productId,
-});
+  if (res.ok) {
+    const products = await res.json();
+    await dispatch(setUserProducts(products));
+    return products;
+  }
+};
 
-export const addNewProduct = (product, image) => async (dispatch) => {
-  console.log(product);
+export const addNewProduct = (product) => async (dispatch) => {
   const res = await fetch('/api/products/', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
@@ -57,6 +54,11 @@ export const addNewProduct = (product, image) => async (dispatch) => {
     const product = await res.json();
     dispatch(addProduct(product));
     return product;
+  } else if (res.status < 500) {
+    const errorMessages = await res.json();
+    return errorMessages;
+  } else {
+    return { server: 'Something went wrong. Please try again' };
   }
 };
 
@@ -69,8 +71,12 @@ export const editProductById = (productId, data) => async (dispatch) => {
 
   if (res.ok) {
     const product = await res.json();
-    dispatch(editProduct(product));
-    return product;
+    return await dispatch(editProduct(product));
+  } else if (res.status < 500) {
+    const errorMessages = await res.json();
+    return errorMessages;
+  } else {
+    return { server: 'Something went wrong. Please try again' };
   }
 };
 
@@ -94,6 +100,18 @@ export const getProductDetailsById = (productId) => async (dispatch) => {
   }
 };
 
+export const deleteProductById = (productId, current) => async (dispatch) => {
+  const res = await fetch(`/api/products/${productId}`, {
+    method: 'DELETE',
+  });
+  if (res.ok) {
+    const data = await res.json();
+    if (current) dispatch(getUserProducts());
+    else dispatch(getProducts());
+    return data;
+  }
+};
+
 export const wishlistNewProduct = (productId) => async (dispatch) => {
   const res = await fetch(`/api/products/${productId}/wishlist`, {
     method: 'POST',
@@ -103,6 +121,11 @@ export const wishlistNewProduct = (productId) => async (dispatch) => {
     const data = await res.json();
     dispatch(getProductDetailsById(productId));
     return data;
+  } else if (res.status < 500) {
+    const errorMessages = await res.json();
+    return errorMessages;
+  } else {
+    return { server: 'Something went wrong. Please try again' };
   }
 };
 
@@ -141,6 +164,14 @@ const productsReducer = (state = structuredClone(initialState), action) => {
     case EDIT_PRODUCT: {
       const newState = structuredClone(state);
       newState.products[action.product.id] = structuredClone(action.product);
+      return newState;
+    }
+    case SET_USER_PRODUCTS: {
+      const newState = structuredClone(initialState);
+      action.products.products.forEach((product) => {
+        newState.products[product.id] = structuredClone(product);
+        if (newState.allIds.indexOf(product.id) < 0) newState.allIds.push(product.id);
+      });
       return newState;
     }
     case SET_PRODUCTS: {

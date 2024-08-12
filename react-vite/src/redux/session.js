@@ -46,7 +46,6 @@ export const thunkSignup = (user) => async (dispatch) => {
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify(user),
   });
-  console.log(JSON.stringify(user));
 
   if (response.ok) {
     const data = await response.json();

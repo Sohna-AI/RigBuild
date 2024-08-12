@@ -7,7 +7,9 @@ function OpenModalButton({
   onModalClose, // optional: callback function that will be called once the modal is closed
   reviewDelete,
   reviewEdit,
-  reviewProduct
+  reviewProduct,
+  productDetailsDelete,
+  productDeleteOnCurrent,
 }) {
   const { setModalContent, setOnModalClose } = useModal();
 
@@ -20,11 +22,13 @@ function OpenModalButton({
   const handleClassName = () => {
     if (reviewDelete) return 'review-card-delete-button';
     if (reviewEdit) return 'review-card-edit-button';
-    if (reviewProduct) return 'review-this-product-button'
+    if (reviewProduct) return 'review-this-product-button';
+    if (productDetailsDelete) return 'product-details-delete-button';
+    if (productDeleteOnCurrent) return 'users-product-delete-button';
   };
   handleClassName();
   return (
-    <button onClick={onClick} style={{ cursor: 'pointer' }} className={handleClassName()}>
+    <button onClick={onClick} className={handleClassName()}>
       {buttonText}
     </button>
   );

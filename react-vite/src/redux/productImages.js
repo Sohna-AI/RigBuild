@@ -32,6 +32,11 @@ export const getProductImages = () => async (dispatch) => {
     const data = await res.json();
     dispatch(setProductImages(data));
     return data;
+  } else if (res.status < 500) {
+    const errorMessages = await res.json();
+    return errorMessages;
+  } else {
+    return { server: 'Something went wrong. Please try again' };
   }
 };
 
@@ -47,6 +52,11 @@ export const addNewProductImage = (productId, image) => async (dispatch) => {
   if (res.ok) {
     const productImage = await res.json();
     dispatch(addProductImage(productImage));
+  } else if (res.status < 500) {
+    const errorMessages = await res.json();
+    return errorMessages;
+  } else {
+    return { server: 'Something went wrong. Please try again' };
   }
 };
 
@@ -63,6 +73,11 @@ export const editProductImageById = (productImageId, image) => async (dispatch) 
     const productImage = await res.json();
     dispatch(editProductImage(productImage));
     return productImage;
+  } else if (res.status < 500) {
+    const errorMessages = await res.json();
+    return errorMessages;
+  } else {
+    return { server: 'Something went wrong. Please try again' };
   }
 };
 
@@ -73,6 +88,11 @@ export const removeProductImage = (productImageId) => async (dispatch) => {
 
   if (res.ok) {
     dispatch(deleteProductImage(productImageId));
+  } else if (res.status < 500) {
+    const errorMessages = await res.json();
+    return errorMessages;
+  } else {
+    return { server: 'Something went wrong. Please try again' };
   }
 };
 

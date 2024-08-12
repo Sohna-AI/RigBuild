@@ -53,7 +53,7 @@ export default function ProductsPage() {
                   price={product.price}
                   rating={avgRating(product.reviews)}
                   stock_quantity={product.stock_quantity}
-                  product_image={product.product_images[0].image_url}
+                  product_image={product.product_images[0]?.image_url}
                 />
               </div>
             );

@@ -21,7 +21,7 @@ function Navigation({ isLoaded }) {
     else navigate('/');
   };
   return (
-    <ul className="">
+    <ul className="navigation-top-container">
       <li className="short-logo-container">
         <div className="short-logo-container" onClick={handleClick}>
           <img src="../../../public/short-logo-light-mode.png" className="short-logo" />

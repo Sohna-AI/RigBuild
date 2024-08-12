@@ -50,7 +50,7 @@ const ProfileButton = ({ user }) => {
           <>
             <li className="profile-dropdown-user-info-container">
               <div className="profile-dropdown-user-info">
-                <span className="profile-dropdown-username">Hello, {user.username}</span>
+                <span className="profile-dropdown-username">Welcome, {user.username}</span>
                 <div className="profile-dropdown-email-container">
                   <div className="profile-dropdown-email">{user.email}</div>
                 </div>
@@ -58,12 +58,17 @@ const ProfileButton = ({ user }) => {
             </li>
             <li className="profile-dropdown-manage-listing-container">
               <NavLink
-                to="/spots/current"
+                to="/products/current"
                 className="profile-dropdown-manage-listing"
                 onClick={closeMenu}
                 style={{ textDecoration: 'none' }}
               >
                 Manage Listings
+              </NavLink>
+            </li>
+            <li>
+              <NavLink to="/user/current/wishlist" onClick={closeMenu} style={{ textDecoration: 'none' }}>
+                Wishlist
               </NavLink>
             </li>
             <li>

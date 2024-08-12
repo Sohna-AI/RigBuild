@@ -5,7 +5,7 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
-.hidden {
+.profile-dropdown.hidden {
   display: none;
 }
 
@@ -69,12 +69,14 @@ body {
 }
 
 .profile-dropdown {
+  display: flex;
+  flex-direction: column;
   border: 1px solid black;
   position: absolute;
   top: 5.7rem;
   right: 1.7rem;
-  width: 120px;
-  height: 120px;
+  width: 150px;
+  height: 250px;
   padding: 15px;
   border-radius: 15px;
   background-color: white;
