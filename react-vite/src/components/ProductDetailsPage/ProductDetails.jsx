@@ -108,7 +108,10 @@ const ProductDetails = () => {
 
   const userPostedReview = (reviewsObj, userId) => {
     if (typeof reviewsObj !== 'object' || typeof userId !== 'number') return false;
-
+    const productReviews = reviewsObj[productId];
+    if (!productReviews || typeof productReviews !== 'object') {
+      return false;
+    }
     const { reviews } = reviewsObj[productId];
     for (let reviewId of Object.keys(reviews)) {
       const review = reviews[reviewId];
@@ -158,9 +161,9 @@ const ProductDetails = () => {
                     </div>
                     <div className="product-rating-cart">
                       <div className="product-rating">
-                        {handleReviewsHeader(reviews[productId].allIds.length)}
+                        {handleReviewsHeader(reviews[productId]?.allIds.length)}
                         <StarRating
-                          rating={avgRating(reviews[productId].reviews, reviews[productId].allIds.length)}
+                          rating={avgRating(reviews[productId]?.reviews, reviews[productId]?.allIds.length)}
                         />
                       </div>
                       <div className="product-price-quantity">
@@ -243,13 +246,13 @@ const ProductDetails = () => {
                   </div>
                 </div>
                 <div className="product-details-reviews-products-container">
-                  {reviews[productId].allIds.length ? (
+                  {reviews[productId]?.allIds.length ? (
                     <div className="product-details-reviews-container">
-                      <h1 className="product-details-reviews-header">
-                        {handleReviewsHeader(reviews[productId].allIds.length)}
-                      </h1>
                       <div className="product-details-reviews">
                         <div className="product-details-reviews-post-container">
+                          <h1 className="product-details-reviews-header">
+                            {handleReviewsHeader(reviews[productId]?.allIds.length)}
+                          </h1>
                           {renderPostReviewButton() && (
                             <OpenModalButton
                               buttonText={'Review this product'}
@@ -299,7 +302,7 @@ const ProductDetails = () => {
                   ) : (
                     <div className="product-details-no-reviews-container">
                       <h1 className="product-details-no-reviews-header">
-                        {handleReviewsHeader(reviews[productId].allIds.length)}
+                        {handleReviewsHeader(reviews[productId]?.allIds.length)}
                       </h1>
                       <div className="product-details-no-reviews-post-container">
                         Be first to review this product:
