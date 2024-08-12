@@ -45,7 +45,6 @@ function SignupFormModal() {
     }
   };
 
-  const closeMenu = () => setShowMenu(false);
   useEffect(() => {
     if (!showMenu) return;
 

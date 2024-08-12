@@ -33,7 +33,6 @@ function LoginFormModal() {
     }
   };
 
-  const closeMenu = () => setShowMenu(false);
   useEffect(() => {
     if (!showMenu) return;
 
