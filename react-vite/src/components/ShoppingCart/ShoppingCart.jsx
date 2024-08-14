@@ -90,7 +90,7 @@ const ShoppingCart = () => {
           <div>
             <div className="cart-checkout-subtitle-container">
               <h5 className="cart-checkout-subtitle">Your cart subtotal:</h5>
-              <h4>${cart.totalPrice}</h4>
+              <h4>${cart.totalPrice.toFixed(2)}</h4>
             </div>
           </div>
           <div className="cart-checkout-total-checkout-button">

@@ -1,6 +1,7 @@
 import { useSelector } from 'react-redux';
 import { selectWishlistProducts } from '../../redux/wishlist';
 import ProductCard from '../ProductsPage/ProductCard';
+import './UserWishlist.css';
 const UserWishlist = () => {
   const wishlist = useSelector(selectWishlistProducts);
   const sessionUser = useSelector((state) => state.session.user);
@@ -15,8 +16,8 @@ const UserWishlist = () => {
 
   const handleWishlistHeader = (numWishlist) => {
     if (numWishlist === 0) return 'No products in your wishlist';
-    if (numWishlist === 1) return `${numWishlist} product`;
-    if (numWishlist > 1) return `${numWishlist} products`;
+    if (numWishlist === 1) return `${numWishlist}  product`;
+    if (numWishlist > 1) return `${numWishlist}  products`;
   };
   return (
     <>
@@ -25,7 +26,7 @@ const UserWishlist = () => {
           <h1>{sessionUser.username}&apos;s Wishlist</h1>
           <h3>{handleWishlistHeader(wishlist.allIds.length)} </h3>
         </div>
-        <div>
+        <div className="users-wishlist-page">
           {wishlist?.allIds.map((id) => {
             const product = wishlist.products[id];
             return (

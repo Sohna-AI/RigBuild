@@ -7,7 +7,7 @@ import * as productActions from '../../redux/products';
 import * as reviewActions from '../../redux/reviews';
 import * as categoryActions from '../../redux/categories';
 import * as cartActions from '../../redux/cart';
-import { deleteWishlistProduct, setWishlistProduct } from '../../redux/wishlist';
+import { deleteWishlistProduct, getUserWishlist, setWishlistProduct } from '../../redux/wishlist';
 import ReviewCard from './ReviewCard';
 import './ProductDetails.css';
 import RelatedProducts from './RelatedProducts';
@@ -57,6 +57,13 @@ const ProductDetails = () => {
   }, [dispatch, productId]);
 
   const otherProducts = relatedProducts ? relatedProducts.filter((p) => p.id !== product.id).slice(0, 4) : [];
+
+  useEffect(() => {
+    if (sessionUser) {
+      dispatch(getUserWishlist());
+    }
+    setIsWishlisted(!!wishlist[productId]);
+  }, [dispatch, productId, wishlist, sessionUser]);
 
   const handleWishlistChange = () => {
     if (sessionUser) {
