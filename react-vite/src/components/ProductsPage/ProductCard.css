@@ -225,3 +225,110 @@
   grid-row-end: 1;
   transition: all 0.5s;
 }
+
+.users-product-edit-delete-container {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.users-product-delete-button {
+  background-color: transparent;
+  position: relative;
+  border: none;
+}
+
+.users-product-delete-button::after {
+  content: 'Delete';
+  position: absolute;
+  top: -130%;
+  left: 50%;
+  transform: translateX(-50%);
+  width: fit-content;
+  height: fit-content;
+  background-color: rgb(168, 7, 7);
+  padding: 4px 8px;
+  border-radius: 5px;
+  transition: 0.2s linear;
+  transition-delay: 0.2s;
+  color: white;
+  text-transform: uppercase;
+  font-size: 12px;
+  opacity: 0;
+  visibility: hidden;
+}
+
+.user-product-card-delete-icon {
+  transform: scale(1.2);
+  transition: 0.2s linear;
+}
+
+.users-product-delete-button:hover > .user-product-card-delete-icon {
+  transform: scale(1.5);
+}
+
+.users-product-delete-button > .user-product-card-delete-icon path {
+  fill: red;
+}
+
+.users-product-delete-button:hover > .user-product-card-delete-icon path {
+  fill: rgb(168, 7, 7);
+}
+
+.users-product-delete-button:hover::after {
+  visibility: visible;
+  opacity: 1;
+  top: -160%;
+}
+
+.users-product-edit-button {
+  background-color: transparent;
+  position: relative;
+  border: none;
+  transition: 0.2s linear;
+}
+
+.users-product-edit-button:hover {
+  color: midnightblue;
+  transform: scale(1.5);
+  transition: 0.2s linear;
+}
+
+.users-product-edit-button::after {
+  content: 'edit';
+  position: absolute;
+  top: -50%;
+  left: 50%;
+  transform: translateX(-50%);
+  width: fit-content;
+  height: fit-content;
+  background-color: mediumslateblue;
+  padding: 4px 8px;
+  border-radius: 5px;
+  transition: 0.2s linear;
+  transition-delay: 0.2s;
+  color: white;
+  text-transform: uppercase;
+  font-size: 8px;
+  opacity: 0;
+  visibility: hidden;
+}
+
+.user-product-card-edit-icon {
+  transform: scale(1);
+  transition: 0.2s linear;
+}
+
+.users-product-edit-button:hover > .user-product-card-edit-icon {
+  transform: scale(0.8);
+}
+
+.users-product-edit-button:hover::after {
+  visibility: visible;
+  opacity: 1;
+  top: -70%;
+}
+
+.users-product-edit-button:hover > .user-product-card-edit-icon path {
+  stroke: mediumslateblue;
+}

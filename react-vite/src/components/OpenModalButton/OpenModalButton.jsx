@@ -11,6 +11,7 @@ function OpenModalButton({
   productDetailsDelete,
   productDeleteOnCurrent,
   shoppingCartButton,
+  
 }) {
   const { setModalContent, setOnModalClose } = useModal();
 
@@ -27,6 +28,7 @@ function OpenModalButton({
     if (productDetailsDelete) return 'product-details-delete-button';
     if (productDeleteOnCurrent) return 'users-product-delete-button';
     if (shoppingCartButton) return 'users-shopping-cart-nav-button'
+    
   };
   handleClassName();
   return (

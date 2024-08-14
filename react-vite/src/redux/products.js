@@ -54,14 +54,13 @@ export const addNewProduct = (product) => async (dispatch) => {
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify(product),
   });
-  console.log(JSON.stringify(product));
   if (res.ok) {
     const product = await res.json();
     dispatch(addProduct(product));
     return product;
   } else if (res.status < 500) {
     const errorMessages = await res.json();
-    return errorMessages;
+    return { errors: errorMessages };
   } else {
     return { server: 'Something went wrong. Please try again' };
   }
@@ -77,10 +76,10 @@ export const editProductById = (productId, data) => async (dispatch) => {
   if (res.ok) {
     const product = await res.json();
     await dispatch(editProduct(product));
-    return;
+    return product;
   } else if (res.status < 500) {
     const errorMessages = await res.json();
-    return errorMessages;
+    return { errors: errorMessages };
   } else {
     return { server: 'Something went wrong. Please try again' };
   }
@@ -130,7 +129,7 @@ export const wishlistNewProduct = (productId) => async (dispatch) => {
     return data;
   } else if (res.status < 500) {
     const errorMessages = await res.json();
-    return errorMessages;
+    return { errors: errorMessages };
   } else {
     return { server: 'Something went wrong. Please try again' };
   }

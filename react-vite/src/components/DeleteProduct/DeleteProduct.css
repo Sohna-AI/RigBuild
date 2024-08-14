@@ -1,0 +1,94 @@
+.delete-product-container {
+  width: 350px;
+  height: 250px;
+  background-color: antiquewhite;
+  padding: 35px;
+  border-radius: 20px;
+}
+
+.delete-product-delete-cancel-container {
+  display: flex;
+  height: 150px;
+  align-items: center;
+  justify-content: space-around;
+}
+
+.delete-product-button {
+  position: relative;
+  border-radius: 6px;
+  width: 150px;
+  height: 40px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  border: 1px solid #cc0000;
+  background-color: #e50000;
+  overflow: hidden;
+}
+
+.delete-product-button,
+.delete-product-button__icon,
+.delete-product-button__text {
+  transition: all 0.3s;
+}
+
+.delete-product-button .delete-product-button__text {
+  transform: translateX(35px);
+  color: #fff;
+  font-weight: 600;
+}
+
+.delete-product-button .delete-product-button__icon {
+  position: absolute;
+  transform: translateX(109px);
+  height: 100%;
+  width: 39px;
+  background-color: #cc0000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.delete-product-button .svg {
+  width: 20px;
+}
+
+.delete-product-button:hover {
+  background: #cc0000;
+}
+
+.delete-product-button:hover .delete-product-button__text {
+  color: transparent;
+}
+
+.delete-product-button:hover .delete-product-button__icon {
+  width: 148px;
+  transform: translateX(0);
+}
+
+.delete-product-button:active .delete-product-button__icon {
+  background-color: #b20000;
+}
+
+.delete-product-button:active {
+  border: 1px solid #b20000;
+}
+
+.delete-product-cancel-button {
+  border: none;
+  padding: 1em 2em;
+  font-size: 12px;
+  letter-spacing: 2px;
+  font-weight: 600;
+  color: white;
+  background-color: gray;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: all 400ms;
+}
+
+.delete-product-cancel-button:hover {
+  transition: all 400ms;
+  background-color: aliceblue;
+  color: black;
+}

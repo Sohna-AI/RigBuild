@@ -4,9 +4,11 @@ import { useModal } from '../../context/Modal';
 import { thunkSignup } from '../../redux/session';
 import LoginFormModal from '../LoginFormModal/LoginFormModal';
 import './SignupForm.css';
+import { useNavigate } from 'react-router-dom';
 
 function SignupFormModal() {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const [email, setEmail] = useState('');
   const [username, setUsername] = useState('');
   const [firstName, setFirstName] = useState('');
@@ -37,7 +39,7 @@ function SignupFormModal() {
         password,
       })
     );
-
+    navigate('/products');
     if (serverResponse) {
       setErrors(serverResponse);
     } else {

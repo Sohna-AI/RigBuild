@@ -331,3 +331,47 @@
   align-items: center;
   gap: 50px;
 }
+
+.product-details-edit-delete-buttons-container {
+  display: flex;
+  width: 100px;
+  align-items: center;
+  justify-content: space-between;
+  transform: translateX(-170px);
+  gap: 30px;
+}
+
+.product-details-edit-button,
+.product-details-delete-button {
+  border: none;
+  padding: 1em 2em;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: all 300ms;
+}
+
+.product-details-edit-button {
+  background-color: darkblue;
+  letter-spacing: 1px;
+  color: white;
+  font-weight: 600;
+  font-size: 15px;
+}
+
+.product-details-edit-button:hover {
+  background-color: blue;
+  transition: all 300ms;
+}
+
+.product-details-delete-button {
+  background-color: darkred;
+  letter-spacing: 1px;
+  color: white;
+  font-weight: 600;
+  font-size: 15px;
+}
+
+.product-details-delete-button:hover {
+  background-color: red;
+  transition: all 300ms;
+}

@@ -82,31 +82,27 @@ export default function NewProductForm({ edit }) {
     try {
       if (edit) {
         const serverRes = await dispatch(productActions.editProductById(productId, formData));
-        if (serverRes) {
-          return setErrors(serverRes);
+        if (serverRes.errors) {
+          console.log(serverRes.errors);
+          return setErrors(serverRes.errors);
         }
         if (deleteCurrentImage && currentImageId) {
-          const removeImageRes = await dispatch(productImageActions.removeProductImage(currentImageId));
-          if (removeImageRes) {
-            setErrors((prevErrors) => ({ ...prevErrors, ...removeImageRes }));
-          }
+          await dispatch(productImageActions.removeProductImage(currentImageId));
 
           if (image) {
-            const addImageRes = await dispatch(productImageActions.addNewProductImage(productId, image));
-            if (addImageRes || !image) {
-              console.log('your are here!!!', addImageRes);
-              return setErrors((prevErrors) => ({ ...prevErrors, ...addImageRes }));
-            }
+            await dispatch(productImageActions.addNewProductImage(productId, image));
           }
         }
         navigate(`/products/${productId}`);
       } else {
         const newProduct = await dispatch(productActions.addNewProduct(formData, image));
 
-        if (newProduct) return setErrors(newProduct);
+        if (newProduct.errors) {
+          return setErrors(newProduct.errors);
+        }
 
         await dispatch(productImageActions.addNewProductImage(newProduct.id, image));
-        if (!errors) navigate(`/products/${newProduct.id}`);
+        navigate(`/products/${newProduct.id}`);
       }
     } catch (error) {
       setErrors(error);
