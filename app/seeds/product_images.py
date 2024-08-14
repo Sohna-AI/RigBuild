@@ -11,7 +11,7 @@ def seed_product_images():
         },
         {
             'product_id': 2,
-            'image_url': 'https://rigbuild-productimages.s3.us-east-2.amazonaws.com/8b05cadf525e4e2a94a91c460603effd.png',
+            'image_url': 'https://rigbuild-productimages.s3.us-east-2.amazonaws.com/Radeon-RX-6800-XT.png',
         },
         {
             'product_id': 3,
