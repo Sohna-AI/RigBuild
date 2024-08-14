@@ -9,12 +9,13 @@ import './CreateReviews.css';
 const CreateReviews = ({ productId, edit, reviewId }) => {
   const reviews = useSelector(reviewActions.selectReviews);
   const [starRating, setStarRating] = useState(0);
-  const [review, setReview] = useState('');
+  const [errors, setErrors] = useState({});
+  const [reviewText, setReviewText] = useState('');
   const { closeModal } = useModal();
   const dispatch = useDispatch();
 
   const handleReviewChange = (e) => {
-    setReview(e.target.value);
+    setReviewText(e.target.value);
   };
 
   const handleStarRatingChange = (rating) => {
@@ -22,40 +23,35 @@ const CreateReviews = ({ productId, edit, reviewId }) => {
   };
 
   const handleSubmit = async (e) => {
+    setErrors({});
     e.preventDefault();
 
     const reviewPayload = {
-      review: review,
+      review: reviewText,
       rating: starRating,
     };
 
-    if (reviewPayload) {
-      try {
-        if (edit && reviewId) {
-          await dispatch(reviewActions.editReviewById(reviewPayload, reviewId));
-        } else {
-          await dispatch(createReview(reviewPayload, productId));
-        }
-        await dispatch(loadReviewsByProductId(productId));
-        closeModal();
-      } catch (error) {
-        console.error('failed to create review', error);
-      }
+    if (edit && reviewId) {
+      const existing = await dispatch(reviewActions.editReviewById(reviewPayload, reviewId));
+      if (existing) return setErrors(existing);
+    } else {
+      const newReview = await dispatch(createReview(reviewPayload, productId));
+      console.log(newReview);
+      if (newReview) return setErrors(newReview);
     }
+    await dispatch(loadReviewsByProductId(productId));
+    closeModal();
   };
 
   useEffect(() => {
     if (edit && reviewId) {
       const review = reviews[productId]?.reviews[reviewId];
       if (review) {
-        setReview(review.review);
+        setReviewText(review.review);
         setStarRating(review.rating);
       }
     }
   }, [edit, reviewId, productId, reviews]);
-
-  const reviewLength = review.length < 10;
-  const rating = starRating === 0;
 
   return (
     <>
@@ -64,23 +60,25 @@ const CreateReviews = ({ productId, edit, reviewId }) => {
           <div className="create-review-page">
             <h1 className="create-review-title">{edit ? 'Edit your review' : 'Rate this product'}</h1>
             <main className="create-review-main-container">
-              <textarea
-                name="review"
-                value={review}
-                onChange={handleReviewChange}
-                rows={5}
-                cols={30}
-                className="create-review-form-style"
-                placeholder="Leave your review here..."
-                required
-              ></textarea>
-              <div>
+              <div className="create-review-text-error-container">
+                {errors.review && <p className="error">{errors.review}</p>}
+                <textarea
+                  value={reviewText}
+                  onChange={handleReviewChange}
+                  rows={10}
+                  cols={60}
+                  className="create-review-form-style"
+                  placeholder="Leave your review here..."
+                ></textarea>
+              </div>
+              <div className="create-review-rating-error-container">
+                {errors.rating && <p className="error">{errors.rating}</p>}
                 <StarRating value={starRating} onChange={handleStarRatingChange} />
               </div>
             </main>
-            <footer>
+            <div className="create-review-update-cancel-button-container">
               <div className="create-review-button-container">
-                <button className="create-review-button" type="submit" disabled={reviewLength || rating}>
+                <button className="create-review-button" onClick={handleSubmit}>
                   {edit ? 'Update your review' : 'Submit your review'}
                 </button>
               </div>
@@ -89,7 +87,7 @@ const CreateReviews = ({ productId, edit, reviewId }) => {
                   Cancel
                 </button>
               </div>
-            </footer>
+            </div>
           </div>
         </div>
       </form>

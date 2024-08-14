@@ -1,9 +1,11 @@
-import { NavLink, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { AiOutlineShoppingCart } from 'react-icons/ai';
 import { useState, useEffect } from 'react';
 import ProfileButton from './ProfileButton';
 import './Navigation.css';
 import { useSelector } from 'react-redux';
+import ShoppingCart from '../../components/ShoppingCart/ShoppingCart';
+import OpenModalButton from '../OpenModalButton/OpenModalButton';
 
 function Navigation({ isLoaded }) {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -20,11 +22,15 @@ function Navigation({ isLoaded }) {
     if (sessionUser) navigate('/products');
     else navigate('/');
   };
+
+  const handleSellProductClick = () => {
+    navigate('/products/new');
+  };
   return (
     <ul className="navigation-top-container">
       <li className="short-logo-container">
         <div className="short-logo-container" onClick={handleClick}>
-          <img src="../../../public/short-logo-light-mode.png" className="short-logo" />
+          <img src="/short-logo-light-mode.png" className="short-logo" />
         </div>
       </li>
       <li>
@@ -40,10 +46,15 @@ function Navigation({ isLoaded }) {
 
       {isLoggedIn && isLoaded && (
         <li className="profile-cart-container">
-          <NavLink to="/products/new">
-            <button className="sell-product-button">Sell your Product</button>
-          </NavLink>
-          <AiOutlineShoppingCart className="cart" />
+          <button className="sell-product-button" onClick={handleSellProductClick}>
+            Sell your Product
+          </button>
+
+          <OpenModalButton
+            buttonText={<AiOutlineShoppingCart className="cart" />}
+            modalComponent={<ShoppingCart />}
+            shoppingCartButton={true}
+          />
           <ProfileButton user={sessionUser} />
         </li>
       )}

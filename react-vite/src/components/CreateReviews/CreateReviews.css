@@ -1,5 +1,68 @@
 .create-review-container {
-    width: 500px;
-    height: 500px;
-    background-color: antiquewhite;
+  width: 500px;
+  height: 500px;
+  background-color: antiquewhite;
+  border-radius: 10px;
+}
+
+.create-review-page {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.create-review-update-cancel-button-container {
+  display: flex;
+  width: 80%;
+  justify-content: space-between;
+  padding-top: 30px;
+}
+
+.create-review-button {
+  border: none;
+  outline: 1px solid lightgoldenrodyellow;
+  padding: 1em 2em;
+  border-radius: 8px;
+  background-color: lightyellow;
+  letter-spacing: 1px;
+  font-size: 14px;
+  font-weight: 700;
+  transition: all 300ms;
+}
+
+.create-review-button:hover {
+  outline: 1px solid darkorange;
+  background-color: darkorange;
+  transition: all 300ms;
+  color: white;
+}
+
+.create-review-cancel-button {
+  border: none;
+  outline: 1px solid red;
+  background-color: darkred;
+  font-size: 14px;
+  padding: 1em 2em;
+  border-radius: 8px;
+  font-weight: 700;
+  letter-spacing: 1px;
+  transition: all 300ms;
+}
+
+.create-review-cancel-button:hover {
+  outline: 1px solid darkred;
+  background-color: red;
+  color: white;
+  transition: all 300ms;
+}
+
+.error {
+  color: red;
+  font-size: 12px;
+}
+
+.create-review-text-error-container,
+.create-review-rating-error-container {
+  display: flex;
+  flex-direction: column;
 }

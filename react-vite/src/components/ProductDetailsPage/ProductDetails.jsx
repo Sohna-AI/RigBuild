@@ -6,6 +6,7 @@ import { IoStar } from 'react-icons/io5';
 import * as productActions from '../../redux/products';
 import * as reviewActions from '../../redux/reviews';
 import * as categoryActions from '../../redux/categories';
+import * as cartActions from '../../redux/cart';
 import { deleteWishlistProduct, setWishlistProduct } from '../../redux/wishlist';
 import ReviewCard from './ReviewCard';
 import './ProductDetails.css';
@@ -25,6 +26,7 @@ const ProductDetails = () => {
   const relatedProducts = useSelector((state) =>
     categoryActions.selectProductsByCategory(state, product?.category_id)
   );
+  const cart = useSelector(cartActions.selectCartDetails);
   const [isLoaded, setIsLoaded] = useState(false);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const sessionUser = useSelector((state) => state.session.user);
@@ -53,12 +55,6 @@ const ProductDetails = () => {
     };
     fetchProductAndReviews();
   }, [dispatch, productId]);
-
-  useEffect(() => {
-    if (product?.category_id) {
-      dispatch(categoryActions.getProductsByCategory(product.category_id));
-    }
-  }, [dispatch, product]);
 
   const otherProducts = relatedProducts ? relatedProducts.filter((p) => p.id !== product.id).slice(0, 4) : [];
 
@@ -142,6 +138,14 @@ const ProductDetails = () => {
     if (reviews === 1) return `${reviews} review`;
   };
 
+  const handleAddToCart = () => {
+    const productToAdd = {
+      cartId: cart?.id,
+      productId: product?.id,
+    };
+    dispatch(cartActions.thunkAddToCart(productToAdd.cartId, productToAdd.productId));
+  };
+
   return (
     <>
       {isLoaded && (
@@ -171,10 +175,10 @@ const ProductDetails = () => {
                         <div className="product-quantity">Quantity:{product.stock_quantity}</div>
                       </div>
                     </div>
-                    {!userIsProductOwner(product, sessionUser.id) ? (
+                    {!userIsProductOwner(product, sessionUser?.id) ? (
                       <div className="buttons-cart-wishlist">
                         <div>
-                          <button className="cart-button">
+                          <button className="cart-button" onClick={handleAddToCart}>
                             {' '}
                             <span className="IconContainer">
                               <svg
@@ -305,13 +309,15 @@ const ProductDetails = () => {
                         {handleReviewsHeader(reviews[productId]?.allIds.length)}
                       </h1>
                       <div className="product-details-no-reviews-post-container">
-                        Be first to review this product:
                         {renderPostReviewButton() && (
-                          <OpenModalButton
-                            buttonText={'Review this product'}
-                            modalComponent={<CreateReviews productId={productId} />}
-                            reviewProduct={true}
-                          />
+                          <div>
+                            Be first to review this product:
+                            <OpenModalButton
+                              buttonText={'Review this product'}
+                              modalComponent={<CreateReviews productId={productId} />}
+                              reviewProduct={true}
+                            />
+                          </div>
                         )}
                       </div>
                     </div>
@@ -387,10 +393,7 @@ const ProductDetails = () => {
                 </div>
                 <div>
                   <NavLink to="/">
-                    <img
-                      src="../../../public/short-logo-light-mode.png"
-                      className="product-page-logo-image"
-                    />
+                    <img src="/short-logo-light-mode.png" className="product-page-logo-image" />
                   </NavLink>
                 </div>
               </footer>

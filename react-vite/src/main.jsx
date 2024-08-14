@@ -10,6 +10,7 @@ import * as categoryActions from './redux/categories';
 import * as wishlistAcion from './redux/wishlist';
 import * as userActions from './redux/users';
 import * as reviewActions from './redux/reviews';
+import * as cartActions from './redux/cart';
 import './index.css';
 
 const store = configureStore();
@@ -19,6 +20,7 @@ if (import.meta.env.MODE !== 'production') {
   window.sessionActions = sessionActions;
   window.productActions = productActions;
   window.categoryActions = categoryActions;
+  window.cartActions = cartActions;
   window.wishlistAcion = wishlistAcion;
   window.reviewActions = reviewActions;
   window.userActions = userActions;

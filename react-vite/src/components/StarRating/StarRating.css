@@ -47,6 +47,6 @@
 .rating input:checked ~ label,
 .rating label:hover,
 .rating label:hover ~ label {
-  color: #de5499;
+  color: lightskyblue;
   transition: color 0.3s;
 }

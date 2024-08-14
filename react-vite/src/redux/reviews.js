@@ -47,7 +47,11 @@ export const createReview = (data, productId) => async (dispatch) => {
   if (res.ok) {
     const newReview = await res.json();
     dispatch(addReview(newReview, productId));
-    return newReview;
+  } else if (res.status < 500) {
+    const errorMessages = await res.json();
+    return errorMessages;
+  } else {
+    return { server: 'Something went wrong. Please try again' };
   }
 };
 
@@ -61,7 +65,11 @@ export const editReviewById = (data, reviewId) => async (dispatch) => {
   if (res.ok) {
     const updatedReview = await res.json();
     dispatch(editReview(reviewId, updatedReview));
-    return updatedReview;
+  } else if (res.status < 500) {
+    const errorMessages = await res.json();
+    return errorMessages;
+  } else {
+    return { server: 'Something went wrong. Please try again' };
   }
 };
 
@@ -72,6 +80,11 @@ export const deleteReviewById = (reviewId, productId) => async (dispatch) => {
   if (res.ok) {
     dispatch(deleteReview(reviewId, productId));
     return;
+  } else if (res.status < 500) {
+    const errorMessages = await res.json();
+    return errorMessages;
+  } else {
+    return { server: 'Something went wrong. Please try again' };
   }
 };
 

@@ -1,7 +1,13 @@
 import { useNavigate } from 'react-router-dom';
+import { useState, useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { IoStar } from 'react-icons/io5';
+import { deleteWishlistProduct, setWishlistProduct } from '../../redux/wishlist';
+import * as cartActions from '../../redux/cart';
+import DeleteProduct from '../DeleteProduct/DeleteProduct';
+
 import './ProductCard.css';
-import { useState } from 'react';
+import OpenModalButton from '../OpenModalButton/OpenModalButton';
 
 export default function ProductCard({
   id,
@@ -12,14 +18,26 @@ export default function ProductCard({
   stock_quantity,
   product_image,
   user_products,
+  showWishlistButton = false,
 }) {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const sessionUser = useSelector((state) => state.session.user);
+  const wishlist = showWishlistButton ? useSelector((state) => state.wishlist) : null;
+  const isProductInWishlist = wishlist ? Boolean(wishlist.products[id]) : false;
+  const cart = useSelector(cartActions.selectCartDetails);
+  const [isWishlisted, setIsWishlisted] = useState(isProductInWishlist);
+
   let productDescription;
   if (description) {
     productDescription = description.split('').slice(0, 200).join('') + '...';
   }
   const [visibleDescription, setVisibleDescription] = useState(productDescription);
   const [showFullDes, setShowFullDes] = useState(false);
+
+  useEffect(() => {
+    setIsWishlisted(isProductInWishlist);
+  }, [isProductInWishlist]);
 
   const handleClick = () => {
     navigate(`/products/${id}`);
@@ -47,12 +65,37 @@ export default function ProductCard({
     navigate(`/products/${id}/edit`);
   };
 
+  const handleWishlistChange = () => {
+    if (sessionUser) {
+      if (!isWishlisted) {
+        dispatch(setWishlistProduct(id));
+      } else {
+        dispatch(deleteWishlistProduct(id));
+      }
+      setIsWishlisted(!isWishlisted);
+    }
+  };
+
+  useEffect(() => {
+    if (sessionUser?.id) {
+      dispatch(cartActions.getUserCart(sessionUser.id));
+    }
+  }, [dispatch, sessionUser]);
+
+  const handleAddToCart = () => {
+    const product = {
+      cartId: cart?.id,
+      productId: id,
+    };
+    dispatch(cartActions.thunkAddToCart(product.cartId, product.productId));
+  };
+
   return (
     <>
       {!user_products && (
-        <div className="product-card" onClick={handleClick}>
+        <div className="product-card">
           <div className="product-image-container">
-            <img src={product_image} className="product-image" />
+            <img src={product_image} className="product-image" onClick={handleClick} />
           </div>
           <div className="product-name">
             <p>{name}</p>
@@ -68,23 +111,52 @@ export default function ProductCard({
           </div>
           <div className="product-price-add-cart-container">
             <div className="product-price">${price}</div>
-            <div className="product-page-add-to-cart-button">
-              <button className="product-page-cart-button">
-                {' '}
-                <span className="product-page-IconContainer">
+            {!showWishlistButton ? (
+              <div className="product-page-add-to-cart-button">
+                <button className="product-page-cart-button" onClick={handleAddToCart}>
+                  {' '}
+                  <span className="product-page-IconContainer">
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      height="1em"
+                      viewBox="0 0 576 512"
+                      fill="rgb(17, 17, 17)"
+                      className="product-page-cart-icon"
+                    >
+                      <path d="M0 24C0 10.7 10.7 0 24 0H69.5c22 0 41.5 12.8 50.6 32h411c26.3 0 45.5 25 38.6 50.4l-41 152.3c-8.5 31.4-37 53.3-69.5 53.3H170.7l5.4 28.5c2.2 11.3 12.1 19.5 23.6 19.5H488c13.3 0 24 10.7 24 24s-10.7 24-24 24H199.7c-34.6 0-64.3-24.6-70.7-58.5L77.4 54.5c-.7-3.8-4-6.5-7.9-6.5H24C10.7 48 0 37.3 0 24zM128 464a48 48 0 1 1 96 0 48 48 0 1 1 -96 0zm336-48a48 48 0 1 1 0 96 48 48 0 1 1 0-96z"></path>
+                    </svg>
+                  </span>
+                  <p className="product-page-cart-text">Add to Cart</p>
+                </button>
+              </div>
+            ) : (
+              <div className="product-favorite-button">
+                <input
+                  value="favorite-button"
+                  name="favorite-checkbox"
+                  id="favorite"
+                  checked={isWishlisted}
+                  onChange={handleWishlistChange}
+                  type="checkbox"
+                />
+                <label className="container" htmlFor="favorite">
                   <svg
+                    className="feather feather-heart"
+                    strokeLinejoin="round"
+                    strokeLinecap="round"
+                    strokeWidth="2"
+                    stroke="currentColor"
+                    fill="none"
+                    viewBox="0 0 24 22"
+                    height="15"
+                    width="15"
                     xmlns="http://www.w3.org/2000/svg"
-                    height="1em"
-                    viewBox="0 0 576 512"
-                    fill="rgb(17, 17, 17)"
-                    className="product-page-cart-icon"
                   >
-                    <path d="M0 24C0 10.7 10.7 0 24 0H69.5c22 0 41.5 12.8 50.6 32h411c26.3 0 45.5 25 38.6 50.4l-41 152.3c-8.5 31.4-37 53.3-69.5 53.3H170.7l5.4 28.5c2.2 11.3 12.1 19.5 23.6 19.5H488c13.3 0 24 10.7 24 24s-10.7 24-24 24H199.7c-34.6 0-64.3-24.6-70.7-58.5L77.4 54.5c-.7-3.8-4-6.5-7.9-6.5H24C10.7 48 0 37.3 0 24zM128 464a48 48 0 1 1 96 0 48 48 0 1 1 -96 0zm336-48a48 48 0 1 1 0 96 48 48 0 1 1 0-96z"></path>
+                    <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path>
                   </svg>
-                </span>
-                <p className="product-page-cart-text">Add to Cart</p>
-              </button>
-            </div>
+                </label>
+              </div>
+            )}
           </div>
         </div>
       )}
@@ -122,7 +194,10 @@ export default function ProductCard({
                 <button className="users-product-edit-button" onClick={handleEditButton}>
                   Edit
                 </button>
-                <button className="users-product-delete-button">Delete</button>
+                <OpenModalButton
+                  buttonText={'Delete'}
+                  modalComponent={<DeleteProduct productId={id} current={true} />}
+                />
               </div>
             </div>
           </div>

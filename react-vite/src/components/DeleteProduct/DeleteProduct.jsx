@@ -1,14 +1,21 @@
 import { useDispatch } from 'react-redux';
 import { useModal } from '../../context/Modal';
 import * as productActions from '../../redux/products';
+import { useNavigate } from 'react-router-dom';
 
-const DeleteProduct = ({ productId }) => {
+const DeleteProduct = ({ productId, current = false }) => {
   const { closeModal } = useModal();
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const confirmDelete = () => {
-    dispatch(productActions.deleteProductById(productId));
-    closeModal();
+    const deleteProduct = async () => {
+      await dispatch(productActions.deleteProductById(productId, current));
+      navigate('/products/current');
+      closeModal();
+    };
+
+    deleteProduct();
   };
   return (
     <>

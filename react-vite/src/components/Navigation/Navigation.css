@@ -24,11 +24,18 @@ ul {
   padding-right: 10px;
 }
 
-.cart {
+.users-shopping-cart-nav-button {
   transform: translate(-60px);
   width: 30px;
   height: 30px;
   color: #c4e5f2;
+  background-color: transparent;
+  border: none;
+}
+
+.cart {
+  width: 30px;
+  height: 30px;
 }
 
 .search-bar-container {

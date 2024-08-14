@@ -17,6 +17,7 @@ def products_in_category(category_id):
     """
     Query for a list of products in specific category
     """
-    category = Category.query.get_or_404(category_id)
-    products = Product.query.filter_by(category_id=category.id).all()
+    # category = Category.query.get_or_404(category_id)
+    print('this is the category id!!!!',category_id)
+    products = Product.query.filter_by(category_id=category_id).all()
     return {'products': [product.to_dict() for product in products]}

@@ -22,10 +22,15 @@
 
 .product-image {
   max-width: 400px;
-  width: 100%;
+  width: 200px;
   height: 200px;
   cursor: pointer;
   border-radius: 5% 5% 0% 0%;
+}
+
+.product-image:hover {
+  filter: none;
+  background-image: none;
 }
 
 .rating-quantity-container {
@@ -167,4 +172,56 @@
 .users-product-edit-button,
 .users-product-delete-button {
   cursor: pointer;
+}
+
+#favorite {
+  display: none;
+}
+
+#favorite:checked + .container svg {
+  width: 20px;
+  height: 20px;
+  fill: hsl(0deg 100% 50%);
+  stroke: hsl(0deg 100% 50%);
+  animation: heartButton 1s;
+}
+
+.feather.feather-heart {
+  transform: translateX(2px);
+}
+
+@keyframes heartButton {
+  0% {
+    transform: scale(1);
+  }
+
+  25% {
+    transform: scale(1.3);
+  }
+
+  50% {
+    transform: scale(1);
+  }
+
+  75% {
+    transform: scale(1.3);
+  }
+
+  100% {
+    transform: scale(1);
+  }
+}
+
+#favorite + .container .action {
+  position: relative;
+  overflow: hidden;
+  display: grid;
+}
+
+#favorite + .container .action span {
+  grid-column-start: 1;
+  grid-column-end: 1;
+  grid-row-start: 1;
+  grid-row-end: 1;
+  transition: all 0.5s;
 }

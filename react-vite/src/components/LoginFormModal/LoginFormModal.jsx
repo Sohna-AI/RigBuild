@@ -5,6 +5,7 @@ import { useModal } from '../../context/Modal';
 import './LoginForm.css';
 import SignupFormModal from '../SignupFormModal';
 import * as sessionActions from '../../redux/session';
+import { useNavigate } from 'react-router-dom';
 
 function LoginFormModal() {
   const dispatch = useDispatch();
@@ -15,6 +16,7 @@ function LoginFormModal() {
   const [transitioning, setTransitioning] = useState(false);
   const { closeModal, setModalContent } = useModal();
   const ulRef = useRef();
+  const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -25,7 +27,7 @@ function LoginFormModal() {
         password,
       })
     );
-
+    navigate('/products');
     if (serverResponse) {
       setErrors(serverResponse);
     } else {
@@ -48,11 +50,9 @@ function LoginFormModal() {
   }, [showMenu]);
 
   const handleDemoLogin = async () => {
-    try {
-      await dispatch(sessionActions.loginAsDemoUser()).then(closeModal);
-    } catch (error) {
-      console.error('Demo Login failed:', error);
-    }
+    await dispatch(sessionActions.loginAsDemoUser()).then(closeModal);
+
+    navigate('/products');
   };
 
   const handleSignupClick = () => {
@@ -68,7 +68,7 @@ function LoginFormModal() {
     <div className={`login-form-modal-container ${transitioning ? 'fade-out' : ''}`}>
       <div className="login-form-modal-headers">
         <h1 className="login-form-modal-text">
-          <img src="../../../public/short-logo-light-mode.svg" className="login-form-short-logo" />{' '}
+          <img src="/short-logo-light-mode.svg" className="login-form-short-logo" />{' '}
           <div className="login-form-modal-subtext">Welcome</div>
         </h1>
       </div>
@@ -84,7 +84,6 @@ function LoginFormModal() {
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               className="login-form-email"
-              required
             />
           </label>
           <label className="login-label-input-group">
@@ -97,33 +96,29 @@ function LoginFormModal() {
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               className="login-form-password"
-              required
             />
           </label>
         </div>
         <div className="login-form-login-demo-container">
           <div>
-            <button type="submit" className="login-form-login-button" disabled={!email || !password}>
+            <button className="login-form-login-button" type="submit">
               Log In
-            </button>
-          </div>
-          <div>
-            <button className="login-form-demo-login" onClick={handleDemoLogin}>
-              Login as Demo User
             </button>
           </div>
         </div>
       </form>
-      <div className="login-form-signup-container">
-        Don&apos;t have an account?{' '}
-        {/* <OpenModalMenuItem
-          itemText={<button className="login-form-signup-button">Signup</button>}
-          modalComponent={<SignupFormModal />}
-          onItemClick={closeMenu}
-        /> */}
-        <button className="login-form-signup-button" onClick={handleSignupClick}>
-          Signup
-        </button>
+      <div className="login-demo-signup-container">
+        <div>
+          <button className="login-form-demo-login" onClick={handleDemoLogin}>
+            Login as Demo User
+          </button>
+        </div>
+        <div className="login-form-signup-container">
+          Don&apos;t have an account?{' '}
+          <button className="login-form-signup-button" onClick={handleSignupClick}>
+            Signup
+          </button>
+        </div>
       </div>
     </div>
   );

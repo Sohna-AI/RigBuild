@@ -36,7 +36,7 @@ const LandingPage = () => {
     <>
       <div className="landing-page-container">
         <div className="main-logo-intro-container">
-          <img src="../../../public/main-logo-light-mode.svg" alt="" className="main-logo" />
+          <img src="/main-logo-light-mode.svg" alt="" className="main-logo" />
           <div className="intro-container">
             <p className="intro">
               At RigBuild, we understand that every great PC starts with the perfect parts. Whether
