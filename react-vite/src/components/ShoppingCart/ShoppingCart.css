@@ -20,7 +20,7 @@
 }
 
 .shopping-cart-products-container {
-  max-height: 250px;
+  height: 250px;
   overflow-y: auto;
   margin: 15px;
   scrollbar-width: thin;
