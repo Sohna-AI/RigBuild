@@ -75,7 +75,7 @@ function SignupFormModal() {
       <div className={`signup-form-headers-input-container ${transitioning ? 'fade-out' : ''}`}>
         <div className="signup-form-headers-container">
           <div>
-            <img src="../../../public/short-logo-light-mode.svg" className="signup-form-short-logo" />
+            <img src="/short-logo-light-mode.svg" className="signup-form-short-logo" />
           </div>
           <p className="signup-form-header-subtext">
             Find all the parts you need for your new RIG whether it is for work, school or just kicking back

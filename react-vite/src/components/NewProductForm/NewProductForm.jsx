@@ -301,7 +301,7 @@ export default function NewProductForm({ edit }) {
         </div>
         <div>
           <NavLink to="/">
-            <img src="../../../public/short-logo-light-mode.png" className="product-page-logo-image" />
+            <img src="/short-logo-light-mode.png" className="product-page-logo-image" />
           </NavLink>
         </div>
       </footer>
