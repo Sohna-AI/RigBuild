@@ -68,7 +68,9 @@ export const thunkRemoveFromCart = (cartId, productId) => async (dispatch) => {
   });
 
   if (res.ok) {
+    const data = await res.json();
     dispatch(removeFromCart(productId));
+    return data;
   }
 };
 
@@ -76,7 +78,7 @@ export const thunkUpdateCartQuantity = (cartId, productId, quantity) => async (d
   const res = await fetch(`/api/cart/${cartId}/items/${productId}`, {
     method: 'PUT',
     headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ quantity }),
+    body: JSON.stringify({ quantity: quantity }),
   });
 
   if (res.ok) {
@@ -131,25 +133,28 @@ const cartReducer = (state = structuredClone(initialState), action) => {
     }
     case REMOVE_FROM_CART: {
       const newState = structuredClone(state);
-      const removedProduct = newState.products[action.productId];
+      const productIdx = newState.products.findIndex(
+        (prod) => parseInt(prod.id) === parseInt(action.productId)
+      );
+      if (productIdx !== -1) {
+        const removedProduct = newState.products[productIdx];
 
-      if (removedProduct) {
         newState.totalItems -= removedProduct.quantity;
-        newState.totalPrice -= removedProduct.price * removedProduct.quantity;
-        delete newState.products[action.productId];
+        newState.totalPrice -= Number(removedProduct.product.price) * removedProduct.quantity;
+
+        newState.products.splice(productIdx, 1);
       }
 
       return newState;
     }
     case UPDATE_CART_QUANTITY: {
       const newState = structuredClone(state);
-      const product = newState.products[action.productId];
-
+      const product = newState.products.find((prod) => parseInt(prod.id) === parseInt(action.productId));
       if (product) {
         const quantityDifference = action.quantity - product.quantity;
         product.quantity = action.quantity;
         newState.totalItems += quantityDifference;
-        newState.totalPrice += quantityDifference * product.price;
+        newState.totalPrice += quantityDifference * Number(product.product.price);
       }
 
       return newState;

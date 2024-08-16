@@ -211,3 +211,37 @@
   font-weight: 600;
   transition: all 0.3s cubic-bezier(0.15, 0.83, 0.66, 1);
 }
+
+.shopping-cart-remove-product-button {
+  border: none;
+  background-color: transparent;
+  color: #0550ed;
+  cursor: pointer;
+}
+
+.shopping-cart-remove-product-button:hover {
+  text-decoration: underline;
+}
+
+#negative:hover {
+  background-color: rgb(175, 53, 53);
+  border-radius: inherit;
+  transition: all 200ms;
+  box-sizing: border-box;
+}
+
+#positive:hover {
+  background-color: green;
+  border-radius: inherit;
+  transition: all 200ms;
+  box-sizing: border-box;
+  color: white;
+}
+
+#negative:active {
+  background-color: red;
+}
+
+#positive:active {
+  background-color: lightgreen;
+}

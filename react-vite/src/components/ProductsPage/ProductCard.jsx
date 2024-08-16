@@ -8,6 +8,7 @@ import DeleteProduct from '../DeleteProduct/DeleteProduct';
 
 import './ProductCard.css';
 import OpenModalButton from '../OpenModalButton/OpenModalButton';
+import AddToCartNotification from '../AddToCartNotification/AddToCartNotification';
 
 export default function ProductCard({
   id,
@@ -27,6 +28,7 @@ export default function ProductCard({
   const isProductInWishlist = wishlist ? Boolean(wishlist.products[id]) : false;
   const cart = useSelector(cartActions.selectCartDetails);
   const [isWishlisted, setIsWishlisted] = useState(isProductInWishlist);
+  const [showNotification, setShowNotification] = useState(false);
 
   let productDescription;
   if (description) {
@@ -88,6 +90,12 @@ export default function ProductCard({
       productId: id,
     };
     dispatch(cartActions.thunkAddToCart(product.cartId, product.productId));
+
+    setShowNotification(true);
+
+    setTimeout(() => {
+      setShowNotification(false);
+    }, 2000);
   };
 
   return (
@@ -113,7 +121,7 @@ export default function ProductCard({
             <div className="product-price">${price}</div>
             {!showWishlistButton ? (
               <div className="product-page-add-to-cart-button">
-                <button className="product-page-cart-button" onClick={handleAddToCart}>
+                <button className="product-page-cart-button" onClick={() => handleAddToCart()}>
                   {' '}
                   <span className="product-page-IconContainer">
                     <svg
@@ -128,6 +136,7 @@ export default function ProductCard({
                   </span>
                   <p className="product-page-cart-text">Add to Cart</p>
                 </button>
+                <AddToCartNotification isVisible={showNotification} message="Item added to cart!" />
               </div>
             ) : (
               <div className="product-favorite-button">
