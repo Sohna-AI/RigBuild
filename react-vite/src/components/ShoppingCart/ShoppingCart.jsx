@@ -3,7 +3,7 @@ import './ShoppingCart.css';
 import { useDispatch, useSelector } from 'react-redux';
 import * as cartActions from '../../redux/cart';
 import { NavLink } from 'react-router-dom';
-import { motion } from 'framer-motion';
+import { motion, useMotionValue, useTransform, animate } from 'framer-motion';
 
 const ShoppingCart = () => {
   const dispatch = useDispatch();
@@ -37,6 +37,24 @@ const ShoppingCart = () => {
   const handleRemoveItem = (product) => {
     dispatch(cartActions.thunkRemoveFromCart(cart.id, product.id));
   };
+
+  const priceMotionValue = useMotionValue(cart.totalPrice || 0);
+
+  useEffect(() => {
+    if (cart.totalPrice !== undefined) {
+      const controls = animate(priceMotionValue, cart.totalPrice, {
+        duration: 0.5,
+        onUpdate: (latest) => {
+          if (isNaN(latest)) {
+            priceMotionValue.set(0);
+          }
+        },
+      });
+      return controls.stop;
+    }
+  }, [cart.totalPrice, priceMotionValue]);
+
+  const price = useTransform(priceMotionValue, (value) => formattedPrice(value));
 
   const itemVariants = {
     hidden: { opacity: 0, y: 50 },
@@ -135,7 +153,15 @@ const ShoppingCart = () => {
             ))
           ) : (
             <div className="shopping-cart-empty-container">
-              <h1 className="shopping-cart-empty-header">Cart is empty</h1>
+              <motion.h1
+                className="shopping-cart-empty-header"
+                initial="hidden"
+                animate="visible"
+                transition={{ duration: 0.5 }}
+                variants={itemVariants}
+              >
+                Cart is empty
+              </motion.h1>
             </div>
           )}
         </div>
@@ -146,14 +172,23 @@ const ShoppingCart = () => {
           <div>
             <div className="cart-checkout-subtitle-container">
               <h5 className="cart-checkout-subtitle">Your cart subtotal:</h5>
-              <h4>${formattedPrice(cart.totalPrice)}</h4>
+              <h4>
+                $<motion.span style={{ display: 'inline-block' }}>{price}</motion.span>
+              </h4>
             </div>
           </div>
           <div className="cart-checkout-total-checkout-button">
-            <div className="cart-checkout-total">
-              <span style={{ fontSize: '20px' }}>$</span>
-              {formattedPrice(cart.totalPrice)}
-            </div>
+            <motion.div
+              key={cart.totalPrice}
+              initial={{ scale: 0.95, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              transition={{ duration: 0.3 }}
+            >
+              <div className="cart-checkout-total">
+                <span style={{ fontSize: '20px' }}>$</span>
+                <motion.span>{price}</motion.span>
+              </div>
+            </motion.div>
             <div>
               <button className="cart-checkout-button">Checkout</button>
             </div>
