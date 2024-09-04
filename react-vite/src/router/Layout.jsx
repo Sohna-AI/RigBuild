@@ -9,16 +9,26 @@ import { AnimatePresence, motion } from 'framer-motion';
 export default function Layout() {
   const dispatch = useDispatch();
   const [isLoaded, setIsLoaded] = useState(false);
+  const [theme, setTheme] = useState('light');
   const location = useLocation();
   const hasMountedRef = useRef(false);
-  // useEffect(() => {
-  //   dispatch(thunkAuthenticate()).then(() => setIsLoaded(true));
-  // }, [dispatch]);
 
   useEffect(() => {
-    dispatch(thunkAuthenticate()).then(() => {
-      setIsLoaded(true);
-    });
+    const savedTheme = localStorage.getItem('theme') || 'light';
+
+    setTheme(savedTheme);
+    document.body.className = savedTheme;
+  }, []);
+
+  const toggleTheme = () => {
+    const newTheme = theme === 'light' ? 'dark' : 'light';
+    setTheme(newTheme);
+    localStorage.setItem('theme', newTheme);
+    document.body.className = newTheme;
+  };
+
+  useEffect(() => {
+    dispatch(thunkAuthenticate()).then(() => setIsLoaded(true));
   }, [dispatch]);
 
   useEffect(() => {
@@ -31,7 +41,7 @@ export default function Layout() {
   return (
     <>
       <ModalProvider>
-        <Navigation isLoaded={isLoaded} />
+        <Navigation isLoaded={isLoaded} toggleTheme={toggleTheme} theme={theme} />
         <AnimatePresence initial={false} mode="wait">
           {isLoaded && (
             <motion.div
@@ -39,7 +49,6 @@ export default function Layout() {
               initial={{ x: 300, opacity: 0 }}
               animate={{ x: 0, opacity: 1 }}
               exit={{ x: -300, opacity: 0 }}
-              // transition={{ duration: 0.3 }}
             >
               <Outlet />
             </motion.div>

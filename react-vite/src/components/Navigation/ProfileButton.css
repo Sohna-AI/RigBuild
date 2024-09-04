@@ -1,4 +1,4 @@
-body {
+/* body {
   font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell,
     'Open Sans', 'Helvetica Neue', sans-serif;
   -webkit-font-smoothing: antialiased;
@@ -157,4 +157,167 @@ body {
   background-color: white;
   font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell,
     'Open Sans', 'Helvetica Neue', sans-serif;
+} */
+
+body {
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell,
+    'Open Sans', 'Helvetica Neue', sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  background-color: var(--background-color);
+  color: var(--text-color);
+}
+
+.profile-dropdown.hidden {
+  display: none;
+}
+
+.profile-button {
+  width: 30px;
+  height: 30px;
+  cursor: pointer;
+  color: pink;
+  transform: translateY(-15px) translateX(-38px);
+}
+
+.login-button-dropdown,
+.signup-button-dropdown,
+.logout-button-dropdown {
+  cursor: pointer;
+  border: 1px solid transparent;
+  border-radius: 15px;
+  width: 120px;
+  height: 50px;
+  appearance: none;
+  box-sizing: border-box;
+  color: var(--text-color);
+  display: inline-block;
+  font-family: Roobert, -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif,
+    'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol';
+  font-weight: 600;
+  margin: 0;
+  outline: none;
+  padding: 1em 2.3em;
+  text-align: center;
+  text-decoration: none;
+  transition: all 300ms cubic-bezier(0.23, 1, 0.32, 1);
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+  will-change: transform;
+  background-color: var(--button-bg-color);
+}
+
+.login-signup-button-container {
+  background-color: var(--background-color);
+}
+
+.login-button-dropdown:hover,
+.signup-button-dropdown:hover,
+.logout-button-dropdown:hover {
+  color: var(--button-hover-color);
+  border-color: var(--button-hover-color);
+  background-color: var(--button-hover-bg-color);
+  box-shadow: var(--dropdown-shadow-color) 0 8px 15px;
+  transform: translateY(-2px);
+}
+
+.signup-button-dropdown,
+.logout-button-dropdown {
+  border: 1px solid transparent;
+  border-radius: 15px;
+  width: 120px;
+  height: 50px;
+}
+
+.profile-dropdown {
+  display: flex;
+  flex-direction: column;
+  border: 1px solid var(--border-color);
+  position: absolute;
+  top: 5.7rem;
+  right: 1.7rem;
+  width: 150px;
+  height: 250px;
+  padding: 15px;
+  border-radius: 15px;
+  background-color: var(--dropdown-bg-color);
+  box-shadow: 1px 1px 10px 0.1px var(--dropdown-shadow-color);
+}
+
+.profile-dropdown-user-info {
+  display: flex;
+  flex-direction: column;
+  width: 120px;
+  background-color: var(--dropdown-bg-color);
+}
+
+.profile-dropdown-username {
+  font-size: 15px;
+  color: var(--text-color);
+}
+
+.profile-dropdown-email {
+  font-size: 15px;
+  border-bottom: 1px solid var(--border-color);
+  padding-bottom: 8px;
+  width: 120px;
+  color: var(--text-color);
+}
+
+.profile-dropdown-email-container {
+  max-width: 120px;
+  width: 120px;
+  word-wrap: break-word;
+}
+
+.logout-button-container {
+  padding-top: 10px;
+}
+
+.profile-dropdown-username,
+.profile-dropdown-email,
+.logout-button-container {
+  background-color: var(--dropdown-bg-color);
+}
+
+.profile-dropdown::before {
+  content: '';
+  position: absolute;
+  top: -0.9rem;
+  right: 1.9rem;
+  width: 25px;
+  height: 25px;
+  background-color: var(--background-color);
+  transform: rotate(45deg);
+  border-left: 1px solid var(--border-color);
+  border-top: 1px solid var(--border-color);
+}
+
+.login-button-container,
+.signup-button-container {
+  background-color: var(--background-color);
+}
+
+.login-signup-button-container {
+  display: flex;
+  flex-direction: column;
+  row-gap: 6px;
+  background-color: var(--background-color);
+  padding-top: 5px;
+}
+
+.profile-dropdown-manage-listing-container {
+  background-color: var(--dropdown-bg-color);
+  width: 120px;
+  border-bottom: 1px solid var(--border-color);
+  padding-bottom: 15px;
+  padding-top: 15px;
+}
+
+.profile-dropdown-manage-listing {
+  background-color: var(--dropdown-bg-color);
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell,
+    'Open Sans', 'Helvetica Neue', sans-serif;
+  color: var(--text-color);
 }
