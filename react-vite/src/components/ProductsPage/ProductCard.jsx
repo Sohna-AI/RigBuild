@@ -153,13 +153,18 @@ export default function ProductCard({
                 </button>
                 <div className="item-added-to-cart-container">
                   {sessionUser && (
-                    <AddToCartNotification isVisible={showNotification} message="Item added to cart!" />
+                    <AddToCartNotification
+                      isVisible={showNotification}
+                      message="Item added to cart!"
+                      addToCart={true}
+                    />
                   )}
                   {!sessionUser && (
                     <div>
                       <AddToCartNotification
                         isVisible={showNotification}
                         message="Login to add to the cart!"
+                        addToCartNotLoggedIn={true}
                       />
                     </div>
                   )}

@@ -11,8 +11,6 @@ import { deleteWishlistProduct, getUserWishlist, setWishlistProduct } from '../.
 import ReviewCard from './ReviewCard';
 import './ProductDetails.css';
 import RelatedProducts from './RelatedProducts';
-import OpenModalMenuItem from '../Navigation/OpenModalMenuItem';
-import LoginFormModal from '../LoginFormModal/LoginFormModal';
 import CreateReviews from '../CreateReviews/CreateReviews';
 import OpenModalButton from '../OpenModalButton/OpenModalButton';
 import DeleteProduct from '../DeleteProduct/DeleteProduct';
@@ -34,8 +32,8 @@ const ProductDetails = () => {
   const sessionUser = useSelector((state) => state.session.user);
   const [isWishlisted, setIsWishlisted] = useState(!!wishlist[productId]);
   const [visibleReviews, setVisibleReviews] = useState(4);
-  const [showLoginModal, setShowLoginModal] = useState(false);
   const [showNotification, setShowNotification] = useState(false);
+  const [showWishlistNotification, setShowWishlistNotification] = useState(false);
   const { theme } = useTheme();
   const [key, setKey] = useState(0);
 
@@ -75,8 +73,6 @@ const ProductDetails = () => {
       setIsWishlisted(!isWishlisted);
       if (!isWishlisted) dispatch(setWishlistProduct(product));
       else dispatch(deleteWishlistProduct(productId));
-    } else {
-      setShowLoginModal(true);
     }
   };
 
@@ -175,6 +171,14 @@ const ProductDetails = () => {
     setKey((prevKey) => prevKey + 1);
   }, [theme]);
 
+  const handleWishlistClick = () => {
+    if (!sessionUser) {
+      setShowWishlistNotification(true);
+      setTimeout(() => {
+        setShowWishlistNotification(false);
+      }, 2000);
+    }
+  };
   return (
     <>
       {isLoaded && (
@@ -232,6 +236,7 @@ const ProductDetails = () => {
                                   <AddToCartNotification
                                     isVisible={showNotification}
                                     message="Item added to cart!"
+                                    addToCart={true}
                                   />
                                 )}
                                 {!sessionUser && (
@@ -239,6 +244,7 @@ const ProductDetails = () => {
                                     <AddToCartNotification
                                       isVisible={showNotification}
                                       message="Login to add to the cart!"
+                                      addToCartNotLoggedIn={true}
                                     />
                                   </div>
                                 )}
@@ -251,6 +257,7 @@ const ProductDetails = () => {
                                 id="favorite"
                                 checked={isWishlisted}
                                 onChange={handleWishlistChange}
+                                onClick={handleWishlistClick}
                                 type="checkbox"
                               />
                               <label className="container" htmlFor="favorite">
@@ -273,16 +280,11 @@ const ProductDetails = () => {
                                   <span className="option-2">Added to Wishlist</span>
                                 </div>
                               </label>
-                              {showLoginModal && (
-                                <div style={{ width: '190px' }}>
-                                  <div>You must must be logged in to add to wishlist:</div>
-                                  <OpenModalMenuItem
-                                    itemText={<button style={{ cursor: 'pointer' }}>Login</button>}
-                                    modalComponent={<LoginFormModal />}
-                                    onItemClick={() => setShowLoginModal(false)}
-                                  />
-                                </div>
-                              )}
+                              <AddToCartNotification
+                                message="Must be logged in to add to wishlist"
+                                isVisible={showWishlistNotification}
+                                wishlist={true}
+                              />
                             </div>
                           </div>
                         ) : (
@@ -501,6 +503,24 @@ const ProductDetails = () => {
                                 </span>
                                 <p className="cart-text-dark">Add to Cart</p>
                               </button>
+                              <div className="item-added-to-cart-container">
+                                {sessionUser && (
+                                  <AddToCartNotification
+                                    isVisible={showNotification}
+                                    message="Item added to cart!"
+                                    addToCart={true}
+                                  />
+                                )}
+                                {!sessionUser && (
+                                  <div>
+                                    <AddToCartNotification
+                                      isVisible={showNotification}
+                                      message="Login to add to the cart!"
+                                      addToCartNotLoggedIn={true}
+                                    />
+                                  </div>
+                                )}
+                              </div>
                             </div>
                             <div className="product-favorite-button-dark">
                               <input
@@ -509,6 +529,7 @@ const ProductDetails = () => {
                                 id="favorite-dark"
                                 checked={isWishlisted}
                                 onChange={handleWishlistChange}
+                                onClick={handleWishlistClick}
                                 type="checkbox"
                               />
                               <label className="container-dark" htmlFor="favorite-dark">
@@ -531,16 +552,11 @@ const ProductDetails = () => {
                                   <span className="option-2-dark">Added to Wishlist</span>
                                 </div>
                               </label>
-                              {showLoginModal && (
-                                <div style={{ width: '190px' }}>
-                                  <div>You must must be logged in to add to wishlist:</div>
-                                  <OpenModalMenuItem
-                                    itemText={<button style={{ cursor: 'pointer' }}>Login</button>}
-                                    modalComponent={<LoginFormModal />}
-                                    onItemClick={() => setShowLoginModal(false)}
-                                  />
-                                </div>
-                              )}
+                              <AddToCartNotification
+                                message="Must be logged in to add to wishlist"
+                                isVisible={showWishlistNotification}
+                                wishlist={true}
+                              />
                             </div>
                           </div>
                         ) : (
