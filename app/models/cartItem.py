@@ -21,9 +21,10 @@ class CartItem(db.Model):
     def to_dict(self):
         return {
             'id': self.id,
-            'user_id': self.user_id,
+            'user_id': self.shopping_cart.user_id,
             'cart_id': self.cart_id,
             'product_id': self.product_id,
+            'quantity': self.quantity,
             'product': self.product.to_dict(),
             'created_at': self.created_at,
             'updated_at': self.updated_at

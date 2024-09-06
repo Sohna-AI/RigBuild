@@ -78,6 +78,7 @@ export const loginAsDemoUser = () => async (dispatch) => {
   if (res.ok) {
     const data = await res.json();
     dispatch(setUser(data));
+    return data;
   } else if (res.status < 500) {
     const errorMessages = await res.json();
     return errorMessages;

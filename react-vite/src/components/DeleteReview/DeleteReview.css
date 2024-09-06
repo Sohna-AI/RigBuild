@@ -1,36 +1,21 @@
 .delete-review-container {
+  width: 350px;
+  height: 250px;
   display: flex;
   flex-direction: column;
-  padding: 25px;
-  background: rgb(173, 216, 230);
-  border-radius: 10px;
+  padding: 35px;
+  background: antiquewhite;
+  border-radius: 20px;
 }
 
 .delete-review-delete-button-container {
   display: flex;
   justify-content: space-around;
+  padding-top: 30px;
 }
 
 .delete-modal-subtitle {
-  width: 240px;
-}
-
-.delete-review-button {
-  border: none;
-  padding: 1em 2em;
-  font-size: 12px;
-  letter-spacing: 2px;
-  font-weight: 800;
-  color: white;
-  background-color: maroon;
-  border-radius: 5px;
-  cursor: pointer;
-  transition: all 400ms;
-}
-
-.delete-review-button:hover {
-  transition: all 400ms;
-  background-color: red;
+  width: 340px;
 }
 
 .delete-review-cancel-button {
@@ -50,4 +35,65 @@
   transition: all 400ms;
   background-color: aliceblue;
   color: black;
+}
+
+.delete-review-button {
+  position: relative;
+  border-radius: 6px;
+  width: 150px;
+  height: 40px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  border: 1px solid #cc0000;
+  background-color: #e50000;
+  overflow: hidden;
+}
+
+.delete-review-button,
+.delete-review-button__icon,
+.delete-review-button__text {
+  transition: all 0.3s;
+}
+
+.delete-review-button .delete-review-button__text {
+  transform: translateX(35px);
+  color: #fff;
+  font-weight: 600;
+}
+
+.delete-review-button .delete-review-button__icon {
+  position: absolute;
+  transform: translateX(109px);
+  height: 100%;
+  width: 39px;
+  background-color: #cc0000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.delete-review-button .svg {
+  width: 20px;
+}
+
+.delete-review-button:hover {
+  background: #cc0000;
+}
+
+.delete-review-button:hover .delete-review-button__text {
+  color: transparent;
+}
+
+.delete-review-button:hover .delete-review-button__icon {
+  width: 148px;
+  transform: translateX(0);
+}
+
+.delete-review-button:active .delete-review-button__icon {
+  background-color: #b20000;
+}
+
+.delete-review-button:active {
+  border: 1px solid #b20000;
 }

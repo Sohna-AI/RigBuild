@@ -33,7 +33,10 @@ const UserProducts = () => {
   };
 
   return (
-    <>
+    <div className='user-products-page-container'>
+    <div>
+      <h1>Your Products</h1>
+    </div>
       <div className="single-product-for-user-container">
         {isLoaded && products.allIds.length ? (
           products.allIds.length &&
@@ -66,7 +69,7 @@ const UserProducts = () => {
           </>
         )}
       </div>
-    </>
+    </div>
   );
 };
 

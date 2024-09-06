@@ -33,6 +33,11 @@ const setUserProducts = (products) => ({
   products,
 });
 
+const deleteProduct = (productId) => ({
+  type: DELETE_PRODUCT,
+  productId,
+});
+
 export const getUserProducts = () => async (dispatch) => {
   const res = await fetch('/api/products/current');
 
@@ -49,14 +54,13 @@ export const addNewProduct = (product) => async (dispatch) => {
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify(product),
   });
-
   if (res.ok) {
     const product = await res.json();
     dispatch(addProduct(product));
     return product;
   } else if (res.status < 500) {
     const errorMessages = await res.json();
-    return errorMessages;
+    return { errors: errorMessages };
   } else {
     return { server: 'Something went wrong. Please try again' };
   }
@@ -71,10 +75,11 @@ export const editProductById = (productId, data) => async (dispatch) => {
 
   if (res.ok) {
     const product = await res.json();
-    return await dispatch(editProduct(product));
+    await dispatch(editProduct(product));
+    return product;
   } else if (res.status < 500) {
     const errorMessages = await res.json();
-    return errorMessages;
+    return { errors: errorMessages };
   } else {
     return { server: 'Something went wrong. Please try again' };
   }
@@ -106,6 +111,7 @@ export const deleteProductById = (productId, current) => async (dispatch) => {
   });
   if (res.ok) {
     const data = await res.json();
+    dispatch(deleteProduct(productId));
     if (current) dispatch(getUserProducts());
     else dispatch(getProducts());
     return data;
@@ -123,7 +129,7 @@ export const wishlistNewProduct = (productId) => async (dispatch) => {
     return data;
   } else if (res.status < 500) {
     const errorMessages = await res.json();
-    return errorMessages;
+    return { errors: errorMessages };
   } else {
     return { server: 'Something went wrong. Please try again' };
   }

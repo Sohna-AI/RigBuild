@@ -1,4 +1,5 @@
 import { useRef, useState, useContext, createContext, useEffect } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
 import ReactDOM from 'react-dom';
 import './Modal.css';
 
@@ -50,10 +51,28 @@ export function Modal() {
 
   // Render the following component to the div referenced by the modalRef
   return ReactDOM.createPortal(
-    <div id="modal" className={`modal ${isVisible ? 'modal-enter' : 'modal-exit'}`}>
-      <div id="modal-background" onClick={closeModal} />
-      <div id="modal-content">{modalContent}</div>
-    </div>,
+    <AnimatePresence>
+      {isVisible && (
+        <motion.div
+          id="modal"
+          className="modal"
+          initial={{ opacity: 0, scale: 0.8 }}
+          animate={{ opacity: 1, scale: 1 }}
+          exit={{ opacity: 0, scale: 0.8 }}
+          transition={{ duration: 0.3 }}
+        >
+          <motion.div
+            id="modal-background"
+            initial={{ opacity: 1, scale: 1 }}
+            animate={{ opacity: 1, scale: 100 }}
+            exit={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 0.0 }}
+            onClick={closeModal}
+          />
+          <div id="modal-content">{modalContent}</div>
+        </motion.div>
+      )}
+    </AnimatePresence>,
     modalRef.current
   );
 }

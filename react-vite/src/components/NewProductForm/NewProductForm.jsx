@@ -74,33 +74,34 @@ export default function NewProductForm({ edit }) {
     const formData = {
       name,
       description,
-      price: parseFloat(price) ? parseFloat(price) : '',
+      price: price ? price : '',
       stock_quantity: parseInt(quantity) ? parseInt(quantity) : '',
-      category_id: selectedCategory ? selectedCategory.id : null,
+      category_id: selectedCategory ? selectedCategory.id : '',
     };
 
     try {
       if (edit) {
         const serverRes = await dispatch(productActions.editProductById(productId, formData));
-        if (serverRes) {
-          setErrors(serverRes);
+        if (serverRes.errors) {
+          console.log(serverRes.errors);
+          return setErrors(serverRes.errors);
         }
         if (deleteCurrentImage && currentImageId) {
-          const removeImageRes = await dispatch(productImageActions.removeProductImage(currentImageId));
-          if (removeImageRes) {
-            setErrors((prevErrors) => ({ ...prevErrors, ...removeImageRes }));
+          await dispatch(productImageActions.removeProductImage(currentImageId));
+
+          if (image) {
+            await dispatch(productImageActions.addNewProductImage(productId, image));
           }
         }
-        const addImageRes = await dispatch(productImageActions.addNewProductImage(productId, image));
-        if (addImageRes) {
-          return setErrors((prevErrors) => ({ ...prevErrors, ...addImageRes }));
-        }
-        navigate(`/products/current`);
+        navigate(`/products/${productId}`);
       } else {
         const newProduct = await dispatch(productActions.addNewProduct(formData, image));
 
-        await dispatch(productImageActions.addNewProductImage(newProduct.id, image));
+        if (newProduct.errors) {
+          return setErrors(newProduct.errors);
+        }
 
+        await dispatch(productImageActions.addNewProductImage(newProduct.id, image));
         navigate(`/products/${newProduct.id}`);
       }
     } catch (error) {
@@ -181,7 +182,6 @@ export default function NewProductForm({ edit }) {
                     type="number"
                     value={price}
                     onChange={(e) => setPrice(e.target.value)}
-                    inputMode="numeric"
                     onWheel={(e) => e.target.blur()}
                   />
                 </label>
@@ -190,7 +190,7 @@ export default function NewProductForm({ edit }) {
                 <label>
                   <div className="product-form-quantity-error">
                     What is quantity of your stock?
-                    {errors.quantity && <p id="error">{errors.quantity}</p>}
+                    {errors.stock_quantity && <p id="error">{errors.stock_quantity[0]}</p>}
                   </div>
                   <input
                     className="product-form-input"
@@ -207,7 +207,7 @@ export default function NewProductForm({ edit }) {
                 <label>
                   <div className="product-form-category-error">
                     Select category
-                    {errors.category && <p id="error">{errors.category}</p>}
+                    {errors.category_id && <p id="error">{errors.category_id}</p>}
                   </div>
                   <select value={category} onChange={(e) => setCategory(e.target.value)}>
                     <option value="">Select a category</option>
@@ -237,7 +237,7 @@ export default function NewProductForm({ edit }) {
                       </button>
                     </div>
                   ) : (
-                    <input type="file" accept="image/*" onChange={handleImageChange} />
+                    <input type="file" accept="image/*" onChange={handleImageChange} required />
                   )}
                 </label>
               </div>
@@ -301,7 +301,7 @@ export default function NewProductForm({ edit }) {
         </div>
         <div>
           <NavLink to="/">
-            <img src="../../../public/short-logo-light-mode.png" className="product-page-logo-image" />
+            <img src="/short-logo-light-mode.png" className="product-page-logo-image" />
           </NavLink>
         </div>
       </footer>

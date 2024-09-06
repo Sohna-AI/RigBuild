@@ -34,3 +34,11 @@
   color: white;
   transition: 400ms;
 }
+
+.user-products-page-container {
+  margin: 50px;
+}
+
+.users-product-delete-button {
+  border: none;
+}

@@ -1,3 +1,4 @@
+/* Default (Light Mode) Styles */
 .products-list-container {
   display: flex;
   flex-direction: row;
@@ -11,12 +12,15 @@
   flex-basis: 23.7%;
   max-width: 250px;
   width: 100%;
+  background-color: var(--product-bg-color, white); /* Default to white */
+  color: var(--product-text-color, black); /* Default to black */
 }
 
 .products-page-categories-container {
   display: flex;
   align-items: center;
   gap: 50px;
+  color: var(--text-color, black); /* Default text color */
 }
 
 .products-page-container {
@@ -25,9 +29,11 @@
   justify-content: center;
   margin: auto;
   max-width: 1500px;
+  background-color: var(--background-color, white); /* Default to white */
+  color: var(--text-color, black); /* Default text color */
 }
 
-footer {
+.products-page-footer {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -35,9 +41,60 @@ footer {
   padding-top: 50px;
   margin-top: 50px;
   padding-bottom: 100px;
-  border-top: 1px solid black;
+  border-top: 1px solid var(--border-color, black);
+  /* background-color: var(--footer-bg-color, white); 
+  color: var(--text-color, black);  */
 }
 
 .product-page-logo-image {
   width: 300px;
+}
+
+.products-list-container-dark {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  gap: 30px;
+}
+
+.single-product-dark {
+  display: flex;
+  flex-direction: column;
+  flex-basis: 23.7%;
+  max-width: 250px;
+  width: 100%;
+  background-color: var(--product-bg-color, white); /* Default to white */
+  color: var(--product-text-color, black); /* Default to black */
+}
+
+.products-page-categories-container-dark {
+  display: flex;
+  align-items: center;
+  gap: 50px;
+  color: var(--text-color, black); /* Default text color */
+}
+
+.products-page-container-dark {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  margin: auto;
+  max-width: 1500px;
+  background-color: var(--background-color, white); /* Default to white */
+  color: var(--text-color, black); /* Default text color */
+}
+
+.product-page-logo-image-dark {
+  width: 300px;
+}
+
+.products-page-footer-dark {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 80px;
+  padding-top: 50px;
+  margin-top: 50px;
+  padding-bottom: 100px;
+  border-top: 1px solid var(--border-color, black);
 }

@@ -61,7 +61,7 @@ function wishlistReducer(state = structuredClone(initialState), action) {
     case DELETE_WISHLIST_PRODUCT: {
       const newState = structuredClone(state);
       delete newState.products[action.productId];
-      newState.allIds = newState.allIds.filter((id) => id !== action.productId);
+      newState.allIds = newState.allIds.filter((id) => id !== Number(action.productId));
       return newState;
     }
     default:

@@ -3,7 +3,7 @@
   flex-direction: row;
   align-items: center;
   padding: 25px;
-  border-radius: 9px;
+  border-radius: 10px;
   width: 800px;
   height: 500px;
   background: rgb(238, 174, 202);
@@ -69,9 +69,11 @@
   padding: 1em 2em;
   letter-spacing: 5px;
   font-weight: 600;
+  font-size: 15px;
   color: rgba(148, 187, 233, 1);
   transition: all 300ms;
   cursor: pointer;
+  background-color: lightpink;
 }
 
 .signup-form-signup-button:hover {
@@ -108,9 +110,11 @@
   border-radius: 3px;
   font-weight: 800;
   color: rgba(238, 174, 202, 1);
+  background-color: rgba(148, 187, 233, 1);
   transition: all 300ms;
   cursor: pointer;
   letter-spacing: 2px;
+  font-size: 13px;
 }
 
 .signup-form-login-button:hover {
@@ -119,5 +123,5 @@
   color: rgba(148, 187, 233, 1);
   background-color: rgba(238, 174, 202, 1);
   transition: all 300ms;
-  font-weight: 500;
+  font-weight: 600;
 }

@@ -11,7 +11,7 @@ class Product(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(50), nullable=False)
     description = db.Column(db.String(1500), nullable=False)
-    price = db.Column(db.Numeric(10, 2), nullable=False)
+    price = db.Column(db.String(20), nullable=False)
     stock_quantity = db.Column(db.Integer, nullable=False)
     category_id = db.Column(db.Integer, db.ForeignKey(add_prefix_for_prod('categories.id')), nullable=False)
     user_id = db.Column(db.Integer, db.ForeignKey(add_prefix_for_prod('users.id')), nullable=False)
@@ -21,10 +21,10 @@ class Product(db.Model):
     user = db.relationship('User', back_populates='products')
     product_images = db.relationship('ProductImage', back_populates='product', cascade='all, delete-orphan')
     category = db.relationship('Category', back_populates='products')
-    order_items = db.relationship('OrderItem', back_populates='product')
-    cart_items = db.relationship('CartItem', back_populates='product')
-    reviews = db.relationship('Review', back_populates='product')
-    wishlist = db.relationship('Wishlist', back_populates='products')
+    order_items = db.relationship('OrderItem', back_populates='product', passive_deletes=True)
+    cart_items = db.relationship('CartItem', back_populates='product', cascade='all, delete-orphan')
+    reviews = db.relationship('Review', back_populates='product', cascade='all, delete-orphan')
+    wishlist = db.relationship('Wishlist', back_populates='products', cascade='all, delete-orphan')
     
     def to_dict(self):
         user_id = None

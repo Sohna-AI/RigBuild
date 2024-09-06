@@ -10,6 +10,8 @@ import * as categoryActions from './redux/categories';
 import * as wishlistAcion from './redux/wishlist';
 import * as userActions from './redux/users';
 import * as reviewActions from './redux/reviews';
+import * as cartActions from './redux/cart';
+import { ThemeProvider } from './context/Theme';
 import './index.css';
 
 const store = configureStore();
@@ -19,6 +21,7 @@ if (import.meta.env.MODE !== 'production') {
   window.sessionActions = sessionActions;
   window.productActions = productActions;
   window.categoryActions = categoryActions;
+  window.cartActions = cartActions;
   window.wishlistAcion = wishlistAcion;
   window.reviewActions = reviewActions;
   window.userActions = userActions;
@@ -27,7 +30,9 @@ if (import.meta.env.MODE !== 'production') {
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
     <ReduxProvider store={store}>
-      <RouterProvider router={router} />
+      <ThemeProvider>
+        <RouterProvider router={router} />
+      </ThemeProvider>
     </ReduxProvider>
   </React.StrictMode>
 );

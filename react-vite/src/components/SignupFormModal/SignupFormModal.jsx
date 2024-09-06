@@ -4,9 +4,11 @@ import { useModal } from '../../context/Modal';
 import { thunkSignup } from '../../redux/session';
 import LoginFormModal from '../LoginFormModal/LoginFormModal';
 import './SignupForm.css';
+import { useNavigate } from 'react-router-dom';
 
 function SignupFormModal() {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const [email, setEmail] = useState('');
   const [username, setUsername] = useState('');
   const [firstName, setFirstName] = useState('');
@@ -37,7 +39,7 @@ function SignupFormModal() {
         password,
       })
     );
-
+    navigate('/products');
     if (serverResponse) {
       setErrors(serverResponse);
     } else {
@@ -45,7 +47,6 @@ function SignupFormModal() {
     }
   };
 
-  const closeMenu = () => setShowMenu(false);
   useEffect(() => {
     if (!showMenu) return;
 
@@ -74,7 +75,7 @@ function SignupFormModal() {
       <div className={`signup-form-headers-input-container ${transitioning ? 'fade-out' : ''}`}>
         <div className="signup-form-headers-container">
           <div>
-            <img src="../../../public/short-logo-light-mode.svg" className="signup-form-short-logo" />
+            <img src="/short-logo-light-mode.svg" className="signup-form-short-logo" />
           </div>
           <p className="signup-form-header-subtext">
             Find all the parts you need for your new RIG whether it is for work, school or just kicking back

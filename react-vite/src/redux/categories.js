@@ -30,6 +30,11 @@ export const getProductsByCategory = (categoryId) => async (dispatch) => {
     const products = await res.json();
     dispatch(setProductsByCategory(categoryId, products));
     return products;
+  } else if (res.status < 500) {
+    const errorMessages = await res.json();
+    return errorMessages;
+  } else {
+    return { server: 'Something went wrong. Please try again' };
   }
 };
 

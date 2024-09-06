@@ -1,0 +1,11 @@
+.add-to-cart-notification {
+  position: relative;
+  top: 10px;
+  right: 20px;
+  background-color: #4caf50;
+  color: white;
+  padding: 10px 20px;
+  border-radius: 4px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  z-index: 2000;
+}

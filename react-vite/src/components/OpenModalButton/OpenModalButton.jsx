@@ -10,6 +10,9 @@ function OpenModalButton({
   reviewProduct,
   productDetailsDelete,
   productDeleteOnCurrent,
+  shoppingCartButton,
+  profileDropdownLogin,
+  profileDropdownSignup,
 }) {
   const { setModalContent, setOnModalClose } = useModal();
 
@@ -25,6 +28,9 @@ function OpenModalButton({
     if (reviewProduct) return 'review-this-product-button';
     if (productDetailsDelete) return 'product-details-delete-button';
     if (productDeleteOnCurrent) return 'users-product-delete-button';
+    if (shoppingCartButton) return 'users-shopping-cart-nav-button';
+    if (profileDropdownLogin) return 'login-button-dropdown';
+    if (profileDropdownSignup) return 'signup-button-dropdown';
   };
   handleClassName();
   return (

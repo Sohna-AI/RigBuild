@@ -1,0 +1,9 @@
+.users-wishlist-page-container {
+    margin: 30px;
+}
+.users-wishlist-page {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 50px;
+}
