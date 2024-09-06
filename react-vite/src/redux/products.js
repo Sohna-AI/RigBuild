@@ -48,6 +48,18 @@ export const getUserProducts = () => async (dispatch) => {
   }
 };
 
+export const fetchProducts =
+  (searchQuery = '') =>
+  async (dispatch) => {
+    const response = await fetch(`/api/products?search=${searchQuery}`);
+
+    if (response.ok) {
+      const data = await response.json();
+      dispatch(setProducts(data));
+      return data;
+    }
+  };
+
 export const addNewProduct = (product) => async (dispatch) => {
   const res = await fetch('/api/products/', {
     method: 'POST',

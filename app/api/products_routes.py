@@ -14,7 +14,11 @@ def all_products():
     """
     Query for a list of all products
     """
-    products = Product.query.all()
+    search_query = request.args.get('search', '')
+    if search_query:
+        products = Product.query.filter(Product.name.ilike(f'%{search_query}')).all()
+    else:
+        products = Product.query.all()
     return {'products': [product.to_dict() for product in products]}
 
 @product_routes.route('/<int:product_id>')
