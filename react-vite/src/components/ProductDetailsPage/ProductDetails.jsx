@@ -281,7 +281,7 @@ const ProductDetails = () => {
                                 </div>
                               </label>
                               <AddToCartNotification
-                                message="Must be logged in to add to wishlist"
+                                message="Login to add to wishlist!"
                                 isVisible={showWishlistNotification}
                                 wishlist={true}
                               />
@@ -553,7 +553,7 @@ const ProductDetails = () => {
                                 </div>
                               </label>
                               <AddToCartNotification
-                                message="Must be logged in to add to wishlist"
+                                message="Login to add to wishlist!"
                                 isVisible={showWishlistNotification}
                                 wishlist={true}
                               />
