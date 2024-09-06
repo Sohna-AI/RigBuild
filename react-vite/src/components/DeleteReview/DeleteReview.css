@@ -97,3 +97,18 @@
 .delete-review-button:active {
   border: 1px solid #b20000;
 }
+
+.delete-review-container-dark {
+  width: 350px;
+  height: 250px;
+  display: flex;
+  flex-direction: column;
+  padding: 35px;
+  background: linear-gradient(109.6deg, rgb(20, 30, 48) 11.2%, rgb(36, 59, 85) 91.1%);
+  border-radius: 20px;
+}
+
+.delete-modal-title-dark,
+.delete-modal-subtitle-dark {
+  color: white;
+}

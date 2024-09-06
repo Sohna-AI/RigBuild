@@ -66,3 +66,30 @@
   display: flex;
   flex-direction: column;
 }
+
+.create-review-container-dark {
+  width: 500px;
+  height: 500px;
+  background: linear-gradient(109.6deg, rgb(20, 30, 48) 11.2%, rgb(36, 59, 85) 91.1%);
+  border-radius: 10px;
+}
+
+.create-review-rating-error-container {
+  background-color: transparent;
+}
+
+.create-review-form-style-dark {
+  border-radius: 8px;
+  background-color: rgb(54, 54, 54);
+  color: white;
+  resize: vertical;
+  max-height: 350px;
+}
+
+.create-review-form-style {
+  border-radius: 8px;
+  color: black;
+  resize: vertical;
+  min-height: 50px;
+  max-height: 260px;
+}

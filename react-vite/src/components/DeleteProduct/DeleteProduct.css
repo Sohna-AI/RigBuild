@@ -92,3 +92,16 @@
   background-color: aliceblue;
   color: black;
 }
+
+.delete-product-container-dark {
+  width: 350px;
+  height: 250px;
+  background: linear-gradient(109.6deg, rgb(20, 30, 48) 11.2%, rgb(36, 59, 85) 91.1%);
+  padding: 35px;
+  border-radius: 20px;
+}
+
+.delete-product-title-1-dark,
+.delete-product-title-2-dakr {
+  color: white;
+}
