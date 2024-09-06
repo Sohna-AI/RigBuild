@@ -1,5 +1,4 @@
 import { useNavigate } from 'react-router-dom';
-import { AiOutlineShoppingCart } from 'react-icons/ai';
 import { useState, useEffect } from 'react';
 import ProfileButton from './ProfileButton';
 import './Navigation.css';

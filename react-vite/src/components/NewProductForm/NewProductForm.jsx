@@ -149,7 +149,7 @@ export default function NewProductForm({ edit }) {
     <>
       {loading && <div className="loading-spinner">Loading...</div>}
       {isLoaded && (
-        <>
+        <div key={key}>
           <div className={chooseClassName()}>
             <div className="product-form-header">
               {edit ? <h1>Update Product</h1> : <h1>Sell Product</h1>}
@@ -272,7 +272,7 @@ export default function NewProductForm({ edit }) {
               </div>
             </form>
           </div>
-        </>
+        </div>
       )}
       <footer className={chooseFooterClass()}>
         <div className="social-links">

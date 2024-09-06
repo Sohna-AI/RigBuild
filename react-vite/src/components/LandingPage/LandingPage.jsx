@@ -1,6 +1,6 @@
 import { useDispatch, useSelector } from 'react-redux';
 import * as categoryActions from '../../redux/categories';
-import { NavLink, Outlet } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 import './LandingPage.css';
 import { useEffect, useState, useRef } from 'react';
 import OpenModalMenuItem from '../Navigation/OpenModalMenuItem';

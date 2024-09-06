@@ -4,7 +4,6 @@ import { useDispatch } from 'react-redux';
 import { ModalProvider, Modal } from '../context/Modal';
 import { thunkAuthenticate } from '../redux/session';
 import Navigation from '../components/Navigation/Navigation';
-import { AnimatePresence, motion } from 'framer-motion';
 import { useTheme } from '../context/Theme';
 
 export default function Layout() {

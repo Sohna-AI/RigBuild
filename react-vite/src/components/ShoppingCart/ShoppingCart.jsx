@@ -73,7 +73,7 @@ const ShoppingCart = () => {
   }, [theme]);
 
   return (
-    <div>
+    <div key={key}>
       {theme === 'light' ? (
         <div className="shopping-cart-container">
           <div className="shopping-cart">

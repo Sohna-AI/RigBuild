@@ -7,7 +7,6 @@ import * as sessionActions from '../../redux/session';
 import './ProfileButton.css';
 import { NavLink, useNavigate } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
-import OpenModalButton from '../OpenModalButton/OpenModalButton';
 import OpenModalMenuItem from './OpenModalMenuItem';
 
 const ProfileButton = ({ user, toggleTheme, theme }) => {
