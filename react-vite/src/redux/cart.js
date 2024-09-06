@@ -58,7 +58,6 @@ export const thunkAddToCart =
     if (res.ok) {
       const data = await res.json();
       dispatch(addToCart(data));
-      console.log(data);
       return;
     }
   };

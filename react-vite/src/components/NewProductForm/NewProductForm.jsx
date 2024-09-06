@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react';
 import * as productActions from '../../redux/products';
 import * as categoryActions from '../../redux/categories';
 import * as productImageActions from '../../redux/productImages';
+import { useTheme } from '../../context/Theme';
 import './NewProductForm.css';
 
 export default function NewProductForm({ edit }) {
@@ -23,6 +24,8 @@ export default function NewProductForm({ edit }) {
   const [errors, setErrors] = useState({});
   const [isLoaded, setIsLoaded] = useState(false);
   const [loading, setLoading] = useState(false);
+  const { theme } = useTheme();
+  const [key, setKey] = useState(0);
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
@@ -128,12 +131,26 @@ export default function NewProductForm({ edit }) {
     else navigate('/products');
   };
 
+  useEffect(() => {
+    setKey((prevkey) => prevkey + 1);
+  }, [theme]);
+
+  const chooseClassName = () => {
+    if (theme === 'light') return 'new-product-form-container';
+    if (theme === 'dark') return 'new-product-form-container-dark';
+  };
+
+  const chooseFooterClass = () => {
+    if (theme === 'light') return 'product-form-footer';
+    if (theme === 'dark') return 'product-form-footer-dark';
+  };
+
   return (
     <>
       {loading && <div className="loading-spinner">Loading...</div>}
       {isLoaded && (
         <>
-          <div className="new-product-form-container">
+          <div className={chooseClassName()}>
             <div className="product-form-header">
               {edit ? <h1>Update Product</h1> : <h1>Sell Product</h1>}
             </div>
@@ -257,7 +274,7 @@ export default function NewProductForm({ edit }) {
           </div>
         </>
       )}
-      <footer>
+      <footer className={chooseFooterClass()}>
         <div className="social-links">
           <div>
             <NavLink to="https://github.com/Sohna-AI" className="github-button-container">
@@ -300,9 +317,15 @@ export default function NewProductForm({ edit }) {
           </div>
         </div>
         <div>
-          <NavLink to="/">
-            <img src="/short-logo-light-mode.png" className="product-page-logo-image" />
-          </NavLink>
+          {theme === 'light' ? (
+            <NavLink to="/">
+              <img src="/short-logo-light-mode.png" className="product-form-logo-image" />
+            </NavLink>
+          ) : (
+            <NavLink to="/">
+              <img src="/short-logo-dark-mode.png" className="product-form-logo-image-dark" />
+            </NavLink>
+          )}
         </div>
       </footer>
     </>

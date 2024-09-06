@@ -15,5 +15,5 @@ def get_favorites():
     """
     Get all favorite products for the authenticated user
     """
-    products = Wishlist.query.filter_by(Wishlist.user_id==current_user.id).all()
+    products = Wishlist.query.filter_by(Wishlist.user_id == current_user.id).all()
     return {'wishlist': [product.to_dict() for product in products]}

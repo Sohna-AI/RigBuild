@@ -78,7 +78,7 @@ export default function ProductsPage() {
                 );
               })}
           </div>
-          <footer className='products-page-footer'>
+          <footer className="products-page-footer">
             <div className="social-links">
               <div>
                 <NavLink to="https://github.com/Sohna-AI" className="github-button-container">
@@ -155,7 +155,7 @@ export default function ProductsPage() {
                 );
               })}
           </div>
-          <footer className='products-page-footer-dark'>
+          <footer className="products-page-footer-dark">
             <div className="social-links-dark">
               <div>
                 <NavLink to="https://github.com/Sohna-AI" className="github-button-container-dark">

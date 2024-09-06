@@ -17,6 +17,7 @@ import CreateReviews from '../CreateReviews/CreateReviews';
 import OpenModalButton from '../OpenModalButton/OpenModalButton';
 import DeleteProduct from '../DeleteProduct/DeleteProduct';
 import { useTheme } from '../../context/Theme';
+import AddToCartNotification from '../AddToCartNotification/AddToCartNotification';
 
 const ProductDetails = () => {
   const dispatch = useDispatch();
@@ -34,6 +35,7 @@ const ProductDetails = () => {
   const [isWishlisted, setIsWishlisted] = useState(!!wishlist[productId]);
   const [visibleReviews, setVisibleReviews] = useState(4);
   const [showLoginModal, setShowLoginModal] = useState(false);
+  const [showNotification, setShowNotification] = useState(false);
   const { theme } = useTheme();
   const [key, setKey] = useState(0);
 
@@ -148,16 +150,25 @@ const ProductDetails = () => {
     if (reviews === 1) return `${reviews} review`;
   };
 
-  const handleAddToCart = () => {
+  const handleAddToCart = async () => {
     if (!sessionUser) {
-      alert('Please log in to add items to the cart.');
+      setShowNotification(true);
+      setTimeout(() => {
+        setShowNotification(false);
+      }, 2000);
     } else {
       const productToAdd = {
         cartId: cart?.id,
         productId: product?.id,
       };
-      dispatch(cartActions.thunkAddToCart(productToAdd.cartId, productToAdd.productId));
+      await dispatch(cartActions.thunkAddToCart(productToAdd.cartId, productToAdd.productId));
+      await dispatch(cartActions.getUserCart(sessionUser?.id));
     }
+    setShowNotification(true);
+
+    setTimeout(() => {
+      setShowNotification(false);
+    }, 1000);
   };
 
   useEffect(() => {
@@ -201,7 +212,7 @@ const ProductDetails = () => {
                         {!userIsProductOwner(product, sessionUser?.id) ? (
                           <div className="buttons-cart-wishlist">
                             <div>
-                              <button className="cart-button" onClick={handleAddToCart}>
+                              <button className="cart-button" onClick={() => handleAddToCart()}>
                                 {' '}
                                 <span className="IconContainer">
                                   <svg
@@ -216,6 +227,22 @@ const ProductDetails = () => {
                                 </span>
                                 <p className="cart-text">Add to Cart</p>
                               </button>
+                              <div className="item-added-to-cart-container">
+                                {sessionUser && (
+                                  <AddToCartNotification
+                                    isVisible={showNotification}
+                                    message="Item added to cart!"
+                                  />
+                                )}
+                                {!sessionUser && (
+                                  <div>
+                                    <AddToCartNotification
+                                      isVisible={showNotification}
+                                      message="Login to add to the cart!"
+                                    />
+                                  </div>
+                                )}
+                              </div>
                             </div>
                             <div className="product-favorite-button">
                               <input
