@@ -5,20 +5,17 @@ import { ModalProvider, Modal } from '../context/Modal';
 import { thunkAuthenticate } from '../redux/session';
 import Navigation from '../components/Navigation/Navigation';
 import { AnimatePresence, motion } from 'framer-motion';
+import { useTheme } from '../context/Theme';
 
 export default function Layout() {
   const dispatch = useDispatch();
   const [isLoaded, setIsLoaded] = useState(false);
+  const { theme, toggleTheme } = useTheme();
   const location = useLocation();
   const hasMountedRef = useRef(false);
-  // useEffect(() => {
-  //   dispatch(thunkAuthenticate()).then(() => setIsLoaded(true));
-  // }, [dispatch]);
 
   useEffect(() => {
-    dispatch(thunkAuthenticate()).then(() => {
-      setIsLoaded(true);
-    });
+    dispatch(thunkAuthenticate()).then(() => setIsLoaded(true));
   }, [dispatch]);
 
   useEffect(() => {
@@ -31,21 +28,11 @@ export default function Layout() {
   return (
     <>
       <ModalProvider>
-        <Navigation isLoaded={isLoaded} />
-        <AnimatePresence initial={false} mode="wait">
-          {isLoaded && (
-            <motion.div
-              key={location.pathname}
-              initial={{ x: 300, opacity: 0 }}
-              animate={{ x: 0, opacity: 1 }}
-              exit={{ x: -300, opacity: 0 }}
-              // transition={{ duration: 0.3 }}
-            >
-              <Outlet />
-            </motion.div>
-          )}
-        </AnimatePresence>
-        <Modal />
+        <Navigation isLoaded={isLoaded} toggleTheme={toggleTheme} theme={theme} />
+        <div>
+          {isLoaded && <Outlet />}
+          <Modal />
+        </div>
       </ModalProvider>
     </>
   );

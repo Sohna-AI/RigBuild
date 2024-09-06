@@ -150,3 +150,37 @@
   font-size: 12px;
   font-weight: 500;
 }
+
+.new-product-form-container-dark {
+  margin: 50px auto;
+  max-width: 600px;
+  padding: 40px;
+  border-radius: 8px;
+  background-color: rgb(59, 59, 59);
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell,
+    'Open Sans', 'Helvetica Neue', sans-serif;
+}
+
+.new-product-form-container-dark input,
+.new-product-form-container-dark textarea,
+.new-product-form-container-dark select {
+  background-color: rgb(40, 40, 40);
+  border: none;
+  outline: none;
+}
+
+.product-form-footer,
+.product-form-footer-dark {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 80px;
+  padding-top: 50px;
+  margin-top: 50px;
+  padding-bottom: 100px;
+  border-top: 1px solid var(--border-color, black);
+}
+.product-form-logo-image,
+.product-form-logo-image-dark {
+  width: 300px;
+}

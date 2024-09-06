@@ -98,3 +98,140 @@ ul {
   color: white;
   transition: 400ms;
 }
+
+.cart-icon-container {
+  position: relative;
+  display: inline-block;
+}
+
+.cart-item-count {
+  position: absolute;
+  top: -10px;
+  right: -10px;
+  background-color: red;
+  color: white;
+  border-radius: 50%;
+  padding: 2px 6px;
+  font-size: 0.75rem;
+}
+
+/*Styles for Dark Mode */
+
+.profile-dropdown-dark {
+  position: absolute;
+}
+
+li {
+  list-style: none;
+}
+
+ul {
+  display: flex;
+  justify-content: space-between;
+  height: 80px;
+  align-items: center;
+}
+
+.short-logo-dark {
+  width: 250px;
+  object-fit: contain;
+}
+
+.profile-cart-container-dark {
+  display: flex;
+  align-items: center;
+  padding-right: 10px;
+}
+
+.users-shopping-cart-nav-button-dark {
+  transform: translate(-60px);
+  width: 30px;
+  height: 30px;
+  color: #c4e5f2;
+  background-color: transparent;
+  border: none;
+}
+
+.cart-dark {
+  width: 30px;
+  height: 30px;
+}
+
+.search-bar-container-dark {
+  display: flex;
+  line-height: 28px;
+  align-items: center;
+  position: relative;
+  max-width: 190px;
+}
+
+.short-logo-container-dark {
+  cursor: pointer;
+}
+.search-bar-input-dark {
+  width: 100%;
+  height: 40px;
+  line-height: 28px;
+  padding: 0 1rem;
+  padding-left: 2.5rem;
+  border: 2px solid transparent;
+  border-radius: 8px;
+  outline: none;
+  background-color: #f3f3f4;
+  color: #0d0c22;
+  transition: 0.3s ease;
+}
+
+.search-bar-input-dark::placeholder {
+  color: #9e9ea7;
+}
+
+.search-bar-input-dark:focus,
+.search-bar-input-dark:hover {
+  outline: none;
+  border-color: #c4e5f2;
+  background-color: #fff;
+  box-shadow: 0 0 0 4px rgb(234 76 137 / 30%);
+}
+
+.search-bar-icon-dark {
+  position: absolute;
+  left: 1rem;
+  fill: #9e9ea7;
+  width: 1rem;
+  height: 1rem;
+}
+
+.sell-product-button-dark {
+  transform: translateX(-110px);
+  background-color: transparent;
+  border: 2px solid lightpink;
+  padding: 10px;
+  border-radius: 30px;
+  cursor: pointer;
+  transition: 400ms;
+  color: white;
+}
+
+.sell-product-button-dark:hover {
+  background-color: lightpink;
+  color: white;
+  transition: 400ms;
+}
+
+.cart-icon-container-dark {
+  position: relative;
+  display: inline-block;
+}
+
+.cart-item-count-dark {
+  position: absolute;
+  top: -10px;
+  right: -10px;
+  background-color: red;
+  color: white;
+  border-radius: 50%;
+  padding: 2px 6px;
+  font-size: 0.75rem;
+  border: 1px solid red;
+}

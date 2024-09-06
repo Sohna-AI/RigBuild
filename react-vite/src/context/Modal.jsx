@@ -73,10 +73,6 @@ export function Modal() {
         </motion.div>
       )}
     </AnimatePresence>,
-    // <div id="modal" className={`modal ${isVisible ? 'modal-enter' : 'modal-exit'}`}>
-    //   <div id="modal-background" onClick={closeModal} />
-    //   <div id="modal-content">{modalContent}</div>
-    // </div>,
     modalRef.current
   );
 }

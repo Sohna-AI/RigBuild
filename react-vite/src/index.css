@@ -10,3 +10,254 @@
 button {
   cursor: pointer;
 }
+
+/* Light Theme */
+body.light {
+  --background-color: white;
+  --text-color: black;
+  --link-color: blue;
+  --link-hover-color: darkblue;
+  --border-color: black;
+  --product-bg-color: white;
+  --product-text-color: black;
+  --footer-bg-color: #f8f8f8;
+  --intro-bg-color: #f8f5bb;
+  --category-bg-color: lightblue;
+  --button-bg-color: #f5929f;
+  --button-text-color: #ffffff;
+  --button-hover-bg-color: #111;
+  --button-hover-arrow-color: #645bff;
+  --view-button-bg-color: inherit;
+  --view-button-text-color: #f5929f;
+  --view-button-border-color: #c4e5f2;
+  --view-button-svg-color: greenyellow;
+  --github-button-bg-color: #181717;
+  --github-button-text-color: white;
+  --linkedin-button-bg-color: #0a66c2;
+  --linkedin-button-text-color: #ffffff;
+  --dropdown-bg-color: white;
+  --dropdown-shadow-color: rgba(0, 0, 0, 0.25);
+  --button-bg-color: aliceblue;
+  --button-hover-bg-color: antiquewhite;
+  --button-hover-color: lightpink;
+}
+
+/* Dark Theme */
+body.dark {
+  --background-color: #121212; /* Dark background color */
+  --text-color: #e0e0e0; /* Light text color for contrast */
+  --link-color: #81a1c1; /* Lighter link color */
+  --link-hover-color: #88c0d0; /* Lighter hover link color */
+  --border-color: #e0e0e0;
+  --product-bg-color: #1e1e1e;
+  --product-text-color: #e0e0e0;
+  --footer-bg-color: #1b1b1b;
+  --intro-bg-color: #3e3e3e;
+  --category-bg-color: #2a2a2a;
+  --button-bg-color: #645bff;
+  --button-text-color: #e0e0e0;
+  --button-hover-bg-color: #333;
+  --button-hover-arrow-color: #f5929f;
+  --view-button-bg-color: #333;
+  --view-button-text-color: #645bff;
+  --view-button-border-color: #444;
+  --view-button-svg-color: #e0e0e0;
+  --github-button-bg-color: #24292f;
+  --github-button-text-color: #e0e0e0;
+  --linkedin-button-bg-color: #0077b5;
+  --linkedin-button-text-color: #e0e0e0;
+}
+
+/* Apply the variables */
+body {
+  background-color: var(--background-color);
+  color: var(--text-color);
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+a {
+  color: var(--link-color);
+}
+
+a:hover {
+  color: var(--link-hover-color);
+}
+
+/* Example for navigation bar and dropdown */
+.navigation-top-container {
+  background-color: var(--background-color);
+  color: var(--text-color);
+}
+
+.profile-dropdown {
+  background-color: var(--background-color);
+  color: var(--text-color);
+}
+
+/* Additional components and elements */
+body.dark .single-product {
+  background-color: var(--product-bg-color, #1e1e1e); /* Dark background */
+  color: var(--product-text-color, #e0e0e0); /* Light text */
+}
+
+body.dark .products-page-categories-container,
+body.dark .products-page-container,
+body.dark footer {
+  background-color: var(--background-color, #121212); /* Dark background */
+  color: var(--text-color, #e0e0e0); /* Light text */
+}
+
+body.dark footer {
+  border-top-color: var(--border-color, #e0e0e0); /* Light border */
+}
+
+/* Landing Page Specific Styles */
+body.dark.landing-page-container {
+  max-width: 1000px;
+  margin: auto;
+  background-color: var(--background-color);
+  color: var(--text-color);
+  display: flex;
+  flex-direction: column;
+}
+
+.main-logo-intro-container {
+  display: flex;
+  align-items: center;
+  gap: 40px;
+}
+
+.main-logo {
+  transform: translateX(-40px);
+}
+
+.intro-container {
+  width: 500px;
+  height: 550px;
+  background-color: var(--intro-bg-color);
+  border-radius: 30px;
+}
+
+.intro {
+  padding: 15px;
+  word-wrap: break-word;
+}
+
+.list-of-categories {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 10px;
+  padding: 10px;
+  font-size: small;
+  background-color: var(--category-bg-color);
+  width: 480px;
+  height: 360px;
+}
+
+.category-name {
+  font-weight: 500;
+}
+
+.landing-links-buttons {
+  display: flex;
+  justify-content: center;
+  gap: 225px;
+  margin-top: 50px;
+}
+
+.view-all-products-button-container,
+.login-button-container,
+.signup-button-container,
+.github-button-container,
+.linkedin-button-container {
+  text-decoration: none;
+}
+
+.view-all-products-button {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  padding: 16px 36px;
+  border: 4px solid transparent;
+  font-size: 16px;
+  background-color: var(--view-button-bg-color);
+  border-radius: 100px;
+  font-weight: 600;
+  color: var(--view-button-text-color);
+  box-shadow: 0 0 0 2px var(--view-button-border-color);
+  width: 260px;
+  cursor: pointer;
+  overflow: hidden;
+  transition: all 0.6s cubic-bezier(0.23, 1, 0.32, 1);
+}
+
+.view-all-products-button svg {
+  position: absolute;
+  width: 24px;
+  fill: var(--view-button-svg-color);
+  z-index: 9;
+  transition: all 0.8s cubic-bezier(0.23, 1, 0.32, 1);
+}
+
+.view-all-products-button .arr-1 {
+  right: 16px;
+}
+
+.view-all-products-button .arr-2 {
+  left: -25%;
+}
+
+.view-all-products-button .circle {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 20px;
+  height: 20px;
+  background-color: var(--button-bg-color);
+  border-radius: 50%;
+  opacity: 0;
+  transition: all 0.8s cubic-bezier(0.23, 1, 0.32, 1);
+}
+
+.view-all-products-button .text {
+  position: relative;
+  z-index: 1;
+  transform: translateX(40px);
+  transition: all 0.8s cubic-bezier(0.23, 1, 0.32, 1);
+}
+
+.view-all-products-button:hover {
+  box-shadow: 0 0 0 12px transparent;
+  color: var(--view-button-border-color);
+  border-radius: 12px;
+}
+
+.view-all-products-button:hover .arr-1 {
+  right: -25%;
+}
+
+.view-all-products-button:hover .arr-2 {
+  left: 16px;
+}
+
+.view-all-products-button:hover .text {
+  transform: translateX(20px);
+}
+
+.view-all-products-button:hover svg {
+  fill: var(--text-color);
+}
+
+.view-all-products-button:active {
+  transform: scale(0.95);
+  box-shadow: 0 0 0 4px var(--view-button-svg-color);
+}
+
+.view-all-products-button:hover .circle {
+  width: 264px;
+  height: 264px;
+  opacity: 1;
+}
