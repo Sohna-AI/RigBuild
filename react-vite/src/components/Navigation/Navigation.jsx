@@ -3,14 +3,17 @@ import { AiOutlineShoppingCart } from 'react-icons/ai';
 import { useState, useEffect } from 'react';
 import ProfileButton from './ProfileButton';
 import './Navigation.css';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import ShoppingCart from '../../components/ShoppingCart/ShoppingCart';
 import OpenModalButton from '../OpenModalButton/OpenModalButton';
+import * as cartActions from '../../redux/cart';
 
 function Navigation({ isLoaded, toggleTheme, theme }) {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const sessionUser = useSelector((state) => state.session.user);
+  const cart = useSelector(cartActions.selectCartDetails);
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   useEffect(() => {
     if (sessionUser === null) {
@@ -23,6 +26,12 @@ function Navigation({ isLoaded, toggleTheme, theme }) {
     else navigate('/');
   };
 
+  useEffect(() => {
+    if (sessionUser?.id) {
+      dispatch(cartActions.getUserCart(sessionUser.id));
+    }
+  }, [dispatch, sessionUser]);
+
   const handleSellProductClick = () => {
     navigate('/products/new');
   };
@@ -32,7 +41,7 @@ function Navigation({ isLoaded, toggleTheme, theme }) {
         <>
           <li className="short-logo-container">
             <div className="short-logo-container" onClick={handleClick}>
-              <img src="/short-logo-light-mode.png" className="short-logo" />
+              <img src="/short-logo-light-mode.svg" className="short-logo" />
             </div>
           </li>
           <li>
@@ -52,7 +61,20 @@ function Navigation({ isLoaded, toggleTheme, theme }) {
               </button>
 
               <OpenModalButton
-                buttonText={<AiOutlineShoppingCart className="cart" />}
+                buttonText={
+                  <div className="cart-icon-container">
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      height="1.5em"
+                      viewBox="0 0 576 512"
+                      fill="rgb(17, 17, 17)"
+                      className="cart-icon"
+                    >
+                      <path d="M0 24C0 10.7 10.7 0 24 0H69.5c22 0 41.5 12.8 50.6 32h411c26.3 0 45.5 25 38.6 50.4l-41 152.3c-8.5 31.4-37 53.3-69.5 53.3H170.7l5.4 28.5c2.2 11.3 12.1 19.5 23.6 19.5H488c13.3 0 24 10.7 24 24s-10.7 24-24 24H199.7c-34.6 0-64.3-24.6-70.7-58.5L77.4 54.5c-.7-3.8-4-6.5-7.9-6.5H24C10.7 48 0 37.3 0 24zM128 464a48 48 0 1 1 96 0 48 48 0 1 1 -96 0zm336-48a48 48 0 1 1 0 96 48 48 0 1 1 0-96z"></path>
+                    </svg>
+                    {cart.total_items > 0 && <span className="cart-item-count">{cart.total_items}</span>}
+                  </div>
+                }
                 modalComponent={<ShoppingCart />}
                 shoppingCartButton={true}
               />
@@ -83,24 +105,37 @@ function Navigation({ isLoaded, toggleTheme, theme }) {
             </div>
           </li>
           {isLoggedIn && isLoaded && (
-        <li className="profile-cart-container-dark">
-          <button className="sell-product-button-dark" onClick={handleSellProductClick}>
-            Sell your Product
-          </button>
+            <li className="profile-cart-container-dark">
+              <button className="sell-product-button-dark" onClick={handleSellProductClick}>
+                Sell your Product
+              </button>
 
-          <OpenModalButton
-            buttonText={<AiOutlineShoppingCart className="cart" />}
-            modalComponent={<ShoppingCart />}
-            shoppingCartButton={true}
-          />
-          <ProfileButton user={sessionUser} toggleTheme={toggleTheme} theme={theme} />
-        </li>
-      )}
-      {!isLoggedIn && isLoaded && (
-        <li className="profile-cart-container-dark">
-          <ProfileButton user={sessionUser} toggleTheme={toggleTheme} theme={theme} />
-        </li>
-      )}
+              <OpenModalButton
+                buttonText={
+                  <div className="cart-icon-container-dark">
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      height="1.5em"
+                      viewBox="0 0 576 512"
+                      fill="#FFFFFF"
+                      className="cart-icon-dark"
+                    >
+                      <path d="M0 24C0 10.7 10.7 0 24 0H69.5c22 0 41.5 12.8 50.6 32h411c26.3 0 45.5 25 38.6 50.4l-41 152.3c-8.5 31.4-37 53.3-69.5 53.3H170.7l5.4 28.5c2.2 11.3 12.1 19.5 23.6 19.5H488c13.3 0 24 10.7 24 24s-10.7 24-24 24H199.7c-34.6 0-64.3-24.6-70.7-58.5L77.4 54.5c-.7-3.8-4-6.5-7.9-6.5H24C10.7 48 0 37.3 0 24zM128 464a48 48 0 1 1 96 0 48 48 0 1 1 -96 0zm336-48a48 48 0 1 1 0 96 48 48 0 1 1 0-96z"></path>
+                    </svg>
+                    {cart.totalItems > 0 && <span className="cart-item-count-dark">{cart.totalItems}</span>}
+                  </div>
+                }
+                modalComponent={<ShoppingCart />}
+                shoppingCartButton={true}
+              />
+              <ProfileButton user={sessionUser} toggleTheme={toggleTheme} theme={theme} />
+            </li>
+          )}
+          {!isLoggedIn && isLoaded && (
+            <li className="profile-cart-container-dark">
+              <ProfileButton user={sessionUser} toggleTheme={toggleTheme} theme={theme} />
+            </li>
+          )}
         </>
       )}
     </ul>

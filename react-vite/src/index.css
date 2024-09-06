@@ -94,21 +94,6 @@ a:hover {
   color: var(--text-color);
 }
 
-.theme-toggle-button {
-  background: none;
-  border: none;
-  cursor: pointer;
-  color: var(--text-color);
-  font-size: 14px;
-  width: 100%;
-  text-align: left;
-  padding: 5px 0;
-}
-
-.theme-toggle-button:hover {
-  color: var(--link-hover-color);
-}
-
 /* Additional components and elements */
 body.dark .single-product {
   background-color: var(--product-bg-color, #1e1e1e); /* Dark background */
@@ -275,59 +260,4 @@ body.dark.landing-page-container {
   width: 264px;
   height: 264px;
   opacity: 1;
-}
-
-#user-button {
-  box-sizing: border-box;
-  border: 0;
-  border-radius: 20px;
-  color: var(--button-text-color);
-  padding: 1em 1.8em;
-  background: var(--button-bg-color);
-  display: flex;
-  transition: 0.2s background;
-  align-items: center;
-  gap: 0.6em;
-  font-weight: bold;
-  cursor: pointer;
-}
-
-#user-button .arrow-wrapper {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-#user-button .arrow {
-  margin-top: 1px;
-  width: 10px;
-  background: var(--button-bg-color);
-  height: 2px;
-  position: relative;
-  transition: 0.2s;
-}
-
-#user-button .arrow::before {
-  content: '';
-  position: absolute;
-  border: solid var(--button-hover-arrow-color);
-  border-width: 0 2px 2px 0;
-  display: inline-block;
-  top: -3px;
-  right: 3px;
-  transition: 0.2s;
-  padding: 3px;
-  transform: rotate(-45deg);
-}
-
-#user-button:hover {
-  background-color: var(--button-hover-bg-color);
-}
-
-#user-button:hover .arrow {
-  background: var(--button-hover-arrow-color);
-}
-
-#user-button:hover .arrow:before {
-  right: 0;
 }

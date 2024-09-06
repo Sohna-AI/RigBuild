@@ -58,6 +58,7 @@ export const thunkAddToCart =
     if (res.ok) {
       const data = await res.json();
       dispatch(addToCart(data));
+      console.log(data);
       return;
     }
   };
@@ -86,7 +87,7 @@ export const thunkUpdateCartQuantity = (cartId, productId, quantity) => async (d
   }
 };
 
-const selectCart = (state) => state.cart;
+export const selectCart = (state) => state.cart;
 
 export const selectCartDetails = createSelector([selectCart], (cart) => ({
   ...cart,
@@ -94,67 +95,59 @@ export const selectCartDetails = createSelector([selectCart], (cart) => ({
 
 const initialState = {
   products: {},
-  totalItems: 0,
-  totalPrice: 0,
 };
 
 const cartReducer = (state = structuredClone(initialState), action) => {
   switch (action.type) {
     case SET_CART: {
       const newState = structuredClone(initialState);
-      const cartItems = action.cart.products;
-      cartItems.forEach((item) => {
-        newState.products[item.product_id] = {
-          ...item.product,
-          quantity: item.quantity || 1,
-        };
-        newState.totalItems += item.quantity || 1;
-        newState.totalPrice += (item.product.price || 0) * (item.quantity || 1);
-      });
-      return {
-        ...newState,
-        ...action.cart,
-      };
+      newState.products = [...action.cart.products];
+      return { ...newState, ...action.cart };
     }
     case ADD_TO_CART: {
       const newState = structuredClone(state);
-      const { id, price, quantity } = action.product;
+      const { id, quantity } = action.product;
 
-      if (newState.products[id]) {
-        newState.products[id].quantity += quantity;
+      const validQuantity = parseInt(quantity, 10) || 1;
+
+      const existingProductIndex = newState.products.findIndex((product) => product.id === id);
+
+      if (existingProductIndex !== -1) {
+        newState.products[existingProductIndex].quantity += validQuantity;
       } else {
-        newState.products[id] = { ...action.product };
+        newState.products.push({ ...action.product, quantity: validQuantity });
       }
-
-      newState.totalItems += quantity;
-      newState.totalPrice += price * quantity;
 
       return newState;
     }
     case REMOVE_FROM_CART: {
+      // const newState = structuredClone(state);
+      // const productIdx = newState.products.findIndex(
+      //   (prod) => parseInt(prod.id) === parseInt(action.productId)
+      // );
+      // if (productIdx !== -1) {
+      //   const removedProduct = newState.products[productIdx];
+
+      //   newState.totalItems -= removedProduct.quantity;
+      //   newState.totalPrice -= Number(removedProduct.product.price) * removedProduct.quantity;
+
+      //   newState.products.splice(productIdx, 1);
+      // }
+
+      // return newState;
       const newState = structuredClone(state);
-      const productIdx = newState.products.findIndex(
-        (prod) => parseInt(prod.id) === parseInt(action.productId)
-      );
-      if (productIdx !== -1) {
-        const removedProduct = newState.products[productIdx];
 
-        newState.totalItems -= removedProduct.quantity;
-        newState.totalPrice -= Number(removedProduct.product.price) * removedProduct.quantity;
-
-        newState.products.splice(productIdx, 1);
-      }
+      // Remove the product from the cart if it exists
+      newState.products = newState.products.filter((product) => product.id !== action.productId);
 
       return newState;
     }
     case UPDATE_CART_QUANTITY: {
       const newState = structuredClone(state);
       const product = newState.products.find((prod) => parseInt(prod.id) === parseInt(action.productId));
+
       if (product) {
-        const quantityDifference = action.quantity - product.quantity;
         product.quantity = action.quantity;
-        newState.totalItems += quantityDifference;
-        newState.totalPrice += quantityDifference * Number(product.product.price);
       }
 
       return newState;

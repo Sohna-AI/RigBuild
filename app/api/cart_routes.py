@@ -25,7 +25,7 @@ def add_item_to_cart(cart_id):
     Add a product to the shopping cart
     """
     product_id = request.json.get('product_id')
-    quantity = request.json.get('quantity', 1)
+    quantity = request.json.get('quantity')
     
     try:
         quantity = int(quantity)

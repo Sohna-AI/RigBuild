@@ -5,9 +5,9 @@ const AddToCartNotification = ({ isVisible, message }) => {
     <AnimatePresence>
       {isVisible && (
         <motion.div
-          initial={{ opacity: 0, y: -50 }}
+          initial={{ opacity: 0, y: -30 }}
           animate={{ opacity: 1, y: 0 }}
-          exit={{ opacity: 0, y: -50 }}
+          exit={{ opacity: 0, y: -30 }}
           transition={{ duration: 0.5 }}
           className="add-to-cart-notification"
         >

@@ -8,6 +8,7 @@ import './ProfileButton.css';
 import { NavLink, useNavigate } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import OpenModalButton from '../OpenModalButton/OpenModalButton';
+import OpenModalMenuItem from './OpenModalMenuItem';
 
 const ProfileButton = ({ user, toggleTheme, theme }) => {
   const navigate = useNavigate();
@@ -44,7 +45,7 @@ const ProfileButton = ({ user, toggleTheme, theme }) => {
 
   const ulClassName = 'profile-dropdown' + (showMenu ? '' : ' hidden');
   return (
-    <div>
+    <div className="profile-dropdown-container">
       {theme === 'light' ? (
         <>
           <FaRegUserCircle className="profile-button" onClick={toggleMenu} />
@@ -63,9 +64,6 @@ const ProfileButton = ({ user, toggleTheme, theme }) => {
                     <li className="profile-dropdown-user-info-container">
                       <div className="profile-dropdown-user-info">
                         <span className="profile-dropdown-username">Welcome, {user.username}</span>
-                        <div className="profile-dropdown-email-container">
-                          <div className="profile-dropdown-email">{user.email}</div>
-                        </div>
                       </div>
                     </li>
                     <li className="profile-dropdown-manage-listing-container">
@@ -73,54 +71,45 @@ const ProfileButton = ({ user, toggleTheme, theme }) => {
                         to="/products/current"
                         className="profile-dropdown-manage-listing"
                         onClick={closeMenu}
-                        style={{ textDecoration: 'none' }}
                       >
                         Manage Listings
                       </NavLink>
                     </li>
-                    <li>
+                    <li className="profile-dropdown-wishlist-container">
                       <NavLink
                         to="/user/current/wishlist"
                         onClick={closeMenu}
-                        style={{ textDecoration: 'none' }}
+                        className="profile-dropdown-wishlist"
                       >
                         Wishlist
                       </NavLink>
                     </li>
-                    <li>
-                      <div className="logout-button-container">
-                        <button onClick={logout} className="logout-button-dropdown">
-                          Log Out
-                        </button>
+                    <li className="logout-button-dropdown-container">
+                      <div onClick={logout} className="logout-button-dropdown">
+                        Log Out
                       </div>
                     </li>
                   </>
                 ) : (
-                  <li>
-                    <div className="login-signup-button-container">
-                      <div className="login-button-container">
-                        <OpenModalButton
-                          buttonText="Log In"
-                          modalComponent={<LoginFormModal />}
-                          onButtonClick={closeMenu}
-                          profileDropdownLogin={true}
-                        />
-                      </div>
-                      <div className="signup-button-container">
-                        <OpenModalButton
-                          buttonText="Sign Up"
-                          modalComponent={<SignupFormModal navigate={navigate} />}
-                          onButtonClick={closeMenu}
-                          profileDropdownSignup={true}
-                        />
-                      </div>
-                    </div>
-                  </li>
+                  <>
+                    <OpenModalMenuItem
+                      itemText={<div className="profile-dropdown-login">Login</div>}
+                      modalComponent={<LoginFormModal />}
+                      onItemClick={closeMenu}
+                      profileDropdownLogin={true}
+                    />
+                    <OpenModalMenuItem
+                      itemText={<div className="profile-dropdown-signup">Signup</div>}
+                      modalComponent={<SignupFormModal navigate={navigate} />}
+                      onItemClick={closeMenu}
+                      profileDropdownSignup={true}
+                    />
+                  </>
                 )}
                 <li className="theme-toggle-container">
-                  <button className="theme-toggle-button" onClick={toggleTheme}>
-                    {theme === 'light' ? 'Switch to Dark Mode' : 'Switch to Light Mode'}
-                  </button>
+                  <div className="theme-toggle-button" onClick={toggleTheme}>
+                    {theme === 'light' ? 'Dark Mode' : 'Light Mode'}
+                  </div>
                 </li>
               </motion.ul>
             )}
@@ -144,9 +133,6 @@ const ProfileButton = ({ user, toggleTheme, theme }) => {
                     <li className="profile-dropdown-user-info-container">
                       <div className="profile-dropdown-user-info">
                         <span className="profile-dropdown-username">Welcome, {user.username}</span>
-                        <div className="profile-dropdown-email-container">
-                          <div className="profile-dropdown-email">{user.email}</div>
-                        </div>
                       </div>
                     </li>
                     <li className="profile-dropdown-manage-listing-container">
@@ -159,49 +145,41 @@ const ProfileButton = ({ user, toggleTheme, theme }) => {
                         Manage Listings
                       </NavLink>
                     </li>
-                    <li>
+                    <li className="profile-dropdown-wishlist-container">
                       <NavLink
                         to="/user/current/wishlist"
                         onClick={closeMenu}
-                        style={{ textDecoration: 'none' }}
+                        className="profile-dropdown-wishlist"
                       >
                         Wishlist
                       </NavLink>
                     </li>
-                    <li>
-                      <div className="logout-button-container">
-                        <button onClick={logout} className="logout-button-dropdown">
-                          Log Out
-                        </button>
+                    <li className="logout-button-dropdown-container">
+                      <div onClick={logout} className="logout-button-dropdown">
+                        Log Out
                       </div>
                     </li>
                   </>
                 ) : (
-                  <li>
-                    <div className="login-signup-button-container">
-                      <div className="login-button-container">
-                        <OpenModalButton
-                          buttonText="Log In"
-                          modalComponent={<LoginFormModal />}
-                          onButtonClick={closeMenu}
-                          profileDropdownLogin={true}
-                        />
-                      </div>
-                      <div className="signup-button-container">
-                        <OpenModalButton
-                          buttonText="Sign Up"
-                          modalComponent={<SignupFormModal navigate={navigate} />}
-                          onButtonClick={closeMenu}
-                          profileDropdownSignup={true}
-                        />
-                      </div>
-                    </div>
-                  </li>
+                  <>
+                    <OpenModalMenuItem
+                      itemText={<div className="profile-dropdown-login">Login</div>}
+                      modalComponent={<LoginFormModal />}
+                      onItemClick={closeMenu}
+                      profileDropdownLogin={true}
+                    />
+                    <OpenModalMenuItem
+                      itemText={<div className="profile-dropdown-signup">Signup</div>}
+                      modalComponent={<SignupFormModal navigate={navigate} />}
+                      onItemClick={closeMenu}
+                      profileDropdownSignup={true}
+                    />
+                  </>
                 )}
                 <li className="theme-toggle-container">
-                  <button className="theme-toggle-button" onClick={toggleTheme}>
-                    {theme === 'light' ? 'Switch to Dark Mode' : 'Switch to Light Mode'}
-                  </button>
+                  <div className="theme-toggle-button" onClick={toggleTheme}>
+                    {theme === 'light' ? 'Dark Mode' : 'Light Mode'}
+                  </div>
                 </li>
               </motion.ul>
             )}

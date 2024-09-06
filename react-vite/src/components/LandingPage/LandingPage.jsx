@@ -6,11 +6,12 @@ import { useEffect, useState, useRef } from 'react';
 import OpenModalMenuItem from '../Navigation/OpenModalMenuItem';
 import LoginFormModal from '../LoginFormModal/LoginFormModal';
 import SignupFormModal from '../SignupFormModal';
+import { useTheme } from '../../context/Theme';
 
 const LandingPage = () => {
   const dispatch = useDispatch();
   const [isLoaded, setIsLoaded] = useState(false);
-  const [theme, setTheme] = useState(localStorage.getItem('theme') || 'light');
+  const { theme } = useTheme();
   const [key, setKey] = useState(0);
   const ulRef = useRef();
   const [showMenu, setShowMenu] = useState(false);
@@ -21,6 +22,7 @@ const LandingPage = () => {
   }, [dispatch]);
 
   const closeMenu = () => setShowMenu(false);
+
   useEffect(() => {
     if (!showMenu) return;
 
@@ -36,23 +38,7 @@ const LandingPage = () => {
   }, [showMenu]);
 
   useEffect(() => {
-    const handleStorageChange = () => {
-      const newTheme = localStorage.getItem('theme') || 'light';
-      if (newTheme !== theme) {
-        setTheme(newTheme);
-        setKey((prevKey) => prevKey + 1);
-      }
-    };
-
-    window.addEventListener('storage', handleStorageChange);
-
-    return () => {
-      window.removeEventListener('storage', handleStorageChange);
-    };
-  }, [theme]);
-
-  useEffect(() => {
-    document.body.className = theme;
+    setKey((prevKey) => prevKey + 1);
   }, [theme]);
 
   return (

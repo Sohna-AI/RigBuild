@@ -7,10 +7,13 @@ import ProductCard from './ProductCard';
 import './ProductsPage.css';
 import { getCategories } from '../../redux/categories';
 import CategorySelector from './CategorySelector';
+import { useTheme } from '../../context/Theme';
 
 export default function ProductsPage() {
   const dispatch = useDispatch();
   const products = useSelector(productActions.selectProducts);
+  const { theme } = useTheme();
+  const [key, setKey] = useState(0);
   const sessionUser = useSelector((state) => state.session.user);
   const [isLoaded, setIsLoaded] = useState(false);
   const [selectedCategory, setSelectedCategory] = useState('all');
@@ -41,11 +44,13 @@ export default function ProductsPage() {
     return selectedCategory === 'all' || product.category_id === parseInt(selectedCategory);
   });
 
-  const savedTheme = localStorage.getItem('theme') || 'light';
+  useEffect(() => {
+    setKey((prevKey) => prevKey + 1);
+  }, [theme]);
 
   return (
-    <>
-      {savedTheme === 'light' ? (
+    <div key={key}>
+      {theme === 'light' ? (
         <div className="products-page-container">
           <div className="products-page-categories-container">
             <h3>{filteredProducts?.length} Products</h3>
@@ -73,7 +78,7 @@ export default function ProductsPage() {
                 );
               })}
           </div>
-          <footer>
+          <footer className='products-page-footer'>
             <div className="social-links">
               <div>
                 <NavLink to="https://github.com/Sohna-AI" className="github-button-container">
@@ -150,7 +155,7 @@ export default function ProductsPage() {
                 );
               })}
           </div>
-          <footer>
+          <footer className='products-page-footer-dark'>
             <div className="social-links-dark">
               <div>
                 <NavLink to="https://github.com/Sohna-AI" className="github-button-container-dark">
@@ -194,12 +199,12 @@ export default function ProductsPage() {
             </div>
             <div>
               <NavLink to="/">
-                <img src="/short-logo-dark-mode.svg" className="product-page-logo-image-dark" />
+                <img src="/short-logo-dark-mode.png" className="product-page-logo-image-dark" />
               </NavLink>
             </div>
           </footer>
         </div>
       )}
-    </>
+    </div>
   );
 }
